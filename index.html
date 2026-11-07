@@ -1,0 +1,762 @@
+<title>Cuddle Pop</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: one quiet column on a lilac canvas; the only loud thing is the blend band (hero, paired ring, orb). */
+:root {
+  --canvas: #F4F2FA; --surface: #FFFFFF; --sunken: #ECE9F5;
+  --ink: #2B2749; --ink-muted: #66627F; --line: #E3E0EE;
+  --marigold: #F4B860; --marigold-soft: #FFF0D9;
+  --iris: #6260D6; --iris-soft: #E7E6FB; --iris-text: #FFFFFF;
+  --coral: #F39A85;
+  --stone: #F0EBE4; --stone-ink: #5C5449;
+  --fern: #287D5A; --fern-soft: #DFF4E9;
+  --ember: #CC444B; --ember-soft: #FCE4E4;
+  --night: #1C1A2E; --night-ink: #ECEAF6; --night-muted: #A8A4C0;
+  --shadow: 0 8px 24px rgba(43,39,73,0.08);
+  --display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --body: "Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --canvas: #1C1A2E; --surface: #262340; --sunken: #17152A;
+  --ink: #ECEAF6; --ink-muted: #A8A4C0; --line: #35314F;
+  --marigold: #F2C37A; --marigold-soft: #3B301A;
+  --iris: #9D9CF0; --iris-soft: #2C2B55; --iris-text: #1C1A2E;
+  --coral: #F5A090;
+  --stone: #302B27; --stone-ink: #D6CCBE;
+  --fern: #6FCFA0; --fern-soft: #1A3A2B;
+  --ember: #F08087; --ember-soft: #43202A;
+  --shadow: 0 8px 24px rgba(0,0,0,0.35);
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --canvas: #1C1A2E; --surface: #262340; --sunken: #17152A;
+  --ink: #ECEAF6; --ink-muted: #A8A4C0; --line: #35314F;
+  --marigold: #F2C37A; --marigold-soft: #3B301A;
+  --iris: #9D9CF0; --iris-soft: #2C2B55; --iris-text: #1C1A2E;
+  --coral: #F5A090;
+  --stone: #302B27; --stone-ink: #D6CCBE;
+  --fern: #6FCFA0; --fern-soft: #1A3A2B;
+  --ember: #F08087; --ember-soft: #43202A;
+  --shadow: 0 8px 24px rgba(0,0,0,0.35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--canvas); color: var(--ink);
+  font-family: var(--body); font-size: 17px; line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--canvas); }
+h1, h2, h3, .display { font-family: var(--display); font-weight: 600; margin: 0; text-wrap: balance; letter-spacing: 0; }
+h1 { font-size: clamp(38px, 6vw, 60px); line-height: 1.05; letter-spacing: -0.5px; }
+h2 { font-size: clamp(28px, 3.6vw, 38px); line-height: 1.12; }
+h3 { font-size: 20px; line-height: 26px; }
+p { margin: 0; }
+a { color: var(--iris); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.muted { color: var(--ink-muted); }
+.small { font-size: 15px; line-height: 20px; }
+.caption { font-size: 13px; line-height: 18px; }
+img, svg { max-width: 100%; }
+:focus-visible { outline: 3px solid var(--iris); outline-offset: 3px; border-radius: 6px; }
+
+.wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+section { padding-block: 72px; }
+.section-head { max-width: 640px; display: grid; gap: 14px; margin-bottom: 36px; }
+.section-head p { font-size: 19px; line-height: 28px; color: var(--ink-muted); }
+
+/* Buttons: full pill, 44 min height. Primary is iris. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 0 22px; border-radius: 999px; border: 0;
+  font: 700 17px/24px var(--body); cursor: pointer; text-decoration: none;
+  transition: transform .15s ease, background .15s ease;
+}
+.btn:hover { text-decoration: none; transform: translateY(-1px); }
+.btn-primary { background: var(--iris); color: var(--iris-text); }
+.btn-secondary { background: var(--surface); color: var(--ink); }
+.btn-ghost { background: transparent; color: var(--ink); }
+
+/* Chips */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px;
+  border-radius: 12px; font-size: 13px; line-height: 18px; font-weight: 700;
+}
+.chip-marigold { background: var(--marigold-soft); color: var(--ink); }
+.chip-iris { background: var(--iris-soft); color: var(--ink); }
+.chip-stone { background: var(--stone); color: var(--stone-ink); }
+.chip-fern { background: var(--fern-soft); color: var(--ink); }
+.chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* Nav */
+nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: color-mix(in srgb, var(--canvas) 88%, transparent); backdrop-filter: blur(12px); }
+.nav-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
+.wordmark { display: inline-flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 600; font-size: 22px; color: var(--ink); }
+.wordmark:hover { text-decoration: none; }
+.nav-links { display: flex; gap: 22px; align-items: center; }
+.nav-links a { color: var(--ink); font-size: 15px; }
+@media (max-width: 760px) { .nav-links a:not(.btn) { display: none; } }
+
+/* Hero */
+.hero { padding-block: 40px 72px; }
+.band {
+  border-radius: 28px; padding: 28px;
+  background: linear-gradient(90deg, var(--marigold), var(--coral), var(--iris));
+  color: #2B2749; display: grid; gap: 28px;
+}
+.band-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.band-names { font-family: var(--display); font-weight: 600; font-size: 24px; line-height: 30px; color: #2B2749; }
+.band-sub { font-size: 15px; color: rgba(43,39,73,0.75); }
+.pair { position: relative; width: 108px; height: 64px; flex: none; }
+.pair .av {
+  position: absolute; top: 4px; width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center; font-family: var(--display); font-weight: 600; font-size: 22px;
+  border: 3px solid var(--surface); color: #2B2749;
+}
+.pair .av.a { left: 0; background: var(--marigold-soft); box-shadow: 0 0 0 2px var(--marigold); }
+.pair .av.b { left: 48px; background: var(--iris-soft); box-shadow: 0 0 0 2px var(--iris); z-index: 1; }
+.pair.ring::before { content: ""; position: absolute; inset: -3px -3px -3px -3px; border-radius: 999px; background: linear-gradient(90deg, var(--marigold), var(--coral), var(--iris)); z-index: -1; }
+.hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; margin-top: 44px; }
+.hero-copy { display: grid; gap: 22px; }
+.hero-copy .lede { font-size: 20px; line-height: 30px; color: var(--ink-muted); max-width: 34em; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.hero-art { display: grid; place-items: center; }
+@media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } .hero-art { order: -1; } }
+
+/* Three parties */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { background: var(--surface); border-radius: 20px; padding: 24px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.card.marigold { background: var(--marigold-soft); }
+.card.iris { background: var(--iris-soft); }
+.card.stone { background: var(--stone); }
+.card.stone h3 { color: var(--ink); }
+.card .who { display: flex; align-items: center; gap: 10px; }
+.card .swatch { width: 28px; height: 28px; border-radius: 50%; flex: none; }
+@media (max-width: 760px) { .cards { grid-template-columns: 1fr; } }
+
+/* Phone demo */
+.demo { display: grid; grid-template-columns: .9fr 1.1fr; gap: 40px; align-items: center; }
+@media (max-width: 860px) { .demo { grid-template-columns: 1fr; } }
+.phone {
+  width: min(380px, 100%); margin: 0 auto; background: var(--canvas); border-radius: 36px;
+  border: 8px solid var(--night); box-shadow: var(--shadow); overflow: hidden;
+}
+.phone-head { padding: 14px 16px 10px; display: grid; gap: 8px; background: var(--canvas); }
+.phone-title { font-family: var(--display); font-weight: 600; font-size: 20px; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--sunken); border-radius: 12px; padding: 4px; }
+.seg button {
+  border: 0; border-radius: 10px; padding: 8px 10px; font: 700 14px/18px var(--body);
+  background: transparent; color: var(--ink-muted); cursor: pointer;
+}
+.seg button[aria-selected="true"] { background: var(--surface); color: var(--ink); }
+.thread { padding: 10px 14px 18px; display: grid; gap: 10px; min-height: 480px; align-content: start; }
+.bubble {
+  max-width: 86%; padding: 12px 14px; border-radius: 20px; font-size: 15px; line-height: 21px;
+  color: var(--ink); min-width: 0;
+}
+.bubble.mine { background: var(--marigold-soft); margin-left: auto; border-bottom-right-radius: 6px; }
+.bubble.theirs { background: var(--iris-soft); border-bottom-left-radius: 6px; }
+.bubble.ai { background: var(--stone); border-bottom-left-radius: 6px; }
+.bubble .label { display: block; font-family: var(--display); font-weight: 600; font-size: 14px; color: var(--stone-ink); margin-bottom: 4px; }
+.sys { text-align: center; font-size: 13px; color: var(--ink-muted); padding: 4px 0; }
+.ai-card { background: var(--stone); border-radius: 20px; padding: 16px; display: grid; gap: 10px; }
+.ai-card h4 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 18px; line-height: 24px; color: var(--ink); }
+.ai-card p { font-size: 15px; line-height: 21px; }
+.plan-group { border-radius: 14px; padding: 10px 12px; display: grid; gap: 6px; font-size: 14px; line-height: 20px; }
+.plan-group.a { background: var(--marigold-soft); }
+.plan-group.b { background: var(--iris-soft); }
+.plan-group strong { display: block; }
+.plan-group label { display: flex; gap: 8px; align-items: flex-start; }
+.plan-group input { margin-top: 3px; accent-color: var(--iris); }
+.demo-copy { display: grid; gap: 18px; }
+.demo-copy ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+
+/* Steps: a real sequence (fight stages) */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: step; }
+.step { background: var(--surface); border-radius: 20px; padding: 22px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.step::before {
+  counter-increment: step; content: counter(step);
+  width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--stone); color: var(--stone-ink); font-family: var(--display); font-weight: 600;
+}
+.step .chip { justify-self: start; }
+@media (max-width: 900px) { .steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+
+/* Let's Fight */
+.live { background: var(--night); color: var(--night-ink); border-radius: 28px; padding: 48px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+.live .muted { color: var(--night-muted); }
+.live h2 { color: var(--night-ink); }
+.orb-wrap { display: grid; place-items: center; gap: 22px; }
+.orb {
+  width: 200px; height: 200px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #F2C37A, #F5A090 45%, #9D9CF0 100%);
+  box-shadow: 0 0 80px rgba(157,156,240,0.35);
+  animation: breathe 4s ease-in-out infinite;
+}
+@keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@media (prefers-reduced-motion: reduce) { .orb { animation: none; } html { scroll-behavior: auto; } }
+.ask { background: #ECEAF6; color: #1C1A2E; }
+.transcript { display: grid; gap: 10px; font-size: 15px; line-height: 21px; }
+.transcript .line { display: grid; grid-template-columns: 10px 1fr; gap: 10px; align-items: baseline; }
+.transcript .line i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; position: relative; top: 1px; }
+.transcript .a i { background: #F2C37A; } .transcript .b i { background: #9D9CF0; } .transcript .t i { background: #D6CCBE; }
+.transcript .t { font-family: var(--display); font-size: 16px; }
+.live-rules { display: grid; gap: 8px; padding-left: 20px; margin: 0; color: var(--night-muted); font-size: 15px; line-height: 21px; }
+@media (max-width: 860px) { .live { grid-template-columns: 1fr; padding: 36px 20px; } }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.feature { background: var(--surface); border-radius: 20px; padding: 22px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.feature .glyph { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 6px; }
+.feature .glyph svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.glyph.m { background: var(--marigold-soft); color: var(--ink); }
+.glyph.i { background: var(--iris-soft); color: var(--ink); }
+.glyph.s { background: var(--stone); color: var(--stone-ink); }
+@media (max-width: 900px) { .features { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .features { grid-template-columns: 1fr; } }
+
+/* Privacy */
+.wall { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.layers { display: grid; gap: 2px; background: var(--sunken); border-radius: 20px; overflow: hidden; }
+.layer { background: var(--surface); padding: 18px 20px; display: grid; gap: 4px; }
+.layer strong { font-size: 17px; }
+.layer p { font-size: 15px; line-height: 21px; color: var(--ink-muted); }
+.quote { font-family: var(--display); font-weight: 500; font-size: 26px; line-height: 34px; text-wrap: balance; }
+.promises { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.promises li { display: flex; gap: 10px; align-items: flex-start; }
+.promises li::before { content: ""; width: 20px; height: 20px; flex: none; margin-top: 2px; border-radius: 50%; background: var(--fern-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-6' fill='none' stroke='%23287D5A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat; }
+@media (max-width: 860px) { .wall { grid-template-columns: 1fr; } }
+
+/* Solo */
+.solo { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.solo-band { background: var(--marigold-soft); border-radius: 28px; padding: 28px; display: grid; gap: 22px; }
+.solo-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.solo-pair { position: relative; width: 108px; height: 64px; flex: none; }
+.solo-pair .av { position: absolute; top: 4px; left: 0; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 600; font-size: 22px; background: var(--surface); box-shadow: 0 0 0 2px var(--marigold); border: 3px solid var(--surface); }
+.solo-pair .slot { position: absolute; top: 4px; left: 48px; width: 56px; height: 56px; border-radius: 50%; border: 2px dashed var(--ink-muted); display: grid; place-items: center; color: var(--ink-muted); font-size: 24px; background: var(--marigold-soft); }
+.rows { display: grid; gap: 1px; background: var(--line); border-radius: 16px; overflow: hidden; }
+.row { background: var(--surface); min-height: 56px; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; }
+.row .lead { width: 28px; height: 28px; border-radius: 8px; flex: none; }
+.row .tail { margin-left: auto; color: var(--ink-muted); font-size: 13px; }
+.row.off { color: var(--ink-muted); }
+.solo-copy { display: grid; gap: 16px; }
+@media (max-width: 860px) { .solo { grid-template-columns: 1fr; } }
+
+/* Pricing */
+.plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 760px; }
+.plan { background: var(--surface); border-radius: 20px; padding: 26px; display: grid; gap: 16px; align-content: start; }
+.plan.plus { background: var(--iris-soft); }
+.plan ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; line-height: 21px; }
+.plan .price { font-family: var(--display); font-weight: 600; font-size: 28px; line-height: 34px; }
+@media (max-width: 620px) { .plans { grid-template-columns: 1fr; } }
+
+/* FAQ */
+.faq { display: grid; gap: 2px; max-width: 760px; background: var(--sunken); border-radius: 20px; overflow: hidden; }
+details { background: var(--surface); padding: 16px 20px; }
+summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-family: var(--display); font-size: 22px; color: var(--ink-muted); flex: none; }
+details[open] summary::after { content: "–"; }
+details p { margin-top: 10px; color: var(--ink-muted); font-size: 15px; line-height: 22px; max-width: 60ch; }
+
+/* Early access */
+.cta { background: var(--surface); border-radius: 28px; padding: 44px 32px; display: grid; gap: 20px; justify-items: start; }
+.cta form { display: flex; gap: 10px; flex-wrap: wrap; width: 100%; max-width: 520px; }
+.cta input[type="email"] {
+  flex: 1 1 240px; min-width: 0; height: 48px; padding: 0 16px; border-radius: 12px;
+  border: 1px solid var(--line); background: var(--canvas); color: var(--ink); font: 400 17px/24px var(--body);
+}
+.cta input:focus { outline: none; border-color: var(--iris); box-shadow: 0 0 0 3px var(--iris-soft); }
+.cta .done { background: var(--fern-soft); color: var(--ink); border-radius: 12px; padding: 10px 14px; font-size: 15px; }
+@media (max-width: 620px) { .cta { padding: 32px 20px; } }
+
+footer { padding-block: 40px 56px; border-top: 1px solid var(--line); margin-top: 24px; }
+.foot { display: grid; gap: 18px; }
+.foot .legal { max-width: 70ch; }
+.foot-links { display: flex; gap: 18px; flex-wrap: wrap; font-size: 15px; }
+</style>
+
+<nav>
+  <div class="wrap nav-row">
+    <a class="wordmark" href="#top" aria-label="Cuddle Pop home">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path id="pebble-nav" fill="var(--stone-ink)"></path><circle cx="16" cy="11" r="2" fill="var(--canvas)"></circle></svg>
+      Cuddle Pop
+    </a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#live">Let's Fight</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#pricing">Pricing</a>
+      <a class="btn btn-primary" href="#early-access">Get early access</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="band">
+        <div class="band-top">
+          <div style="display:flex;align-items:center;gap:16px">
+            <div class="pair ring"><div class="av a">M</div><div class="av b">J</div></div>
+            <div>
+              <div class="band-names">Maya and Jonah</div>
+              <div class="band-sub">Together 3 years, 4,100 miles apart this month</div>
+            </div>
+          </div>
+          <span class="chip" style="background:rgba(255,255,255,.55);color:#2B2749"><span class="dot" style="background:#5C5449"></span>Oliver is here</span>
+        </div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1>The friend you both trust when it gets hard.</h1>
+          <p class="lede">Cuddle Pop is an AI that knows both of you, hears both sides in private, stays neutral where you can both see it, and keeps you honest about the plan you agreed on.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#early-access">Get early access</a>
+            <a class="btn btn-secondary" href="#how">See how a fight works</a>
+          </div>
+          <p class="small muted">Coming to iPhone and Android. One subscription covers both of you.</p>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg id="pair-art" viewBox="0 0 420 300" width="420" height="300" role="img"></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="thesis">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Two sides and a neutral third, in one room.</h2>
+        <p>Every couple has someone they call after a fight. Cuddle Pop gives that person a seat inside the relationship: a private line to each of you, and one shared voice for both.</p>
+      </div>
+      <div class="cards">
+        <div class="card marigold">
+          <div class="who"><span class="swatch" style="background:var(--marigold)"></span><h3>Your side</h3></div>
+          <p>A private chat that only you and Oliver can see. Vent, think out loud, paste a screenshot of a conversation that went sideways. None of it reaches your partner.</p>
+        </div>
+        <div class="card iris">
+          <div class="who"><span class="swatch" style="background:var(--iris)"></span><h3>Their side</h3></div>
+          <p>Your partner has the same private line. Oliver hears their version too, which is what makes its view of the two of you fair instead of one-sided.</p>
+        </div>
+        <div class="card stone">
+          <div class="who"><span class="swatch" style="background:var(--stone-ink)"></span><h3>Oliver</h3></div>
+          <p>Warm, direct, and neutral in public. He remembers, asks before he steps in, and names patterns gently. He is not a therapist and says so when things get serious.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="wall-demo">
+    <div class="wrap demo">
+      <div class="phone" aria-label="Example of a private chat and the shared fight thread">
+        <div class="phone-head">
+          <div class="phone-title">Dishes and the 11pm call</div>
+          <div class="seg" role="tablist" aria-label="Thread">
+            <button role="tab" id="tab-private" aria-selected="true" aria-controls="thread-private">Only you and Oliver</button>
+            <button role="tab" id="tab-group" aria-selected="false" aria-controls="thread-group">Together</button>
+          </div>
+        </div>
+        <div class="thread" id="thread-private" role="tabpanel" aria-labelledby="tab-private">
+          <div class="sys">Only you and Oliver can see this</div>
+          <div class="bubble mine">He forgot the call again. Third time this month. I'm starting to feel like I'm the only one keeping this going.</div>
+          <div class="bubble ai"><span class="label">Oliver</span>That's three misses in a month, and the thing underneath sounds like "am I alone in this." Is it the call itself, or what the missed call seems to say?</div>
+          <div class="bubble mine">What it says. Honestly the dishes thing is the same feeling.</div>
+          <div class="bubble ai"><span class="label">Oliver</span>Want me to open a fight so we can work on this together? I'll tell Jonah you want to work through something, and nothing from here.</div>
+          <div class="bubble mine">Yes. Open it.</div>
+        </div>
+        <div class="thread" id="thread-group" role="tabpanel" aria-labelledby="tab-group" hidden>
+          <div class="sys">Maya, Jonah and Oliver</div>
+          <div class="bubble theirs">Sorry, I didn't realise it had been that many. Work has been eating evenings.</div>
+          <div class="ai-card">
+            <h4>What I heard from both of you</h4>
+            <p>Maya is reading the missed calls as a sign she is carrying the relationship alone. Jonah is overloaded in the evenings and did not notice the pattern until now. You both want the 11pm call to stay.</p>
+            <p class="caption" style="color:var(--stone-ink)">Each of you confirmed this is fair.</p>
+          </div>
+          <div class="ai-card">
+            <h4>Plan for the next two weeks</h4>
+            <div class="plan-group a">
+              <strong>Maya</strong>
+              <label><input type="checkbox" id="plan-maya-1"> Say it the first time a call is missed, not the third</label>
+            </div>
+            <div class="plan-group b">
+              <strong>Jonah</strong>
+              <label><input type="checkbox" id="plan-jonah-1"> Put the call in the work calendar as busy</label>
+              <label><input type="checkbox" id="plan-jonah-2"> If a call will be missed, say so before 9pm</label>
+            </div>
+            <p class="caption" style="color:var(--stone-ink)">Check-in on Thursday</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-copy">
+        <h2>Private means private. Shared means fair.</h2>
+        <p class="muted" style="font-size:19px;line-height:28px">Switch between the two threads above. What Maya said in private shapes how Oliver asks its questions. It never shows up in the shared thread, quoted, paraphrased, or hinted at.</p>
+        <ul>
+          <li>The other person is told you want to work through something, and nothing else.</li>
+          <li>Oliver writes a summary and both of you confirm it is fair before anything else happens.</li>
+          <li>The plan is concrete, per person, and time-bound, with a check-in date.</li>
+          <li>Each of you can edit the plan before accepting it.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How a fight works.</h2>
+        <p>A fight is its own workspace: a shared thread, a private thread for each of you, a plan, and a repair score that reflects what actually happens afterwards.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="chip chip-marigold">Open</span>
+          <h3>Each of you tells Oliver privately</h3>
+          <p class="small muted">Oliver asks a few questions each and listens for what you need, not just what happened.</p>
+        </div>
+        <div class="step">
+          <span class="chip chip-stone">Cooling</span>
+          <h3>A summary you both call fair</h3>
+          <p class="small muted">Oliver reflects both sides back in the shared thread. Either of you can say "not quite" and it revises.</p>
+        </div>
+        <div class="step">
+          <span class="chip chip-iris">Resolving</span>
+          <h3>A plan with real action items</h3>
+          <p class="small muted">One to three things per person, time-bound, with a check-in date. Both accept before it counts.</p>
+        </div>
+        <div class="step">
+          <span class="chip chip-fern">Resolved</span>
+          <h3>Follow-through, not just good intentions</h3>
+          <p class="small muted">Journals, stories and check-ins feed an effort trend. Your partner sees the trend, never your entries.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="live">
+    <div class="wrap">
+      <div class="live">
+        <div class="orb-wrap">
+          <div class="orb" aria-hidden="true"></div>
+          <button class="btn ask" type="button" id="ask-third">Ask Oliver</button>
+          <div class="transcript" aria-label="Example live transcript">
+            <div class="line a"><i></i><span>You said you'd be here by seven.</span></div>
+            <div class="line b"><i></i><span>I said I'd try. There's a difference.</span></div>
+            <div class="line a"><i></i><span>Hey Oliver, what did he actually say on Tuesday?</span></div>
+            <div class="line t"><i></i><span id="third-live">Jonah said "I'll try to be back by seven" on Tuesday. Maya heard a promise. Want to take ten minutes before going on?</span></div>
+          </div>
+        </div>
+        <div style="display:grid;gap:18px">
+          <h2>Let's Fight: a referee for the real thing.</h2>
+          <p class="muted" style="font-size:19px;line-height:28px">Tap Let's Fight when an argument is actually happening. Oliver listens, knows who is speaking, and stays silent until one of you says "Hey Oliver".</p>
+          <ul class="live-rules">
+            <li>Both of you consent on your own phones before anything is recorded.</li>
+            <li>Oliver answers in a sentence or two: who said what, where the misunderstanding is, and whether a timeout would help.</li>
+            <li>No diagnosis, no taking sides. If it is not sure who spoke, it asks.</li>
+            <li>When you stop, Oliver writes the fight record and opens a fight with the summary and a draft plan already in it.</li>
+            <li>Audio is deleted after transcription. The transcript stays with the fight.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Built for the days between fights, too.</h2>
+        <p>Most of the time nothing is wrong. Cuddle Pop is designed to be worth opening then as well, which is also how it learns enough about you both to be fair later.</p>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <div class="glyph s"><svg viewBox="0 0 24 24"><path d="M4 6h16v10H9l-5 4z"/></svg></div>
+          <h3>Talk it out</h3>
+          <p class="small muted">A short guided conversation after a fight that stops the replay loop: name the feeling, separate story from fact, pick one next action.</p>
+        </div>
+        <div class="feature">
+          <div class="glyph m"><svg viewBox="0 0 24 24"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div>
+          <h3>Journal and effort</h3>
+          <p class="small muted">A private daily journal with mood. Oliver reads it to see whether you are working on what you agreed, and shares only a trend arrow, if you let it.</p>
+        </div>
+        <div class="feature">
+          <div class="glyph i"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="3"/><path d="M8 13h2M14 12v2M16 11v4"/></svg></div>
+          <h3>Games</h3>
+          <p class="small muted">Would you rather, guess what I'd say, love languages, fight styles. Short, playful, and the fastest way for Oliver to learn how you two work.</p>
+        </div>
+        <div class="feature">
+          <div class="glyph m"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 16l5-5 4 4 3-3 4 4"/><circle cx="15.5" cy="8.5" r="1.5"/></svg></div>
+          <h3>Stories</h3>
+          <p class="small muted">Photos that last a day. Pin one to an action item as proof you did the thing. "Cooked dinner like I promised" counts.</p>
+        </div>
+        <div class="feature">
+          <div class="glyph i"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+          <h3>Plans and surprises</h3>
+          <p class="small muted">Dates, gifts and anniversaries planned in your private chat, using what your partner has hinted at. Reminders before the dates that matter.</p>
+        </div>
+        <div class="feature">
+          <div class="glyph s"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h5"/></svg></div>
+          <h3>Screenshot analysis</h3>
+          <p class="small muted">Paste a screenshot from any messaging app into your private chat. Oliver reads what each person is saying, the tone, and what might be misread.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="wrap wall">
+      <div style="display:grid;gap:22px">
+        <h2>The privacy wall gets priority over everything else.</h2>
+        <p class="quote">"If the wall fails once, the product is dead."</p>
+        <p class="muted">That line is in our engineering plan, and it is why the wall is three separate layers rather than a promise in a system prompt. Oliver can use what it knows privately to decide how to advise. It can never use it to decide what to reveal.</p>
+        <ul class="promises">
+          <li>Private chats and journals are never quoted, paraphrased or hinted at in shared threads.</li>
+          <li>Anything shared from a private conversation needs your explicit yes, each time.</li>
+          <li>Let's Fight audio is deleted after transcription.</li>
+          <li>Ending the relationship locks the data for both of you. Either can ask to recover, and the other has to accept.</li>
+          <li>If something looks like crisis or abuse, Oliver drops the both-sides framing with you privately and points to real help.</li>
+        </ul>
+      </div>
+      <div class="layers" aria-label="The three layers of the privacy wall">
+        <div class="layer">
+          <strong>Data layer</strong>
+          <p>Every memory, journal entry and game answer carries a privacy scope. The shared thread is built from shared rows only. Your partner's private rows cannot be loaded into your thread.</p>
+        </div>
+        <div class="layer">
+          <strong>Prompt layer</strong>
+          <p>In shared threads Oliver is told it has no access to private conversations and must never imply it does. In private threads it is told nothing said there is shared.</p>
+        </div>
+        <div class="layer">
+          <strong>Guard layer</strong>
+          <p>Every message bound for a shared thread is checked against the other person's private memories. A leak means a rewrite, then a safe fallback, and an incident logged.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="solo">
+    <div class="wrap solo">
+      <div class="solo-copy">
+        <h2>Start before they join.</h2>
+        <p class="muted" style="font-size:19px;line-height:28px">Create the relationship, tell Oliver what to call your partner, and get going. Your private chat, journal, games and even a fight you open alone all work with one person.</p>
+        <p class="muted">When they accept the invite, the band blends into both your colours, your sealed game answers wait for theirs, and any open fight invites them to give their side. Nothing from your solo period is shared unless you mark it shareable.</p>
+      </div>
+      <div class="solo-band" aria-label="Example of the solo home screen">
+        <div class="solo-top">
+          <div style="display:flex;align-items:center;gap:16px">
+            <div class="solo-pair"><div class="av">M</div><div class="slot" aria-hidden="true">+</div></div>
+            <div>
+              <div class="band-names" style="color:var(--ink)">Maya</div>
+              <div class="small muted">Just you and Oliver, for now</div>
+            </div>
+          </div>
+          <a class="btn btn-secondary" href="#early-access" style="min-height:40px">Invite them</a>
+        </div>
+        <div class="rows">
+          <div class="row"><span class="lead" style="background:var(--stone)"></span>Talk to Oliver<span class="tail">Only you</span></div>
+          <div class="row"><span class="lead" style="background:var(--marigold)"></span>Journal<span class="tail">Today</span></div>
+          <div class="row"><span class="lead" style="background:var(--iris-soft)"></span>Guess what I'd say<span class="tail">Waiting for them</span></div>
+          <div class="row off"><span class="lead" style="background:var(--sunken)"></span>Let's Fight<span class="tail">Needs both of you here</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>One subscription, both of you.</h2>
+        <p>Whoever pays, the other person gets everything. Subscribe alone and your partner inherits it the day they join.</p>
+      </div>
+      <div class="plans">
+        <div class="plan">
+          <div>
+            <h3>Free</h3>
+            <div class="price">0</div>
+          </div>
+          <ul>
+            <li>One relationship</li>
+            <li>Private and shared chat, with a daily message limit</li>
+            <li>Fights, journal, games and stories</li>
+            <li>Solo mode while you wait for your partner</li>
+          </ul>
+          <a class="btn btn-secondary" href="#early-access">Get early access</a>
+        </div>
+        <div class="plan plus">
+          <div>
+            <h3>Plus</h3>
+            <div class="price">Per relationship</div>
+            <p class="small muted">Price announced at launch</p>
+          </div>
+          <ul>
+            <li>Unlimited chat and fights</li>
+            <li>Let's Fight live sessions</li>
+            <li>All games, including the partner-only ones</li>
+            <li>One payment covers both partners</li>
+          </ul>
+          <a class="btn btn-primary" href="#early-access">Get early access</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Questions couples ask first.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Is this therapy?</summary>
+          <p>No. Cuddle Pop is not a therapist, does not diagnose, and says so plainly whenever a conversation gets serious. If it detects signs of crisis or abuse, it stops mediating and points you to real resources for your region.</p>
+        </details>
+        <details>
+          <summary>Can my partner see what I say in private?</summary>
+          <p>No. Private chats, journal entries and private game answers never appear in shared threads, in any form. The only thing your partner can see from your journal is an effort trend, and only if you turn that on.</p>
+        </details>
+        <details>
+          <summary>What if Oliver takes my partner's side?</summary>
+          <p>In shared threads Oliver only says what both of you have confirmed is fair. You can push back on any summary and it will revise, up to three rounds, before anything moves forward.</p>
+        </details>
+        <details>
+          <summary>Does Let's Fight record us all the time?</summary>
+          <p>No. Recording starts only after both of you consent, and only for that session. Audio is deleted once it has been transcribed. You can end the session at any moment.</p>
+        </details>
+        <details>
+          <summary>What happens if we break up?</summary>
+          <p>Either of you can end the relationship. Both of you lose live access and the data is locked. Either can later propose recovery, and the other has to accept. You can ask for a permanent delete at any time.</p>
+        </details>
+        <details>
+          <summary>Does it work long-distance?</summary>
+          <p>It was designed for that. Both of you reach the same Oliver from anywhere, the shared space works across time zones, and Let's Fight works when you are in the same room or on a call.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="early-access">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Be the first couple in the room.</h2>
+        <p class="muted" style="max-width:52ch">We are opening Cuddle Pop to a small group of couples first. Leave an email and we will send one message when your invite is ready.</p>
+        <form id="waitlist" novalidate>
+          <label for="email" class="caption muted" style="width:100%">Your email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button class="btn btn-primary" type="submit">Request an invite</button>
+        </form>
+        <p class="done" id="waitlist-done" hidden></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="wordmark" href="#top">
+      <svg width="22" height="22" viewBox="0 0 26 26" aria-hidden="true"><path id="pebble-foot" fill="var(--stone-ink)"></path><circle cx="16" cy="11" r="2" fill="var(--canvas)"></circle></svg>
+      Cuddle Pop
+    </a>
+    <p class="small muted legal">Cuddle Pop is an AI companion for couples. It is not a licensed therapist or counsellor and does not provide medical or mental-health care. If you are in danger or in crisis, contact local emergency services or a crisis line.</p>
+    <div class="foot-links">
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">Questions</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Superellipse pebble path (n = 3), Oliver's mark.
+  function pebble(cx, cy, rx, ry, n, rot) {
+    var pts = [];
+    for (var i = 0; i < 64; i++) {
+      var t = (i / 64) * Math.PI * 2;
+      var c = Math.cos(t), s = Math.sin(t);
+      var x = Math.sign(c) * Math.pow(Math.abs(c), 2 / n) * rx;
+      var y = Math.sign(s) * Math.pow(Math.abs(s), 2 / n) * ry;
+      var xr = x * Math.cos(rot) - y * Math.sin(rot);
+      var yr = x * Math.sin(rot) + y * Math.cos(rot);
+      pts.push([cx + xr, cy + yr]);
+    }
+    return "M" + pts.map(function (p) { return p[0].toFixed(2) + " " + p[1].toFixed(2); }).join("L") + "Z";
+  }
+  // Paper-cut blob: 7 points on a circle with seeded jitter, Catmull-Rom smoothed into cubic Beziers.
+  function blob(cx, cy, r, seed, jitter) {
+    var rnd = function () { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    var n = 7, pts = [];
+    for (var i = 0; i < n; i++) {
+      var a = (i / n) * Math.PI * 2 - Math.PI / 2;
+      var rr = r * (1 - jitter + rnd() * jitter);
+      pts.push([cx + Math.cos(a) * rr, cy + Math.sin(a) * rr]);
+    }
+    var d = "M" + pts[0][0].toFixed(1) + " " + pts[0][1].toFixed(1);
+    for (var j = 0; j < n; j++) {
+      var p0 = pts[(j - 1 + n) % n], p1 = pts[j], p2 = pts[(j + 1) % n], p3 = pts[(j + 2) % n];
+      var c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+      var c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+      d += "C" + [c1[0], c1[1], c2[0], c2[1], p2[0], p2[1]].map(function (v) { return v.toFixed(1); }).join(" ");
+    }
+    return d + "Z";
+  }
+
+  var pebbleD = pebble(13, 13, 11, 9, 3, -0.35);
+  ["pebble-nav", "pebble-foot"].forEach(function (id) { var el = document.getElementById(id); if (el) el.setAttribute("d", pebbleD); });
+
+  var art = document.getElementById("pair-art");
+  if (art) {
+    art.innerHTML =
+      '<path d="' + blob(150, 150, 118, 7, 0.18) + '" fill="var(--marigold-soft)"/>' +
+      '<path d="' + blob(282, 158, 108, 23, 0.18) + '" fill="var(--iris-soft)"/>' +
+      '<circle cx="96" cy="112" r="7" fill="var(--marigold)"/>' +
+      '<circle cx="326" cy="118" r="7" fill="var(--iris)"/>' +
+      '<path d="' + pebble(214, 228, 30, 23, 3, -0.3) + '" fill="var(--stone)"/>' +
+      '<circle cx="223" cy="222" r="4" fill="var(--stone-ink)"/>';
+  }
+
+  // Private / shared thread tabs
+  var tabs = document.querySelectorAll('[role="tab"]');
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+      });
+    });
+  });
+
+  // Ask Oliver: cycle through a few example answers (≤ 60 words each, by the live rules)
+  var answers = [
+    'Jonah said "I\'ll try to be back by seven" on Tuesday. Maya heard a promise. Want to take ten minutes before going on?',
+    'You have both interrupted each other four times in the last minute. I would suggest a ten-minute timeout and then Maya goes first.',
+    'Maya, your point was that being late is not the issue, not knowing is. Jonah, you agreed with that a moment ago.'
+  ];
+  var ai = 0, askBtn = document.getElementById("ask-third"), live = document.getElementById("third-live");
+  if (askBtn && live) askBtn.addEventListener("click", function () { ai = (ai + 1) % answers.length; live.textContent = answers[ai]; });
+
+  // Waitlist form: handled in page. Wire to a backend before launch.
+  var form = document.getElementById("waitlist"), done = document.getElementById("waitlist-done"), email = document.getElementById("email");
+  if (form) form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = (email.value || "").trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) {
+      done.hidden = false; done.style.background = "var(--ember-soft)";
+      done.textContent = "That email does not look right. Check it and try again.";
+      email.focus(); return;
+    }
+    done.hidden = false; done.style.background = "var(--fern-soft)";
+    done.textContent = "Thanks. We'll email " + v + " when your invite is ready.";
+    form.reset();
+  });
+})();
+</script>
