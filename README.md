@@ -32,7 +32,7 @@ No DNS change is needed when the domain and hosting are on the same Hostinger ac
 
 **B. Vercel.** `vercel login`, then from this folder `vercel --prod` and `vercel domains add cuddlepop.com`. Vercel prints the records: an `A` record for `@` → `76.76.21.21` and a `CNAME` for `www` → `cname.vercel-dns.com`. Add both at Hostinger; certificates are automatic.
 
-**C. GitHub Pages.** Push this folder to a repo, enable Pages on the branch, set the custom domain to `cuddlepop.com` (this creates a `CNAME` file). At Hostinger add four `A` records for `@` → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` and a `CNAME` for `www` → `<github-user>.github.io`, then tick "Enforce HTTPS" once the certificate is issued. Pages does not run `vercel.json`: add a `404.html` copy of `join.html` so `/join/<code>` still resolves (the script reads the code from the path).
+**C. GitHub Pages (chosen, live).** The site is published from the public repo `schrodingerstiger0/cuddlepop-site` by its GitHub Actions workflow (`.github/workflows/pages.yml` there) on every push to `main`. From this project: `make web-deploy` pushes apps/web to that repo by hand, and `.github/workflows/web-deploy.yml` does the same automatically on push to `main` once this project is on GitHub and the `SITE_DEPLOY_KEY` secret (private half of a write deploy key on cuddlepop-site) is set. Setup was: push this folder to a repo, enable Pages on the branch, set the custom domain to `cuddlepop.com` (this creates a `CNAME` file). At Hostinger add four `A` records for `@` → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` and a `CNAME` for `www` → `<github-user>.github.io`, then tick "Enforce HTTPS" once the certificate is issued. Pages does not run `vercel.json`: add a `404.html` copy of `join.html` so `/join/<code>` still resolves (the script reads the code from the path).
 
 ## Before launch
 
@@ -40,3 +40,12 @@ No DNS change is needed when the domain and hosting are on the same Hostinger ac
 - Set the Plus price in the pricing section once it is decided.
 - Add `<meta name="description">`, Open Graph tags and a favicon.
 - Fill in `TEAMID`, the Android fingerprint and the store links above.
+
+## Source of the current design
+
+The live page (index.html) is the "Romantic & Cozy Cuddle Edition" from the Stitch project
+"Retro Gen Z CuddlePop" (projects/18230474138243898393, screen 5273d678…), exported 2026-11-14
+through the Stitch MCP server and adapted: images copied into assets/ (two came from the
+project's image screens), head metadata and favicon added, nav anchors wired, waitlist alert
+replaced with an inline confirmation. Tailwind is loaded from the CDN at runtime.
+The previous hand-built page is archived at docs/web-archive/index-v1.html.
