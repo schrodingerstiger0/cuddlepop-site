@@ -43,9 +43,9 @@ No DNS change is needed when the domain and hosting are on the same Hostinger ac
 
 ## Source of the current design
 
-The live page (index.html) is the "Romantic & Cozy Cuddle Edition" from the Stitch project
-"Retro Gen Z CuddlePop" (projects/18230474138243898393, screen 5273d678…), exported 2026-11-14
-through the Stitch MCP server and adapted: images copied into assets/ (two came from the
-project's image screens), head metadata and favicon added, nav anchors wired, waitlist alert
-replaced with an inline confirmation. Tailwind is loaded from the CDN at runtime.
-The previous hand-built page is archived at docs/web-archive/index-v1.html.
+The live page (index.html) is the "Tabbed Mobile Edition" (Stitch screen edcadf25…) made on 2026-11-14 in the
+Stitch project "Retro Gen Z CuddlePop" (projects/18230474138243898393): the Romantic & Cozy design restructured
+into five tabs (Home, How it works, Let's Fight, Privacy, Pricing & FAQ) with vanilla-JS tab switching and hash
+routing, mobile-first, "show don't write". Copy is Gen Z conversational (rewrite scripts in the session scratchpad).
+Images live in assets/ (seven photos from the Stitch project). Tailwind loads from the CDN at runtime.
+Earlier versions: docs/web-archive/index-v1.html (hand-built), Stitch screen 5273d678… (long single-page cozy edition).

@@ -78,6 +78,15 @@
       opacity: 1;
       transform: translateY(0);
     }
+    /* Desktop: panels fill the viewport below the header, content vertically centred */
+    @media (min-width: 1280px) {
+      .tab-panel.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: min(calc(100vh - 12rem), 44rem);
+      }
+    }
     /* Polaroids & Tape */
     .polaroid-frame {
       box-shadow: 3px 4px 10px rgba(0,0,0,0.06), 0 0 0 1.5px #1C1917;
@@ -102,13 +111,14 @@
     .wave-bar:nth-child(6) { animation-delay: 0.35s; }
   </style>
 </head>
-<body class="min-h-screen pb-24 lg:pb-12 bg-brand-cream selection:bg-brand-rose selection:text-brand-dark">
+<body class="min-h-screen pb-24 sm:pb-12 bg-brand-cream selection:bg-brand-rose selection:text-brand-dark">
 
   <!-- ================= STICKY TOP APP BAR ================= -->
   <header class="sticky top-0 z-50 bg-brand-cream/95 backdrop-blur-md border-b-2 border-brand-border">
-    <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between">
+   <div class="xl:max-w-7xl xl:mx-auto xl:px-10 xl:py-3 xl:flex xl:items-center xl:gap-6">
+    <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between md:px-8 xl:contents">
       <!-- Brand Logo -->
-      <a href="#home" class="flex items-center gap-2 group">
+      <a href="#home" class="flex items-center gap-2 group xl:order-1 xl:shrink-0">
         <span class="text-2xl filter drop-shadow group-hover:scale-110 transition-transform">🧸</span>
         <div class="flex flex-col">
           <div class="flex items-center gap-1.5">
@@ -119,8 +129,8 @@
       </a>
 
       <!-- Direct Header CTA (Hidden on tiny phones, visible on sm+) -->
-      <div class="flex items-center gap-2">
-        <a href="#home" onclick="scrollToEarlyAccess(event)" class="hidden sm:inline-flex items-center gap-1.5 bg-brand-primary text-white text-xs font-bold px-3 py-1.5 rounded-full border-2 border-brand-dark shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+      <div class="flex items-center gap-2 xl:order-3 xl:shrink-0">
+        <a href="#home" onclick="scrollToEarlyAccess(event)" class="xl:text-sm xl:px-4 xl:py-2 hidden sm:inline-flex items-center gap-1.5 bg-brand-primary text-white text-xs font-bold px-3 py-1.5 rounded-full border-2 border-brand-dark shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
           <span>Get in early</span>
           <span class="material-symbols-outlined text-sm font-bold">arrow_forward</span>
         </a>
@@ -128,7 +138,7 @@
     </div>
 
     <!-- HORIZONTALLY SCROLLABLE TAB PILLS -->
-    <nav class="max-w-4xl mx-auto px-3 pb-2.5 overflow-x-auto no-scrollbar flex items-center gap-1.5 sm:gap-2">
+    <nav class="max-w-4xl mx-auto px-3 pb-2.5 overflow-x-auto no-scrollbar flex items-center gap-1.5 sm:gap-2 md:justify-center md:flex-wrap md:overflow-visible md:px-8 md:pb-3 xl:order-2 xl:flex-1 xl:max-w-none xl:mx-0 xl:px-0 xl:pb-0">
       <button data-tab="home" onclick="switchTab('home')" class="tab-btn active px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-heading font-bold border-2 border-brand-dark transition-all flex items-center gap-1.5 whitespace-nowrap bg-brand-primary text-white shadow-pop-sm">
         <span>🏠</span>
         <span>Home</span>
@@ -154,17 +164,20 @@
         <span>Pricing &amp; FAQ</span>
       </button>
     </nav>
+   </div>
   </header>
 
   <!-- ================= MAIN CONTENT WRAPPER ================= -->
-  <main class="max-w-xl mx-auto px-4 pt-4 sm:pt-6">
+  <main class="max-w-xl mx-auto px-4 pt-4 sm:pt-6 md:max-w-4xl md:px-8 md:pt-8 xl:max-w-7xl xl:px-10 xl:pt-10">
 
     <!-- ======================================================== -->
     <!-- TAB 1: HOME (Max 2-3 mobile screens)                     -->
     <!-- ======================================================== -->
     <section id="panel-home" class="tab-panel active space-y-6">
+     <div class="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-8 xl:grid-cols-[1.1fr_1fr] xl:gap-x-14 xl:gap-y-10">
+      <div class="space-y-6 md:self-center xl:space-y-8">
       <!-- Status pill banner -->
-      <div class="flex flex-wrap items-center justify-center gap-2 pt-1 text-center">
+      <div class="flex flex-wrap items-center justify-center gap-2 pt-1 text-center md:justify-start">
         <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-brand-peach border border-brand-dark shadow-pop-sm">
           <span>💖 Maya &amp; Jonah: 3 yrs · 4,100 mi apart</span>
         </span>
@@ -175,18 +188,20 @@
       </div>
 
       <!-- Hero Header & Value Proposition -->
-      <div class="text-center space-y-3">
-        <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-brand-dark leading-tight tracking-tight">
+      <div class="text-center space-y-3 md:text-left xl:space-y-5">
+        <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-brand-dark leading-tight tracking-tight xl:text-6xl xl:leading-[1.08]">
           The bestie you both trust when it gets <span class="bg-brand-lemon px-2 py-0.5 rounded-md border border-brand-dark shadow-pop-sm inline-block rotate-[-1deg]">real.</span>
         </h1>
-        <p class="text-sm sm:text-base text-brand-muted max-w-md mx-auto leading-relaxed">
+        <p class="text-sm sm:text-base text-brand-muted max-w-md mx-auto leading-relaxed md:mx-0 xl:text-lg xl:max-w-lg">
           Cuddle Pop is an emotionally smart AI for couples. It hears both sides in private, stays neutral where you both can see, and keeps it real.
         </p>
       </div>
 
+      </div>
+
       <!-- Hero Polaroid Duo Visual (PHOTO 15 & 14) -->
-      <div class="relative py-2 px-3">
-        <div class="grid grid-cols-2 gap-3 max-w-md mx-auto">
+      <div class="relative py-2 px-3 md:self-center xl:px-6">
+        <div class="grid grid-cols-2 gap-3 max-w-md mx-auto md:max-w-none xl:gap-6">
           <!-- Polaroid 1 -->
           <div class="polaroid-frame bg-white p-2 rounded-xl rotate-[-2deg] hover:rotate-0 transition-transform">
             <div class="relative overflow-hidden rounded-lg aspect-square border border-stone-200">
@@ -197,7 +212,7 @@
           </div>
 
           <!-- Polaroid 2 -->
-          <div class="polaroid-frame bg-white p-2 rounded-xl rotate-[3deg] hover:rotate-0 transition-transform">
+          <div class="polaroid-frame bg-white p-2 rounded-xl rotate-[3deg] hover:rotate-0 transition-transform md:translate-y-6">
             <div class="relative overflow-hidden rounded-lg aspect-square border border-stone-200">
               <img loading="lazy" src="assets/rooftop.jpg" alt="Couple hugging on rooftop sunset polaroid" class="w-full h-full object-cover">
               <span class="absolute top-1 left-1 washi-tape text-[9px] font-mono px-1.5 py-0.5 rounded font-bold">rooftop flash</span>
@@ -207,8 +222,9 @@
         </div>
       </div>
 
+      <div class="space-y-6 md:flex md:flex-col md:justify-between md:gap-6 md:space-y-0">
       <!-- Quick Concept Triad: Icon & Badge Row -->
-      <div class="bg-white border-2 border-brand-border rounded-2xl p-4 shadow-pop">
+      <div class="bg-white border-2 border-brand-border rounded-2xl p-4 shadow-pop xl:p-5">
         <div class="text-xs font-mono font-bold uppercase tracking-wider text-brand-muted text-center mb-3">
           The Blueprint for Fair Love
         </div>
@@ -250,8 +266,10 @@
         </button>
       </div>
 
+      </div>
+
       <!-- WAITLIST FORM (id="early-access") REQUIRED ON HOME TAB -->
-      <div id="early-access" class="scroll-mt-28 bg-brand-lemon border-2 border-brand-dark rounded-2xl p-5 shadow-pop text-center space-y-3">
+      <div id="early-access" class="scroll-mt-28 bg-brand-lemon border-2 border-brand-dark rounded-2xl p-5 shadow-pop text-center space-y-3 md:flex md:flex-col md:items-center md:justify-center xl:p-8">
         <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white text-brand-dark text-[11px] font-mono font-bold border border-brand-dark">
           <span>💌 Early access</span>
           <span>· first couples in</span>
@@ -263,19 +281,19 @@
           We're opening Cuddle Pop to a small group of couples first. Drop your email and we'll send one message when your invite is ready.
         </p>
 
-        <form onsubmit="handleWaitlist(event)" class="space-y-2 pt-1 max-w-md mx-auto">
+        <form onsubmit="handleWaitlist(event)" class="space-y-2 pt-1 max-w-md mx-auto md:w-full">
           <div class="flex flex-col sm:flex-row gap-2">
             <input 
               type="email" 
               id="waitlist-email" 
               required 
               placeholder="you@bothloved.com" 
-              class="flex-1 px-3.5 py-2.5 rounded-xl border-2 border-brand-dark text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary placeholder:text-stone-400 font-mono"
+              class="min-w-0 flex-1 px-3.5 py-2.5 rounded-xl border-2 border-brand-dark text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary placeholder:text-stone-400 font-mono"
             >
             <button 
               type="submit" 
               id="waitlist-submit"
-              class="px-5 py-2.5 bg-brand-primary text-white font-heading font-bold text-sm rounded-xl border-2 border-brand-dark shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-1.5"
+              class="shrink-0 whitespace-nowrap px-5 py-2.5 bg-brand-primary text-white font-heading font-bold text-sm rounded-xl border-2 border-brand-dark shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-1.5"
             >
               <span>Count us in</span>
               <span class="material-symbols-outlined text-base">send</span>
@@ -290,29 +308,32 @@
           Cuddle Pop is an AI companion for couples. It's not a licensed therapist and doesn't provide crisis intervention.
         </p>
       </div>
+     </div>
 
     </section>
 
     <!-- ======================================================== -->
     <!-- TAB 2: HOW IT WORKS                                      -->
     <!-- ======================================================== -->
-    <section id="panel-how-it-works" class="tab-panel space-y-6">
+    <section id="panel-how-it-works" class="tab-panel space-y-6 md:space-y-8">
+     <div class="space-y-6 md:space-y-8 xl:space-y-0 xl:grid xl:grid-cols-12 xl:gap-10 xl:items-center">
+      <div class="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-8 md:items-center xl:col-span-5 xl:block xl:space-y-6">
       
       <!-- Section Header -->
-      <div class="text-center space-y-1">
+      <div class="text-center space-y-1 md:text-left md:space-y-2 md:self-center">
         <span class="inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-brand-peach border border-brand-dark">
           Real Scenario, Real Talk
         </span>
-        <h2 class="font-heading font-extrabold text-2xl text-brand-dark">
+        <h2 class="font-heading font-extrabold text-2xl text-brand-dark md:text-3xl xl:text-4xl xl:leading-tight">
           Dishes &amp; that 11pm call
         </h2>
-        <p class="text-xs text-brand-muted">
+        <p class="text-xs text-brand-muted md:text-sm md:leading-relaxed md:max-w-md">
           Private thoughts never leak into the shared room. They just help Oliver steer you both back to the same page.
         </p>
       </div>
 
       <!-- Candid Couple Kitchen Photo (PHOTO 5) -->
-      <div class="polaroid-frame bg-white p-2 rounded-2xl max-w-sm mx-auto">
+      <div class="polaroid-frame bg-white p-2 rounded-2xl max-w-sm mx-auto md:max-w-none md:w-full">
         <div class="relative overflow-hidden rounded-xl aspect-[4/3]">
           <img loading="lazy" src="assets/kitchen.jpg" alt="Couple cooking in rustic kitchen laughing" class="w-full h-full object-cover">
           <span class="absolute bottom-2 left-2 washi-tape text-[10px] font-mono px-2 py-0.5 rounded font-bold">
@@ -321,8 +342,10 @@
         </div>
       </div>
 
+      </div>
+
       <!-- INTERACTIVE CHAT MOCKUP WITH TAB TOGGLES -->
-      <div class="bg-white border-2 border-brand-dark rounded-2xl shadow-pop overflow-hidden">
+      <div class="bg-white border-2 border-brand-dark rounded-2xl shadow-pop overflow-hidden xl:col-span-7">
         <!-- Chat Switcher Tabs -->
         <div class="bg-stone-100 border-b-2 border-brand-dark p-1.5 flex gap-1">
           <button onclick="toggleChatView('split')" id="chat-tab-split" class="flex-1 py-1.5 text-[11px] font-mono font-bold rounded-lg bg-brand-primary text-white border border-brand-dark transition-all">
@@ -337,10 +360,10 @@
         </div>
 
         <!-- Chat Panels Container -->
-        <div class="p-3.5 space-y-3">
+        <div class="p-3.5 space-y-3 md:flex md:gap-3 md:space-y-0">
           
           <!-- Maya Private Chat Card -->
-          <div id="view-chat-private" class="p-3 rounded-xl bg-amber-50/70 border border-brand-dark space-y-2">
+          <div id="view-chat-private" class="md:flex-1 md:min-w-0 p-3 rounded-xl bg-amber-50/70 border border-brand-dark space-y-2">
             <div class="flex items-center justify-between text-[10px] font-mono border-b border-amber-200 pb-1">
               <span class="font-bold text-amber-900 flex items-center gap-1">
                 <span>🔒 Just you &amp; Oliver</span>
@@ -363,7 +386,7 @@
           </div>
 
           <!-- Shared Room Chat Card -->
-          <div id="view-chat-shared" class="p-3 rounded-xl bg-indigo-50/60 border border-brand-dark space-y-2">
+          <div id="view-chat-shared" class="md:flex-1 md:min-w-0 p-3 rounded-xl bg-indigo-50/60 border border-brand-dark space-y-2">
             <div class="flex items-center justify-between text-[10px] font-mono border-b border-indigo-200 pb-1">
               <span class="font-bold text-indigo-900 flex items-center gap-1">
                 <span>🤝 Maya, Jonah &amp; Oliver</span>
@@ -408,52 +431,54 @@
         </div>
       </div>
 
+     </div>
+
       <!-- The 4-Stage Fight Protocol Step Graphic -->
-      <div class="bg-brand-surface border-2 border-brand-dark rounded-2xl p-4 shadow-pop space-y-3">
+      <div class="bg-brand-surface border-2 border-brand-dark rounded-2xl p-4 shadow-pop space-y-3 md:p-5">
         <div class="text-center">
           <div class="text-xs font-mono font-bold uppercase text-brand-muted">The 4-Stage Protocol</div>
           <h3 class="font-heading font-bold text-base text-brand-dark">how a fight goes</h3>
         </div>
 
-        <div class="grid grid-cols-2 gap-2 text-xs">
+        <div class="grid grid-cols-2 gap-2 text-xs md:gap-3 xl:grid-cols-4">
           <!-- Step 1 -->
-          <div class="bg-white p-2.5 rounded-xl border border-brand-dark">
+          <div class="bg-white p-2.5 rounded-xl border border-brand-dark md:p-3.5">
             <div class="flex items-center justify-between mb-1">
               <span class="w-5 h-5 rounded-full bg-brand-lemon border border-brand-dark font-mono font-bold text-[10px] flex items-center justify-center">1</span>
               <span class="text-[9px] font-mono bg-stone-100 px-1 rounded text-stone-600">Open</span>
             </div>
-            <div class="font-heading font-bold text-[11px]">Tell Oliver privately</div>
-            <p class="text-[10px] text-stone-500 mt-0.5 leading-snug">He asks what you need, not just the tea.</p>
+            <div class="font-heading font-bold text-[11px] md:text-sm">Tell Oliver privately</div>
+            <p class="text-[10px] text-stone-500 mt-0.5 leading-snug md:text-xs">He asks what you need, not just the tea.</p>
           </div>
 
           <!-- Step 2 -->
-          <div class="bg-white p-2.5 rounded-xl border border-brand-dark">
+          <div class="bg-white p-2.5 rounded-xl border border-brand-dark md:p-3.5">
             <div class="flex items-center justify-between mb-1">
               <span class="w-5 h-5 rounded-full bg-brand-peach border border-brand-dark font-mono font-bold text-[10px] flex items-center justify-center">2</span>
               <span class="text-[9px] font-mono bg-stone-100 px-1 rounded text-stone-600">Cooling</span>
             </div>
-            <div class="font-heading font-bold text-[11px]">Recap both call fair</div>
-            <p class="text-[10px] text-stone-500 mt-0.5 leading-snug">Redo until "yes, that's what I felt."</p>
+            <div class="font-heading font-bold text-[11px] md:text-sm">Recap both call fair</div>
+            <p class="text-[10px] text-stone-500 mt-0.5 leading-snug md:text-xs">Redo until "yes, that's what I felt."</p>
           </div>
 
           <!-- Step 3 -->
-          <div class="bg-white p-2.5 rounded-xl border border-brand-dark">
+          <div class="bg-white p-2.5 rounded-xl border border-brand-dark md:p-3.5">
             <div class="flex items-center justify-between mb-1">
               <span class="w-5 h-5 rounded-full bg-brand-lavender border border-brand-dark font-mono font-bold text-[10px] flex items-center justify-center">3</span>
               <span class="text-[9px] font-mono bg-stone-100 px-1 rounded text-stone-600">Resolving</span>
             </div>
-            <div class="font-heading font-bold text-[11px]">Real action items</div>
-            <p class="text-[10px] text-stone-500 mt-0.5 leading-snug">1–3 promises, deadlines, a check-in date.</p>
+            <div class="font-heading font-bold text-[11px] md:text-sm">Real action items</div>
+            <p class="text-[10px] text-stone-500 mt-0.5 leading-snug md:text-xs">1–3 promises, deadlines, a check-in date.</p>
           </div>
 
           <!-- Step 4 -->
-          <div class="bg-white p-2.5 rounded-xl border border-brand-dark">
+          <div class="bg-white p-2.5 rounded-xl border border-brand-dark md:p-3.5">
             <div class="flex items-center justify-between mb-1">
               <span class="w-5 h-5 rounded-full bg-emerald-100 border border-brand-dark font-mono font-bold text-[10px] flex items-center justify-center">4</span>
               <span class="text-[9px] font-mono bg-stone-100 px-1 rounded text-stone-600">Resolved</span>
             </div>
-            <div class="font-heading font-bold text-[11px]">Effort follow-through</div>
-            <p class="text-[10px] text-stone-500 mt-0.5 leading-snug">Journals feed effort trend, never private lines.</p>
+            <div class="font-heading font-bold text-[11px] md:text-sm">Effort follow-through</div>
+            <p class="text-[10px] text-stone-500 mt-0.5 leading-snug md:text-xs">Journals feed effort trend, never private lines.</p>
           </div>
         </div>
       </div>
@@ -461,33 +486,33 @@
       <!-- Everyday Micro-Moments Grid -->
       <div class="space-y-2">
         <div class="text-xs font-mono font-bold uppercase text-brand-muted text-center">Days between fights</div>
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <div class="p-2.5 bg-white rounded-xl border border-brand-dark flex items-start gap-2">
+        <div class="grid grid-cols-2 gap-2 text-xs md:gap-3 xl:grid-cols-4">
+          <div class="p-2.5 bg-white rounded-xl border border-brand-dark flex items-start gap-2 md:p-3.5">
             <span class="text-lg">💬</span>
             <div>
-              <div class="font-bold text-[11px]">Talk it out</div>
-              <div class="text-[10px] text-stone-500">Break the replay loop</div>
+              <div class="font-bold text-[11px] md:text-sm">Talk it out</div>
+              <div class="text-[10px] text-stone-500 md:text-xs">Break the replay loop</div>
             </div>
           </div>
-          <div class="p-2.5 bg-white rounded-xl border border-brand-dark flex items-start gap-2">
+          <div class="p-2.5 bg-white rounded-xl border border-brand-dark flex items-start gap-2 md:p-3.5">
             <span class="text-lg">📔</span>
             <div>
-              <div class="font-bold text-[11px]">Journal &amp; effort</div>
-              <div class="text-[10px] text-stone-500">Private mood &amp; trend arrows</div>
+              <div class="font-bold text-[11px] md:text-sm">Journal &amp; effort</div>
+              <div class="text-[10px] text-stone-500 md:text-xs">Private mood &amp; trend arrows</div>
             </div>
           </div>
-          <div class="p-2.5 bg-white rounded-xl border border-brand-dark flex items-start gap-2">
+          <div class="p-2.5 bg-white rounded-xl border border-brand-dark flex items-start gap-2 md:p-3.5">
             <span class="text-lg">🎲</span>
             <div>
-              <div class="font-bold text-[11px]">Couple games</div>
-              <div class="text-[10px] text-stone-500">Would you rather &amp; trivia</div>
+              <div class="font-bold text-[11px] md:text-sm">Couple games</div>
+              <div class="text-[10px] text-stone-500 md:text-xs">Would you rather &amp; trivia</div>
             </div>
           </div>
-          <div class="p-2.5 bg-white rounded-xl border border-brand-dark flex items-start gap-2">
+          <div class="p-2.5 bg-white rounded-xl border border-brand-dark flex items-start gap-2 md:p-3.5">
             <span class="text-lg">📸</span>
             <div>
-              <div class="font-bold text-[11px]">Stories &amp; proof</div>
-              <div class="text-[10px] text-stone-500">Cooked dinner like I promised</div>
+              <div class="font-bold text-[11px] md:text-sm">Stories &amp; proof</div>
+              <div class="text-[10px] text-stone-500 md:text-xs">Cooked dinner like I promised</div>
             </div>
           </div>
         </div>
@@ -498,23 +523,25 @@
     <!-- ======================================================== -->
     <!-- TAB 3: LET'S FIGHT                                       -->
     <!-- ======================================================== -->
-    <section id="panel-lets-fight" class="tab-panel space-y-6">
+    <section id="panel-lets-fight" class="tab-panel space-y-6 md:space-y-8">
+     <div class="space-y-6 md:space-y-8 xl:space-y-0 xl:grid xl:grid-cols-12 xl:gap-10 xl:items-center">
+      <div class="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-8 md:items-center xl:col-span-5 xl:block xl:space-y-6">
 
       <!-- Header -->
-      <div class="text-center space-y-1">
+      <div class="text-center space-y-1 md:text-left md:space-y-2 md:self-center">
         <span class="inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-100 text-rose-800 border border-brand-dark">
           🔴 Live, IRL or on a call
         </span>
-        <h2 class="font-heading font-extrabold text-2xl text-brand-dark">
+        <h2 class="font-heading font-extrabold text-2xl text-brand-dark md:text-3xl xl:text-4xl xl:leading-tight">
           Let's Fight: a ref for the real thing
         </h2>
-        <p class="text-xs text-brand-muted">
+        <p class="text-xs text-brand-muted md:text-sm md:leading-relaxed md:max-w-md">
           Oliver just listens and stays quiet until one of you says <span class="font-mono font-bold bg-white px-1 border border-stone-300 rounded">"Hey Oliver"</span>.
         </p>
       </div>
 
       <!-- Diner Candid Photo (PHOTO 13) -->
-      <div class="polaroid-frame bg-white p-2 rounded-2xl max-w-sm mx-auto">
+      <div class="polaroid-frame bg-white p-2 rounded-2xl max-w-sm mx-auto md:max-w-none md:w-full">
         <div class="relative overflow-hidden rounded-xl aspect-[4/3]">
           <img loading="lazy" src="assets/diner.jpg" alt="Couple sharing earbuds in vintage diner booth" class="w-full h-full object-cover">
           <span class="absolute top-2 right-2 washi-tape text-[10px] font-mono px-2 py-0.5 rounded font-bold">
@@ -523,8 +550,10 @@
         </div>
       </div>
 
+      </div>
+
       <!-- DARK INTERACTIVE LIVE REFEREE CONSOLE -->
-      <div class="bg-stone-950 text-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop space-y-4">
+      <div class="bg-stone-950 text-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop space-y-4 md:p-5 xl:col-span-7 xl:p-6">
         <!-- Status Bar -->
         <div class="flex items-center justify-between border-b border-stone-800 pb-2">
           <div class="flex items-center gap-2">
@@ -587,19 +616,21 @@
         </div>
       </div>
 
+     </div>
+
       <!-- Safety Rules Checklist -->
-      <div class="bg-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop space-y-2.5">
-        <div class="font-heading font-bold text-sm text-brand-dark">Let's Fight ground rules</div>
-        <ul class="space-y-1.5 text-xs text-stone-700">
-          <li class="flex items-start gap-2">
+      <div class="bg-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop space-y-2.5 md:p-5 md:space-y-3">
+        <div class="font-heading font-bold text-sm text-brand-dark md:text-base">Let's Fight ground rules</div>
+        <ul class="space-y-1.5 text-xs text-stone-700 md:space-y-0 md:grid md:grid-cols-3 md:gap-3 md:text-sm">
+          <li class="flex items-start gap-2 md:p-3 md:rounded-xl md:bg-brand-cream md:border md:border-stone-300">
             <span class="text-emerald-600 font-bold">✓</span>
             <span>Both consent on your own phones before anything records.</span>
           </li>
-          <li class="flex items-start gap-2">
+          <li class="flex items-start gap-2 md:p-3 md:rounded-xl md:bg-brand-cream md:border md:border-stone-300">
             <span class="text-emerald-600 font-bold">✓</span>
             <span>No diagnosing, no picking sides. Oliver sticks to the facts.</span>
           </li>
-          <li class="flex items-start gap-2">
+          <li class="flex items-start gap-2 md:p-3 md:rounded-xl md:bg-brand-cream md:border md:border-stone-300">
             <span class="text-emerald-600 font-bold">✓</span>
             <span>Audio deleted right after transcription. Transcript stays in fight vault.</span>
           </li>
@@ -612,22 +643,23 @@
     <!-- TAB 4: PRIVACY                                           -->
     <!-- ======================================================== -->
     <section id="panel-privacy" class="tab-panel space-y-6">
+     <div class="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-6 md:items-stretch xl:grid-cols-3 xl:gap-8">
 
       <!-- Header & Engineering Pledge -->
-      <div class="text-center space-y-1">
+      <div class="text-center space-y-1 md:text-left md:space-y-2 md:self-center">
         <span class="inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-100 text-emerald-800 border border-brand-dark">
           The Zero-Leak Promise
         </span>
-        <h2 class="font-heading font-extrabold text-2xl text-brand-dark">
+        <h2 class="font-heading font-extrabold text-2xl text-brand-dark md:text-3xl xl:text-4xl xl:leading-tight">
           "If the wall fails once, the product is dead."
         </h2>
-        <p class="text-xs text-brand-muted max-w-sm mx-auto">
+        <p class="text-xs text-brand-muted max-w-sm mx-auto md:mx-0 md:text-sm md:leading-relaxed md:max-w-md">
           That line is in our engineering plan. The privacy wall is 3 separate physical layers, not a wishful system prompt.
         </p>
       </div>
 
       <!-- Candid Hug Polaroid (PHOTO 6) -->
-      <div class="polaroid-frame bg-white p-2 rounded-2xl max-w-sm mx-auto">
+      <div class="polaroid-frame bg-white p-2 rounded-2xl max-w-sm mx-auto md:max-w-none md:w-full">
         <div class="relative overflow-hidden rounded-xl aspect-[4/3]">
           <img loading="lazy" src="assets/piggyback.jpg" alt="Couple piggyback laughter golden hour polaroid" class="w-full h-full object-cover">
           <span class="absolute bottom-2 right-2 washi-tape text-[10px] font-mono px-2 py-0.5 rounded font-bold">
@@ -636,85 +668,90 @@
         </div>
       </div>
 
+      <div class="space-y-6 md:space-y-0 md:col-span-2 md:grid md:grid-cols-2 md:gap-4 xl:contents">
       <!-- 3-LAYER ARCHITECTURAL BREAKDOWN CARDS -->
-      <div class="space-y-3">
+      <div class="space-y-3 md:space-y-0 md:contents">
         <!-- Layer 1 -->
-        <div class="bg-white border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm">
+        <div class="bg-white border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm md:p-4 xl:order-last xl:p-5">
           <div class="flex items-center justify-between mb-1">
             <span class="font-mono text-[10px] font-bold text-brand-primary bg-brand-lavender px-2 py-0.5 rounded border border-brand-primary">LAYER 01</span>
             <span class="text-[10px] font-mono text-stone-500 font-bold">DB Schema Isolation</span>
           </div>
           <div class="font-heading font-bold text-sm text-brand-dark">Data Layer Segregation</div>
-          <p class="text-xs text-stone-600 mt-1">
+          <p class="text-xs text-stone-600 mt-1 md:text-sm md:leading-relaxed">
             Every memory, journal entry and game answer has a privacy scope. Your partner's private rows literally can't load into your thread.
           </p>
         </div>
 
         <!-- Layer 2 -->
-        <div class="bg-white border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm">
+        <div class="bg-white border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm md:p-4 xl:order-last xl:p-5">
           <div class="flex items-center justify-between mb-1">
             <span class="font-mono text-[10px] font-bold text-amber-700 bg-brand-lemon px-2 py-0.5 rounded border border-amber-600">LAYER 02</span>
             <span class="text-[10px] font-mono text-stone-500 font-bold">Context Blindness</span>
           </div>
           <div class="font-heading font-bold text-sm text-brand-dark">Prompt Layer Walls</div>
-          <p class="text-xs text-stone-600 mt-1">
+          <p class="text-xs text-stone-600 mt-1 md:text-sm md:leading-relaxed">
             In shared threads Oliver has zero access to private chats and can't imply it does. In private threads, nothing gets shared.
           </p>
         </div>
 
         <!-- Layer 3 -->
-        <div class="bg-white border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm">
+        <div class="bg-white border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm md:p-4 xl:order-last xl:p-5">
           <div class="flex items-center justify-between mb-1">
             <span class="font-mono text-[10px] font-bold text-rose-700 bg-brand-peach px-2 py-0.5 rounded border border-rose-600">LAYER 03</span>
             <span class="text-[10px] font-mono text-stone-500 font-bold">Incident Tripwires</span>
           </div>
           <div class="font-heading font-bold text-sm text-brand-dark">Guard Layer Interceptors</div>
-          <p class="text-xs text-stone-600 mt-1">
+          <p class="text-xs text-stone-600 mt-1 md:text-sm md:leading-relaxed">
             Every message headed for a shared thread is checked against private memories. A leak triggers an instant rewrite and fallback.
           </p>
         </div>
       </div>
 
       <!-- Solo Mode Feature Box -->
-      <div class="bg-brand-butter border-2 border-brand-dark rounded-2xl p-4 shadow-pop text-center space-y-2">
+      <div class="bg-brand-butter border-2 border-brand-dark rounded-2xl p-4 shadow-pop text-center space-y-2 md:flex md:flex-col md:items-center md:justify-center xl:p-6">
         <span class="text-xs font-mono font-bold bg-white px-2 py-0.5 rounded-full border border-brand-dark">
           Solo Soft Launch
         </span>
-        <h3 class="font-heading font-bold text-base text-brand-dark">Don't wait on them</h3>
-        <p class="text-xs text-stone-600 max-w-sm mx-auto leading-relaxed">
+        <h3 class="font-heading font-bold text-base text-brand-dark md:text-lg xl:text-xl">Don't wait on them</h3>
+        <p class="text-xs text-stone-600 max-w-sm mx-auto leading-relaxed md:text-sm">
           Set up your space, tell Oliver what to call your person, and start your private journal, solo games, and thoughts right away.
         </p>
       </div>
+      </div>
+     </div>
 
     </section>
 
     <!-- ======================================================== -->
     <!-- TAB 5: PRICING & FAQ                                     -->
     <!-- ======================================================== -->
-    <section id="panel-pricing" class="tab-panel space-y-6">
+    <section id="panel-pricing" class="tab-panel space-y-6 md:space-y-8">
+     <div class="space-y-6 md:space-y-8 xl:space-y-0 xl:grid xl:grid-cols-12 xl:gap-10 xl:items-center">
+      <div class="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-8 md:items-center xl:col-span-5 xl:block xl:space-y-6">
 
       <!-- Header -->
-      <div class="text-center space-y-1">
+      <div class="text-center space-y-1 md:text-left md:space-y-2 md:self-center">
         <span class="inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-brand-lemon border border-brand-dark">
           Billing for Two
         </span>
-        <h2 class="font-heading font-extrabold text-2xl text-brand-dark">
+        <h2 class="font-heading font-extrabold text-2xl text-brand-dark md:text-3xl xl:text-4xl xl:leading-tight">
           one sub, both of you.
         </h2>
-        <p class="text-xs text-brand-muted max-w-sm mx-auto">
+        <p class="text-xs text-brand-muted max-w-sm mx-auto md:mx-0 md:text-sm md:leading-relaxed md:max-w-md">
           Whoever pays, the other person gets everything. Subscribe solo and your partner gets it the day they join.
         </p>
       </div>
 
       <!-- Candid Bed Snuggle Photo (PHOTO 8 & 7) -->
-      <div class="grid grid-cols-2 gap-3 max-w-md mx-auto">
-        <div class="polaroid-frame bg-white p-2 rounded-xl">
+      <div class="grid grid-cols-2 gap-3 max-w-md mx-auto md:max-w-none md:w-full">
+        <div class="polaroid-frame bg-white p-2 rounded-xl md:rotate-[-2deg]">
           <div class="relative overflow-hidden rounded-lg aspect-square">
             <img loading="lazy" src="assets/morning.jpg" alt="Couple laughing in bed snuggle" class="w-full h-full object-cover">
           </div>
           <div class="text-[9px] font-mono text-center pt-1 text-stone-600">forehead cuddles ✨</div>
         </div>
-        <div class="polaroid-frame bg-white p-2 rounded-xl">
+        <div class="polaroid-frame bg-white p-2 rounded-xl md:rotate-[2deg]">
           <div class="relative overflow-hidden rounded-lg aspect-square">
             <img loading="lazy" src="assets/cocoa.jpg" alt="Couple cozy sofa blanket cocoa" class="w-full h-full object-cover">
           </div>
@@ -722,10 +759,12 @@
         </div>
       </div>
 
+      </div>
+
       <!-- PRICING CARDS -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 xl:col-span-7 xl:gap-6">
         <!-- Free Tier -->
-        <div class="bg-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop flex flex-col justify-between">
+        <div class="bg-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop flex flex-col justify-between md:p-5 xl:p-6">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <span class="font-mono text-xs font-bold text-stone-500 uppercase">TIER 01</span>
@@ -734,7 +773,7 @@
             <div class="font-heading font-extrabold text-xl">Free</div>
             <div class="text-2xl font-mono font-bold">$0</div>
             
-            <ul class="space-y-1.5 text-xs text-stone-600 pt-2">
+            <ul class="space-y-1.5 text-xs text-stone-600 pt-2 md:text-sm">
               <li class="flex items-center gap-1.5">✓ One relationship space</li>
               <li class="flex items-center gap-1.5">✓ Private + shared chat, daily cap</li>
               <li class="flex items-center gap-1.5">✓ Fights, journal &amp; games</li>
@@ -748,7 +787,7 @@
         </div>
 
         <!-- Plus Tier (Popular) -->
-        <div class="bg-brand-butter border-2 border-brand-dark rounded-2xl p-4 shadow-pop relative flex flex-col justify-between">
+        <div class="bg-brand-butter border-2 border-brand-dark rounded-2xl p-4 shadow-pop relative flex flex-col justify-between md:p-5 xl:p-6">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <span class="font-mono text-xs font-bold text-brand-primary uppercase">TIER 02</span>
@@ -757,7 +796,7 @@
             <div class="font-heading font-extrabold text-xl">Plus</div>
             <div class="text-sm font-mono font-bold text-brand-primary">Price at launch</div>
 
-            <ul class="space-y-1.5 text-xs text-brand-dark pt-2 font-medium">
+            <ul class="space-y-1.5 text-xs text-brand-dark pt-2 font-medium md:text-sm">
               <li class="flex items-center gap-1.5">✨ Unlimited chat &amp; fights</li>
               <li class="flex items-center gap-1.5">🎙️ Let's Fight live audio sessions</li>
               <li class="flex items-center gap-1.5">🎲 Every game unlocked</li>
@@ -771,8 +810,10 @@
         </div>
       </div>
 
+     </div>
+
       <!-- FAQ ACCORDION (Placed under Pricing per instructions) -->
-      <div class="bg-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop space-y-3">
+      <div class="bg-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop space-y-3 md:p-5 xl:p-6">
         <div class="text-center pb-1">
           <span class="font-mono text-[10px] font-bold uppercase text-brand-muted bg-stone-100 px-2 py-0.5 rounded">
             Real Talk
@@ -780,7 +821,7 @@
           <h3 class="font-heading font-bold text-lg text-brand-dark mt-1">the stuff couples ask first</h3>
         </div>
 
-        <div class="space-y-2">
+        <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 md:gap-3 md:items-start">
           <!-- FAQ 1 -->
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
             <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-bold text-xs sm:text-sm text-brand-dark flex items-center justify-between">
@@ -852,16 +893,18 @@
     </section>
 
     <!-- Global Minimal Footer -->
-    <footer class="pt-8 pb-4 text-center space-y-2 border-t border-stone-300 mt-10">
-      <div class="flex items-center justify-center gap-2">
+    <footer class="pt-8 pb-4 text-center space-y-2 border-t border-stone-300 mt-10 md:flex md:items-center md:justify-between md:gap-8 md:text-left md:space-y-0">
+     <div class="space-y-2 md:space-y-1">
+      <div class="flex items-center justify-center gap-2 md:justify-start">
         <span class="text-xl">🧸</span>
         <span class="font-heading font-bold text-sm">Cuddle Pop</span>
         <span class="text-[10px] font-mono bg-stone-200 px-1.5 py-0.5 rounded">beta</span>
       </div>
-      <p class="text-[11px] text-stone-500 max-w-sm mx-auto leading-relaxed">
+      <p class="text-[11px] text-stone-500 max-w-sm mx-auto leading-relaxed md:mx-0">
         A cozy neo-retro playground for sorting out couple drama with empathy, humor, and real mediation.
       </p>
-      <div class="text-[10px] text-stone-400 font-mono">
+     </div>
+      <div class="text-[10px] text-stone-400 font-mono md:text-right md:shrink-0">
         © 2026 Cuddle Pop. Made with patience &amp; scrapbooked memories.
       </div>
     </footer>
