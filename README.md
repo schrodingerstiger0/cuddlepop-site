@@ -43,9 +43,12 @@ No DNS change is needed when the domain and hosting are on the same Hostinger ac
 
 ## Source of the current design
 
-The live page (index.html) is the "Tabbed Mobile Edition" (Stitch screen edcadf25…) made on 2026-11-14 in the
-Stitch project "Retro Gen Z CuddlePop" (projects/18230474138243898393): the Romantic & Cozy design restructured
-into five tabs (Home, How it works, Let's Fight, Privacy, Pricing & FAQ) with vanilla-JS tab switching and hash
-routing, mobile-first, "show don't write". Copy is Gen Z conversational (rewrite scripts in the session scratchpad).
-Images live in assets/ (seven photos from the Stitch project). Tailwind loads from the CDN at runtime.
-Earlier versions: docs/web-archive/index-v1.html (hand-built), Stitch screen 5273d678… (long single-page cozy edition).
+index.html is a single-scroll product landing page (2026-11-14, evening) built from the Stitch "Romantic & Cozy" design
+in the project "Retro Gen Z CuddlePop" (projects/18230474138243898393). Sections follow the visitor's questions in order:
+hero (value + chat demo), the problem, three steps, Let's Fight, privacy, pricing, FAQ, final CTA. The floating header's
+pills are anchor links (old hashes #home/#how-it-works/#lets-fight/#privacy/#pricing still work). Three breakpoint layouts
+(phone / md tablet / xl desktop). Copy: one voice, Gen Z conversational, theme "Oliver is the mutual friend, the glue",
+under 550 words. Icons: original hand-drawn SVG sprite generated in Stitch (screen 82470a3f…), inlined; favicon in
+assets/favicon.svg. Photos in assets/ from the Stitch project. Tailwind via CDN.
+Earlier versions: docs/web-archive/index-v1.html (hand-built), Stitch screens 5273d678… (long cozy edition),
+edcadf25… (tabbed mobile edition).
