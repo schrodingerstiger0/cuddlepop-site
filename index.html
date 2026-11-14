@@ -131,30 +131,30 @@
 
   <!-- ================= FLOATING DOCK ================= -->
   <div id="dock-wrap" class="fixed inset-x-0 z-50 flex justify-center px-2 pointer-events-none">
-    <nav id="dock" aria-label="Sections" class="pointer-events-auto max-w-full flex items-center gap-1 p-1.5 rounded-full bg-brand-cream/[0.92] backdrop-blur-md border-2 border-[#2B2749] shadow-[3px_3px_0px_#2B2749]">
-      <a href="#panel-home" data-section="panel-home" aria-label="what it is" class="tab-btn flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3 py-1.5 md:px-3 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
+    <nav id="dock" aria-label="Sections" class="pointer-events-auto max-w-full flex items-center gap-0.5 md:gap-1 p-1 md:p-1.5 rounded-[1.75rem] md:rounded-full bg-brand-cream/[0.92] backdrop-blur-md border-2 border-[#2B2749] shadow-[3px_3px_0px_#2B2749]">
+      <a href="#panel-home" data-section="panel-home" aria-label="what it is" class="tab-btn flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-2 py-1 md:px-3 md:py-1.5 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
         <svg class="ic" aria-hidden="true"><use href="#i-home"/></svg>
-        <span class="sr-only md:not-sr-only">what it is</span>
+        <span class="md:hidden text-[10px] leading-none">what</span><span class="sr-only md:not-sr-only">what it is</span>
       </a>
-      <a href="#panel-how-it-works" data-section="panel-how-it-works" aria-label="how it works" class="tab-btn flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3 py-1.5 md:px-3 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
+      <a href="#panel-how-it-works" data-section="panel-how-it-works" aria-label="how it works" class="tab-btn flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-2 py-1 md:px-3 md:py-1.5 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
         <svg class="ic" aria-hidden="true"><use href="#i-how-it-works"/></svg>
-        <span class="sr-only md:not-sr-only">how it works</span>
+        <span class="md:hidden text-[10px] leading-none">how</span><span class="sr-only md:not-sr-only">how it works</span>
       </a>
-      <a href="#panel-lets-fight" data-section="panel-lets-fight" aria-label="Let&#39;s Fight" class="tab-btn flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3 py-1.5 md:px-3 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
+      <a href="#panel-lets-fight" data-section="panel-lets-fight" aria-label="Let&#39;s Fight" class="tab-btn flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-2 py-1 md:px-3 md:py-1.5 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
         <svg class="ic" aria-hidden="true"><use href="#i-lets-fight"/></svg>
-        <span class="sr-only md:not-sr-only">Let's Fight</span>
+        <span class="md:hidden text-[10px] leading-none">fight</span><span class="sr-only md:not-sr-only">Let's Fight</span>
       </a>
-      <a href="#panel-privacy" data-section="panel-privacy" aria-label="privacy" class="tab-btn flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3 py-1.5 md:px-3 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
+      <a href="#panel-privacy" data-section="panel-privacy" aria-label="privacy" class="tab-btn flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-2 py-1 md:px-3 md:py-1.5 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
         <svg class="ic" aria-hidden="true"><use href="#i-privacy"/></svg>
-        <span class="sr-only md:not-sr-only">privacy</span>
+        <span class="md:hidden text-[10px] leading-none">privacy</span><span class="sr-only md:not-sr-only">privacy</span>
       </a>
-      <a href="#panel-pricing" data-section="panel-pricing" aria-label="pricing" class="tab-btn flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-3 py-1.5 md:px-3 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
+      <a href="#panel-pricing" data-section="panel-pricing" aria-label="pricing" class="tab-btn flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-2 py-1 md:px-3 md:py-1.5 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
         <svg class="ic" aria-hidden="true"><use href="#i-pricing"/></svg>
-        <span class="sr-only md:not-sr-only">pricing</span>
+        <span class="md:hidden text-[10px] leading-none">price</span><span class="sr-only md:not-sr-only">pricing</span>
       </a>
-      <a href="#early-access" onclick="scrollToEarlyAccess(event)" aria-label="get in early" class="flex items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-[#2B2749] bg-brand-primary text-white px-3 py-1.5 text-sm font-heading font-bold transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-primaryHover">
+      <a href="#early-access" onclick="scrollToEarlyAccess(event)" aria-label="get in early" class="flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-[#2B2749] bg-brand-primary text-white px-3 py-1.5 text-sm font-heading font-bold transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-primaryHover">
         <svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>
-        <span class="sr-only md:not-sr-only">get in early</span>
+        <span class="md:hidden text-[10px] leading-none">join</span><span class="sr-only md:not-sr-only">get in early</span>
       </a>
     </nav>
   </div>
