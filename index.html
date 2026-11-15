@@ -111,6 +111,7 @@
     "@type": "SoftwareApplication",
     "name": "Cuddle Pop",
     "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "iOS, Android",
     "description": "Oliver is an AI mutual friend for couples. Each partner tells him their side privately, and he helps them agree on what happens next.",
     "url": "https://cuddlepop.com/",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
@@ -171,6 +172,14 @@
       },
       {
         "@type": "Question",
+        "name": "what does my person see when i invite them?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "a link and one line: \"Oliver wants to hear your side.\" the link works in any messaging app. it installs Cuddle Pop and connects the two of you automatically. nothing you told Oliver goes with it."
+        }
+      },
+      {
+        "@type": "Question",
         "name": "do i have to use it every day?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -183,6 +192,14 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "no. you both opt in each time, and audio is deleted once transcribed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "is what i tell Oliver used to train AI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "no. what you tell Oliver stays between you and him. none of it is used to train AI."
         }
       },
       {
@@ -278,10 +295,15 @@
           meet Oliver. you each tell him your side, privately. he helps you two sort it out tonight, not after a week of silence.
         </p>
         <div class="pt-1 space-y-2">
+          <div class="flex flex-wrap items-center justify-center gap-3 md:justify-start">
           <a href="#early-access" onclick="scrollToEarlyAccess(event, 'hero')" class="inline-flex items-center gap-2 bg-brand-primary text-white font-heading font-bold text-sm sm:text-base px-5 py-3 rounded-xl border-2 border-brand-dark shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
             <span>meet Oliver, it's free</span>
             <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>
           </a>
+          <button type="button" onclick="openGetApp('hero')" class="inline-flex items-center gap-2 bg-white text-brand-dark font-heading font-bold text-sm sm:text-base px-5 py-3 rounded-xl border-2 border-brand-dark shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+            <span>get the app</span>
+          </button>
+          </div>
           <p class="text-[11px] font-mono text-stone-500">no card. one email when it's your turn. he never tells them what you said.</p>
         </div>
         <p class="flex items-center justify-center gap-3 max-w-md mx-auto text-sm text-brand-dark text-left leading-snug md:mx-0 md:justify-start xl:text-base">
@@ -503,7 +525,6 @@
           <div class="font-heading font-bold text-sm text-brand-dark md:text-base">nothing goes shared without your yes</div>
           <p class="text-xs text-stone-600 mt-1 md:text-sm">Oliver checks every shared message for leaks and rewrites anything that slips.</p>
         </div>
-        <!-- TODO(confirm): invite channel and wording are unconfirmed (link by text/share sheet? exact message?). Mock bubble below uses the brief's draft line. -->
         <div class="bg-brand-butter border-2 border-brand-dark rounded-2xl p-4 shadow-pop text-center space-y-2 md:text-left xl:p-5">
           <h3 class="font-heading font-bold text-base text-brand-dark md:text-lg">your person isn't in yet? start solo.</h3>
           <p class="text-xs text-stone-600 md:text-sm">tell Oliver your side first. when you're ready, he sends the invite.</p>
@@ -583,7 +604,10 @@
             <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-bold text-xs sm:text-sm text-brand-dark flex items-center justify-between"><span>do we both need Cuddle Pop?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-xs text-stone-600 leading-relaxed border-t border-dashed border-stone-300">to sort out a fight together, yes. but you can start solo: tell Oliver your side, and invite your person when you're ready. one sub covers both of you.</div>
           </div>
-          <!-- TODO(confirm): unpublished FAQ "what does my person see when i invite them?" Draft answer: a link and one line, "Oliver wants to hear your side." nothing you told Oliver goes with it. Add to the page and to the FAQPage JSON-LD once confirmed. -->
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-bold text-xs sm:text-sm text-brand-dark flex items-center justify-between"><span>what does my person see when i invite them?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-xs text-stone-600 leading-relaxed border-t border-dashed border-stone-300">a link and one line: "Oliver wants to hear your side." the link works in any messaging app. it installs Cuddle Pop and connects the two of you automatically. nothing you told Oliver goes with it.</div>
+          </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
             <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-bold text-xs sm:text-sm text-brand-dark flex items-center justify-between"><span>do i have to use it every day?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-xs text-stone-600 leading-relaxed border-t border-dashed border-stone-300">no. no streaks, no homework. open it when there's a fight, ignore it when things are good. the journal and games are there if you want them.</div>
@@ -592,7 +616,10 @@
             <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-bold text-xs sm:text-sm text-brand-dark flex items-center justify-between"><span>is Let's Fight always recording?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-xs text-stone-600 leading-relaxed border-t border-dashed border-stone-300">no. you both opt in each time, and audio is deleted once transcribed.</div>
           </div>
-          <!-- TODO(confirm): unpublished FAQ "is what i tell Oliver used to train AI?" needs the founder's answer before it goes on the page or into the FAQPage JSON-LD. -->
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-bold text-xs sm:text-sm text-brand-dark flex items-center justify-between"><span>is what i tell Oliver used to train AI?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-xs text-stone-600 leading-relaxed border-t border-dashed border-stone-300">no. what you tell Oliver stays between you and him. none of it is used to train AI.</div>
+          </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
             <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-bold text-xs sm:text-sm text-brand-dark flex items-center justify-between"><span>how much will plus cost?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-xs text-stone-600 leading-relaxed border-t border-dashed border-stone-300">we'll set the price at launch. one sub covers both of you, and the first couples in get it free.</div>
@@ -646,6 +673,10 @@
             </div>
           </form>
 
+          <p class="text-xs text-brand-dark/80">
+            <button type="button" onclick="openGetApp('footer')" class="font-heading font-bold underline underline-offset-2 decoration-2 hover:text-brand-primary">get the app</button>
+          </p>
+
           <p class="text-[10px] text-stone-600 leading-tight pt-1">
             Cuddle Pop is an AI friend for two. not therapy, not for emergencies.
           </p>
@@ -677,7 +708,46 @@
 
   </main>
 
+  <!-- get the app: platform picker. switches itself on when APP_LINKS are filled in -->
+  <div id="get-app" class="hidden fixed inset-0 z-[60] bg-brand-dark/40 flex items-center justify-center" onclick="if (event.target === this) closeGetApp()">
+    <div role="dialog" aria-modal="true" aria-labelledby="get-app-title" class="relative bg-white border-2 border-brand-dark rounded-2xl shadow-pop p-5 max-w-sm w-[calc(100%-2rem)] space-y-4">
+      <button type="button" onclick="closeGetApp()" aria-label="close" class="absolute top-3 right-3 w-8 h-8 inline-flex items-center justify-center rounded-full border-2 border-brand-dark bg-white font-heading font-bold text-brand-dark hover:bg-brand-cream">
+        <span aria-hidden="true" class="text-lg leading-none">&times;</span>
+      </button>
+      <div class="space-y-1 pr-10">
+        <h2 id="get-app-title" tabindex="-1" class="font-heading font-extrabold text-xl text-brand-dark focus:outline-none">get the app.</h2>
+        <p class="text-sm text-brand-muted">which phone?</p>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <button type="button" id="get-app-android" onclick="pickPlatform('android')" class="font-heading font-bold text-brand-dark border-2 border-brand-dark rounded-xl py-3 bg-brand-lemon shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">android</button>
+        <button type="button" id="get-app-ios" onclick="pickPlatform('ios')" class="font-heading font-bold text-brand-dark border-2 border-brand-dark rounded-xl py-3 bg-brand-lavender shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">iOS</button>
+      </div>
+      <div id="get-app-ready-android" class="hidden space-y-2 text-center">
+        <a id="get-app-dl-android" download href="#" onclick="window.track && track('get_app_download', { platform: 'android' })" class="inline-flex w-full items-center justify-center gap-2 bg-brand-primary text-white font-heading font-bold text-sm px-5 py-3 rounded-xl border-2 border-brand-dark shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+          <span>download for android</span>
+          <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+        <p class="text-xs text-stone-600">your phone will ask you to allow installs from the browser. that's normal.</p>
+      </div>
+      <div id="get-app-ready-ios" class="hidden text-center">
+        <a id="get-app-dl-ios" href="#" onclick="window.track && track('get_app_download', { platform: 'ios' })" class="inline-flex w-full items-center justify-center gap-2 bg-brand-primary text-white font-heading font-bold text-sm px-5 py-3 rounded-xl border-2 border-brand-dark shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+          <span>get it on iOS</span>
+          <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+      <div id="get-app-not-ready" class="hidden space-y-3 text-center">
+        <p class="text-sm text-brand-dark">not out yet. leave your email and we'll send you the link the day it's ready.</p>
+        <button type="button" onclick="closeGetApp(); goToWaitlist();" class="inline-flex w-full items-center justify-center gap-2 bg-brand-primary text-white font-heading font-bold text-sm px-5 py-3 rounded-xl border-2 border-brand-dark shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+          <span>count us in</span>
+          <svg class="ic" aria-hidden="true"><use href="#i-envelope"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    const APP_LINKS = { android: '', ios: '' }; // TODO(ready): set the APK URL (e.g. 'assets/cuddlepop.apk') and the iOS link when the builds are ready
+
     // Sections the header pills point at, in page order
     const NAV_SECTIONS = ['panel-home', 'panel-how-it-works', 'panel-lets-fight', 'panel-privacy', 'panel-pricing'];
     // Old tab hashes (and a few aliases) mapped to section ids
@@ -751,6 +821,54 @@
       if (location) window.track && track('cta_click', { location: location });
       goToWaitlist();
     }
+
+    // Get the app: platform picker modal
+    let getAppOpener = null;
+    function detectPlatform() {
+      const ua = navigator.userAgent || '';
+      if (/android/i.test(ua)) return 'android';
+      if (/iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1)) return 'ios';
+      return null;
+    }
+    function openGetApp(location) {
+      const modal = document.getElementById('get-app');
+      if (!modal) return;
+      getAppOpener = document.activeElement;
+      ['get-app-ready-android', 'get-app-ready-ios', 'get-app-not-ready'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      const guess = detectPlatform();
+      ['android', 'ios'].forEach(p => {
+        const b = document.getElementById('get-app-' + p);
+        b.classList.toggle('ring-2', p === guess);
+        b.classList.toggle('ring-brand-primary', p === guess);
+        b.setAttribute('aria-pressed', 'false');
+      });
+      modal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      document.getElementById('get-app-title').focus();
+      window.track && track('get_app_open', { location: location || '' });
+    }
+    function closeGetApp() {
+      const modal = document.getElementById('get-app');
+      if (!modal || modal.classList.contains('hidden')) return;
+      modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      if (getAppOpener && getAppOpener.focus) getAppOpener.focus({ preventScroll: true });
+      getAppOpener = null;
+    }
+    function pickPlatform(platform) {
+      const url = APP_LINKS[platform] || '';
+      const ready = url !== '';
+      ['android', 'ios'].forEach(p => document.getElementById('get-app-' + p).setAttribute('aria-pressed', String(p === platform)));
+      ['get-app-ready-android', 'get-app-ready-ios', 'get-app-not-ready'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      if (ready) {
+        document.getElementById('get-app-dl-' + platform).setAttribute('href', url);
+        document.getElementById('get-app-ready-' + platform).classList.remove('hidden');
+      } else {
+        document.getElementById('get-app-not-ready').classList.remove('hidden');
+      }
+      window.track && track('get_app_pick', { platform: platform, ready: ready });
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGetApp(); });
 
     // Toggle the chat demo between both / private / shared
     function toggleChatView(mode) {
@@ -906,6 +1024,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       jumpToHash();
+      if (/[?&]getapp=1(&|$)/.test(window.location.search)) openGetApp('url');
     });
     // Re-run after images/fonts and Tailwind styles settle so the landing is exact
     window.addEventListener('load', () => { jumpToHash(); setTimeout(jumpToHash, 400); });
