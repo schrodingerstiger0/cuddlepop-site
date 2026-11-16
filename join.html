@@ -3,34 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Your invite · Cuddle Pop</title>
+<title>Join on Cuddle Pop</title>
 <meta name="robots" content="noindex">
-<meta name="referrer" content="no-referrer">
-<meta name="theme-color" content="#FCF9F4">
-<!-- /join/{code} is the universal link in every invite. It opens the web page first, on every
-     device (docs/18 §3): this file only forwards to /side/{code}, the guest page with Oliver's
-     promises. On GitHub Pages /join/{code} never reaches this file: 404.html is a copy of
-     side/index.html and renders the promises directly. No auto-redirect into the app. -->
-<script>
-(function () {
-  var m = location.pathname.match(/\/join\/([A-Za-z0-9]{4,12})\/?$/) ||
-          location.search.match(/[?&]code=([A-Za-z0-9]{4,12})(?:&|$)/);
-  location.replace(m ? '/side/' + m[1].toUpperCase() : '/side/');
-})();
-</script>
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/side/assets/side.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root { --canvas:#F4F2FA; --surface:#FFFFFF; --ink:#2B2749; --ink-muted:#66627F; --line:#E3E0EE; --marigold:#F4B860; --coral:#F39A85; --iris:#6260D6; --iris-text:#fff; --stone:#F0EBE4; --stone-ink:#5C5449; --display:"Fraunces",Georgia,serif; --body:"Atkinson Hyperlegible","Helvetica Neue",Arial,sans-serif; }
+@media (prefers-color-scheme: dark) { :root { --canvas:#1C1A2E; --surface:#262340; --ink:#ECEAF6; --ink-muted:#A8A4C0; --line:#35314F; --marigold:#F2C37A; --coral:#F5A090; --iris:#9D9CF0; --iris-text:#1C1A2E; --stone:#302B27; --stone-ink:#D6CCBE; color-scheme:dark; } }
+* { box-sizing:border-box } body { margin:0; background:var(--canvas); color:var(--ink); font:17px/24px var(--body); -webkit-font-smoothing:antialiased; }
+main { max-width:520px; margin:0 auto; padding:40px max(20px, env(safe-area-inset-left)) 60px max(20px, env(safe-area-inset-right)); display:grid; gap:22px; }
+.band { border-radius:28px; padding:24px; background:linear-gradient(90deg,var(--marigold),var(--coral),var(--iris)); color:#2B2749; font-family:var(--display); font-weight:600; font-size:24px; }
+h1 { font-family:var(--display); font-weight:600; font-size:34px; line-height:40px; margin:0; letter-spacing:-0.5px; }
+p { margin:0 } .muted { color:var(--ink-muted) }
+.code { background:var(--surface); border-radius:20px; padding:20px; display:grid; gap:6px; }
+.code strong { font-family:var(--display); font-size:32px; letter-spacing:4px; }
+.btn { display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:0 22px; border-radius:999px; border:0; font:700 17px/24px var(--body); text-decoration:none; cursor:pointer; }
+.primary { background:var(--iris); color:var(--iris-text) } .secondary { background:var(--surface); color:var(--ink) }
+.row { display:flex; gap:12px; flex-wrap:wrap }
+.small { font-size:15px; line-height:20px }
+</style>
 </head>
 <body>
-<header class="top"><a class="wordmark" href="/">Cuddle Pop</a></header>
-<main class="wrap">
-  <section class="screen">
-    <p class="eyebrow">One sec</p>
-    <h1 class="title">Taking you to Oliver…</h1>
-    <noscript>
-      <p class="lede">This page needs JavaScript to open your invite. Turn it on and reload, or get the Cuddle Pop app and type the code from your link into Join.</p>
-    </noscript>
-  </section>
+<main>
+  <div class="band">Cuddle Pop</div>
+  <h1>Someone wants you in the room.</h1>
+  <p class="muted">They started a relationship on Cuddle Pop and invited you. Open the app to join, or install it first.</p>
+  <div class="code"><span class="small muted">Your invite code</span><strong id="code">------</strong><span class="small muted">Expires 7 days after it was sent.</span></div>
+  <div class="row">
+    <a class="btn primary" id="open" href="#">Open in Cuddle Pop</a>
+    <a class="btn secondary" id="ios" href="#" hidden>Get it on the App Store</a>
+    <a class="btn secondary" id="android" href="#" hidden>Get it on Google Play</a>
+  </div>
+  <p class="small muted">If the app does not open, install it, then enter the code under "Join a relationship".</p>
 </main>
+<script>
+(function () {
+  var m = location.pathname.match(/\/join\/([A-Za-z0-9]{4,12})/);
+  var code = m ? m[1].toUpperCase() : '';
+  document.getElementById('code').textContent = code || 'Missing';
+  var open = document.getElementById('open');
+  open.href = code ? 'cuddlepop://join/' + code : '#';
+  // Store links: fill in once the listings exist.
+  var IOS = '', ANDROID = '';
+  if (IOS) { var a = document.getElementById('ios'); a.href = IOS; a.hidden = false; }
+  if (ANDROID) { var b = document.getElementById('android'); b.href = ANDROID; b.hidden = false; }
+  if (code) { setTimeout(function () { location.href = 'cuddlepop://join/' + code; }, 400); }
+})();
+</script>
 </body>
 </html>
