@@ -7,10 +7,10 @@
 (function () {
   'use strict';
 
-  // TODO(confirm): GA4 measurement ID, Meta Pixel ID, and the consent approach
-  // (cookie banner / region rules) must be confirmed before either ID is filled in,
-  // because filling one in loads that provider's script on every page view.
-  var GA_MEASUREMENT_ID = '';
+  // GA4 property "Cuddle Pop" (nihal@cuddlepop.com), set 2026-11-16. No ads and no
+  // EU/UK targeting for now, so no consent banner. Add one before filling META_PIXEL_ID
+  // or before any EU/UK campaign.
+  var GA_MEASUREMENT_ID = 'G-YBZTCEFL4W';
   var META_PIXEL_ID = '';
 
   var debug = false;
