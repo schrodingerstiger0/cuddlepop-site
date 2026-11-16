@@ -1,0 +1,292 @@
+/* The guest page (docs/18 §3). Site tokens from apps/web/tailwind.config.js, no build step.
+   Light only, like cuddlepop.com. */
+:root {
+  --cream: #FCF9F4;      /* brand.cream: the canvas */
+  --surface: #FAF7F2;    /* brand.surface */
+  --ink: #1C1917;        /* brand.dark: text and 2px outlines */
+  --muted: #78716C;      /* brand.muted */
+  --iris: #6260D6;       /* brand.primary */
+  --iris-hover: #5250B8; /* brand.primaryHover */
+  --peach: #FFE7EC;
+  --lavender: #EDE9FE;
+  --lemon: #FEF08A;
+  --butter: #FFFBEB;
+  --rose: #FDA4AF;
+  --on-iris: #FFFFFF;
+  --card: #FFFFFF;       /* docs/08 surface: cards, inputs, inactive pills */
+  --ember: #DC2626;      /* docs/08 ember: destructive links */
+  --fern: #059669;       /* docs/08 fern: live dot */
+  --pop: 3px 3px 0 var(--ink);
+  --pop-sm: 2px 2px 0 var(--ink);
+  --pop-lg: 5px 5px 0 var(--ink);
+  --heading: "Epilogue", system-ui, sans-serif;
+  --body: "Plus Jakarta Sans", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font: 400 17px/1.5 var(--body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+[hidden] { display: none !important; }
+
+.top {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: max(16px, env(safe-area-inset-top)) 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+/* Plain wordmark: the title highlighter is the screen's only lemon (docs/08 highlighter rule). */
+.wordmark {
+  font: 800 21px/1 var(--heading);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 10px 0;
+}
+.open-app {
+  font: 700 14px/1 var(--body);
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
+  box-shadow: var(--pop-sm);
+}
+
+.wrap {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 20px max(48px, env(safe-area-inset-bottom));
+  outline: none;
+}
+.screen { display: grid; gap: 16px; animation: screen-in 220ms cubic-bezier(.2, .8, .2, 1) both; }
+/* Tight title group, then the docs/08 section gap (16 + 12 = 28) before the card or the buttons. */
+.screen > .card, .screen > .btns { margin-top: 12px; }
+@keyframes screen-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.eyebrow {
+  margin: 0;
+  font: 600 11px/14px var(--mono);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.title {
+  margin: 0;
+  font: 800 30px/1.15 var(--heading);
+  letter-spacing: -0.6px;
+  overflow-wrap: anywhere;
+}
+/* Highlighter: one lemon word on the screen title (docs/08), drawn in left to right. */
+.hl {
+  display: inline-block;
+  padding: 0 6px;
+  background: var(--lemon);
+  border: 1px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: var(--pop-sm);
+  transform: rotate(-1deg);
+  animation: hl-draw 300ms ease-out 150ms both;
+}
+@keyframes hl-draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 -4px -4px 0); } }
+.lede { margin: 0; font-size: 17px; color: var(--ink); overflow-wrap: anywhere; }
+.small { margin: 0; font-size: 14px; line-height: 1.45; color: var(--muted); }
+
+.chip {
+  justify-self: start;
+  display: inline-block;
+  font: 500 12px/1.3 var(--mono);
+  background: var(--butter);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 6px 12px;
+  box-shadow: var(--pop-sm);
+}
+
+.card {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: var(--pop);
+  display: grid;
+  gap: 12px;
+}
+.card.butter { background: var(--butter); }
+.card.lavender { background: var(--lavender); }
+.card.peach { background: var(--peach); }
+/* inkMuted fails contrast on the tints (docs/08). */
+.card.lavender .small, .card.peach .small { color: var(--ink); }
+
+.promises { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; }
+.promise-intro + .promises { margin-top: 8px; }
+.promises li > span:last-child { padding-top: 3px; }
+.promises li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start; }
+.promises .num {
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  font: 800 15px/1 var(--heading);
+  background: var(--lemon);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+}
+.promise-intro { margin: 0; font: 700 19px/24px var(--heading); letter-spacing: -0.01em; }
+
+.btns { display: grid; gap: 12px; }
+.btns.row { grid-template-columns: 1fr 1fr; }
+.btn {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 12px 20px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  font: 700 17px/1.2 var(--heading);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  color: var(--ink);
+  background: var(--card);
+  box-shadow: var(--pop-sm);
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+/* Press = 1px down-right, block gone (docs/08). Hover only darkens, and only on real pointers,
+   so a tap on a phone never leaves the button stuck pressed. */
+.btn:active { transform: translate(1px, 1px); box-shadow: none; }
+.btn:focus-visible, .link:focus-visible, .choice:focus-visible, textarea:focus-visible, .open-app:focus-visible, .wordmark:focus-visible {
+  outline: 3px solid var(--iris);
+  outline-offset: 3px;
+}
+.btn.primary { background: var(--iris); color: var(--on-iris); }
+.btn.lemon { background: var(--lemon); }
+.btn.danger { background: var(--rose); }
+.btn[disabled] { opacity: 0.55; cursor: default; transform: none; box-shadow: var(--pop-sm); }
+@media (hover: hover) {
+  .btn.primary:not([disabled]):hover { background: var(--iris-hover); }
+  .choice:not([disabled]):hover { background: var(--lemon); }
+}
+
+.link {
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border: 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 4px;
+  font: 700 15px/1.3 var(--body);
+  color: var(--iris);
+  text-decoration: none;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  justify-self: start;
+}
+.link:hover { text-decoration: underline; }
+.link.danger { color: var(--ember); }
+
+textarea {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  padding: 16px;
+  font: 400 17px/1.5 var(--body);
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: var(--pop);
+}
+textarea::placeholder { color: var(--muted); }
+.save-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); }
+/* Status pill with a fern dot (docs/08 StatusPill), then the mono counter. */
+.save-row > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font: 500 12.5px/17px var(--body);
+  color: var(--ink);
+  box-shadow: var(--pop-sm);
+}
+.save-row > span:first-child::before { content: ''; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--fern); }
+.save-row > span:last-child { font: 500 11px/14px var(--mono); letter-spacing: 1px; }
+
+.code {
+  font: 800 34px/1 var(--heading);
+  letter-spacing: 0.18em;
+  overflow-wrap: anywhere;
+}
+
+.choices { display: grid; gap: 10px; }
+.choices.scale { grid-template-columns: repeat(auto-fit, minmax(48px, 1fr)); }
+.choice {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 52px;
+  padding: 12px 16px;
+  text-align: left;
+  font: 600 16px/1.35 var(--body);
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: var(--pop-sm);
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.choices.scale .choice { text-align: center; padding: 12px 0; }
+.choice:active { transform: translate(1px, 1px); box-shadow: none; background: var(--lemon); }
+.choice[disabled] { opacity: 0.55; cursor: default; }
+
+.progress { height: 10px; border: 2px solid var(--ink); border-radius: 999px; background: var(--card); overflow: hidden; }
+.progress span { display: block; height: 100%; background: var(--iris); }
+
+.reveal { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.reveal .q { margin: 0; font: 700 16px/1.35 var(--heading); }
+.reveal dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 15px; }
+.reveal dt { font-weight: 700; }
+.reveal dd { margin: 0; overflow-wrap: anywhere; }
+
+.notice {
+  margin: 0;
+  padding: 12px 14px;
+  font-size: 15px;
+  background: var(--butter);
+  border: 1px solid var(--ink);
+  border-radius: 12px;
+}
+
+@media (min-width: 640px) {
+  .wrap { padding-top: 40px; }
+  .title { font-size: 34px; line-height: 1.12; letter-spacing: -1px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .btn:active, .choice:active { transform: none; }
+  .hl { transform: none; clip-path: none; }
+}

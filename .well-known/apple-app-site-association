@@ -4,7 +4,7 @@
     "details": [
       {
         "appID": "TEAMID.app.cuddlepop.mobile",
-        "paths": ["/join/*"]
+        "paths": ["NOT /join/*", "NOT /side/*"]
       }
     ]
   }
