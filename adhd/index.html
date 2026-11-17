@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <title>Cuddle Pop, adhd mode: the AI friend who hears both sides</title>
+  <meta name="description" content="meet Oliver, the friend you both share. each of you tells your side privately, Oliver hears both, and helps you sort it out tonight. free early access.">
+  <link rel="canonical" href="https://cuddlepop.com/adhd/">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FCF9F4">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cuddle Pop">
+  <meta property="og:url" content="https://cuddlepop.com/adhd/">
+  <meta property="og:title" content="Oliver wants to hear your side.">
+  <meta property="og:description" content="Cuddle Pop is the friend who's heard both sides. tell Oliver yours, privately. sort it out tonight.">
+  <meta property="og:image" content="https://cuddlepop.com/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Oliver the bear beside the words: the friend who's heard both sides.">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Oliver wants to hear your side.">
+  <meta name="twitter:description" content="Cuddle Pop is the friend who's heard both sides. tell Oliver yours, privately. sort it out tonight.">
+  <meta name="twitter:image" content="https://cuddlepop.com/assets/og.png">
+
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+  <!-- Google Fonts: Epilogue (headlines), Plus Jakarta Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&amp;family=Plus+Jakarta+Sans:wght@500;700;800&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&amp;family=Plus+Jakarta+Sans:wght@500;700;800&amp;display=swap"></noscript>
+
+  <link rel="stylesheet" href="/assets/site.css">
+
+  <style>
+    body {
+      background-color: #FCF9F4;
+      color: #1C1917;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, .font-heading { font-family: 'Epilogue', sans-serif; }
+    section { scroll-margin-top: 4.5rem; }
+
+    /* paper dots behind the illustrations */
+    .paper {
+      background-color: #FAF6ED;
+      background-image: radial-gradient(rgba(28, 25, 23, 0.10) 1.2px, transparent 1.2px);
+      background-size: 18px 18px;
+    }
+
+    /* buttons press down like a stamp */
+    .pop-btn { transition: transform 0.12s ease, box-shadow 0.12s ease; }
+    .pop-btn:hover { transform: translateY(-2px); }
+    .pop-btn:active { transform: translate(3px, 3px) !important; box-shadow: 1px 1px 0 #1C1917 !important; }
+
+    /* Oliver: ears wiggle, eyes blink */
+    @keyframes earL { 0%, 78%, 100% { transform: rotate(0); } 82% { transform: rotate(-14deg); } 87% { transform: rotate(9deg); } 92% { transform: rotate(-6deg); } 96% { transform: rotate(0); } }
+    @keyframes earR { 0%, 78%, 100% { transform: rotate(0); } 82% { transform: rotate(14deg); } 87% { transform: rotate(-9deg); } 92% { transform: rotate(6deg); } 96% { transform: rotate(0); } }
+    @keyframes blink { 0%, 91%, 100% { transform: scaleY(1); } 94% { transform: scaleY(0.08); } }
+    .ear-l { transform-origin: 32px 40px; animation: earL 5s ease-in-out infinite; }
+    .ear-r { transform-origin: 88px 40px; animation: earR 5s ease-in-out infinite 0.3s; }
+    .eye { transform-box: fill-box; transform-origin: center; animation: blink 4.2s ease-in-out infinite; }
+    .eye-r { animation-delay: 0.05s; }
+
+    /* hero bubbles take turns */
+    @keyframes bubL { 0%, 8% { opacity: 0; transform: translate(-24px, 6px) scale(0.85); } 14%, 86% { opacity: 1; transform: none; } 93%, 100% { opacity: 0; transform: translate(-12px, 0) scale(0.95); } }
+    @keyframes bubR { 0%, 24% { opacity: 0; transform: translate(24px, 6px) scale(0.85); } 30%, 86% { opacity: 1; transform: none; } 93%, 100% { opacity: 0; transform: translate(12px, 0) scale(0.95); } }
+    @keyframes bubO { 0%, 44% { opacity: 0; transform: translate(-50%, 14px) scale(0.8); } 50%, 86% { opacity: 1; transform: translate(-50%, 0) scale(1); } 93%, 100% { opacity: 0; transform: translate(-50%, 8px) scale(0.9); } }
+    .bub-l { animation: bubL 8s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+    .bub-r { animation: bubR 8s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+    .bub-o { animation: bubO 8s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+
+    /* stickers drift a little */
+    @keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); } 50% { transform: translateY(-4px) rotate(var(--tilt, 0deg)); } }
+    .sticker { animation: bob 3.6s ease-in-out infinite; }
+    .sticker:nth-child(2) { animation-delay: 0.6s; }
+    .sticker:nth-child(3) { animation-delay: 1.2s; }
+
+    /* hero card leans toward the pointer (desktop only) */
+    #hero-card { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.25s ease; will-change: transform; }
+
+    /* things slide in as you scroll */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal[data-delay="1"] { transition-delay: 0.15s; }
+    .reveal[data-delay="2"] { transition-delay: 0.3s; }
+    .reveal[data-delay="3"] { transition-delay: 0.45s; }
+
+    /* step cards light up one after another; the line between them draws itself */
+    .step { transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease; filter: saturate(0.4); }
+    .step.lit { filter: none; transform: translateY(-4px); box-shadow: 5px 5px 0 #1C1917; }
+    #step-line { transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    #step-line.in { transform: scaleX(1); }
+
+    /* typing cursor on Oliver's replies */
+    .typing::after { content: '|'; margin-left: 1px; animation: cursor 0.8s steps(1) infinite; }
+    @keyframes cursor { 50% { opacity: 0; } }
+
+    /* Let's Fight: the button hums, the meter spikes, the toast pops */
+    @keyframes ring { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(1.45); opacity: 0; } }
+    #loud-ring { animation: ring 2.2s ease-out infinite; }
+    #loud-ring.off { animation: none; opacity: 0; }
+    .bar { transform-origin: bottom; transition: transform 0.25s ease; }
+    #meter.loud .bar { animation: spike 0.5s ease-in-out 3; }
+    @keyframes spike { 0%, 100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
+    .bar:nth-child(2) { animation-delay: 0.08s !important; }
+    .bar:nth-child(3) { animation-delay: 0.16s !important; }
+    .bar:nth-child(4) { animation-delay: 0.24s !important; }
+    .bar:nth-child(5) { animation-delay: 0.32s !important; }
+    @keyframes popIn { 0% { opacity: 0; transform: translate(-50%, 12px) scale(0.7); } 60% { transform: translate(-50%, -4px) scale(1.05); } 100% { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+    #fight-toast.show { display: block; animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+    /* privacy: the lock says nope */
+    @keyframes nope { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+    .nope { animation: nope 0.45s ease-in-out; }
+
+    /* chatbot vs Oliver crossfade */
+    .state { transition: opacity 0.35s ease, transform 0.35s ease; }
+    .state.out { opacity: 0; transform: scale(0.96); position: absolute; pointer-events: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+      .bub-l, .bub-r, .bub-o, .reveal, #step-line { opacity: 1 !important; transform: none !important; }
+      .step { filter: none; }
+      #hero-card { transform: none !important; }
+    }
+  </style>
+
+  <script src="/assets/track.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Cuddle Pop",
+    "url": "https://cuddlepop.com/",
+    "logo": "https://cuddlepop.com/assets/apple-touch-icon.png",
+    "slogan": "the friend who's heard both sides."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Cuddle Pop",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "iOS, Android",
+    "description": "Cuddle Pop gives a couple Oliver, the AI mutual friend they share. Each partner tells their side privately, and Oliver helps them agree on what happens next.",
+    "url": "https://cuddlepop.com/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "can my partner see my private chats?", "acceptedAnswer": { "@type": "Answer", "text": "no." } },
+      { "@type": "Question", "name": "is Oliver a real person?", "acceptedAnswer": { "@type": "Answer", "text": "no. an AI, and a bear." } },
+      { "@type": "Question", "name": "is this therapy?", "acceptedAnswer": { "@type": "Answer", "text": "no. if it spots crisis or abuse, it points you to real help." } },
+      { "@type": "Question", "name": "is what i tell Oliver used to train AI?", "acceptedAnswer": { "@type": "Answer", "text": "no." } },
+      { "@type": "Question", "name": "what if we break up?", "acceptedAnswer": { "@type": "Answer", "text": "either of you can lock it for both. we wipe it on request." } }
+    ]
+  }
+  </script>
+</head>
+
+<body class="bg-canvas text-ink antialiased selection:bg-lemon selection:text-ink">
+
+  <!-- Oliver's face, reused by the small illustrations -->
+  <svg width="0" height="0" class="absolute" aria-hidden="true">
+    <symbol id="oliver-face" viewBox="0 0 120 110">
+      <circle cx="32" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
+      <circle cx="32" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/>
+      <circle cx="88" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
+      <circle cx="88" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/>
+      <circle cx="60" cy="66" r="36" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
+      <ellipse cx="60" cy="76" rx="15" ry="11" fill="#FFF9ED" stroke="#1C1917" stroke-width="3"/>
+      <path d="M55 72C55 70 57.3 68.5 60 68.5C62.7 68.5 65 70 65 72C65 74.5 60 77 60 77C60 77 55 74.5 55 72Z" fill="#1C1917"/>
+      <path d="M60 77V80.5M56 80.5C57.3 82 62.7 82 64 80.5" stroke="#1C1917" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="46" cy="61" r="4" fill="#1C1917"/>
+      <circle cx="74" cy="61" r="4" fill="#1C1917"/>
+      <circle cx="38" cy="72" r="4" fill="#F39A85"/>
+      <circle cx="82" cy="72" r="4" fill="#F39A85"/>
+    </symbol>
+  </svg>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-canvas/90 backdrop-blur-md border-b-2 border-ink">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 h-16 xl:h-20 flex items-center justify-between">
+      <a href="#panel-home" class="flex items-center gap-2.5">
+        <svg class="w-9 h-9" aria-hidden="true"><use href="#oliver-face"/></svg>
+        <span class="font-heading font-black text-xl sm:text-2xl tracking-tight whitespace-nowrap">Cuddle Pop</span>
+        <span class="px-2.5 py-0.5 text-xs font-bold bg-peach border-2 border-ink rounded-full shadow-pop-sm">beta</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <a href="/" onclick="window.track && track('mode_switch', { to: 'full' })" class="pop-btn px-3 py-1.5 text-xs sm:text-sm font-extrabold bg-white border-2 border-ink rounded-full shadow-pop-sm whitespace-nowrap">full site</a>
+        <a href="#early-access" onclick="scrollToEarlyAccess(event, 'header')" class="pop-btn px-4 py-1.5 text-sm font-extrabold bg-lemon border-2 border-ink rounded-full shadow-pop whitespace-nowrap">meet Oliver</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="panel-home" class="pt-10 pb-16 px-4 sm:px-6 max-w-[1200px] mx-auto md:grid md:grid-cols-12 md:gap-8 md:items-center md:pt-14 md:pb-20 xl:gap-14 xl:pt-16 xl:pb-24 xl:min-h-[calc(100vh-5rem)]">
+      <div class="text-center max-w-2xl mx-auto mb-10 reveal md:text-left md:mx-0 md:mb-0 md:col-span-6 xl:col-span-6">
+        <h1 class="font-heading font-black text-[2.6rem] sm:text-6xl md:text-5xl xl:text-7xl tracking-tight leading-[1.05] mb-4">the friend who's heard both sides.</h1>
+        <p class="text-base sm:text-lg xl:text-2xl font-semibold text-ink/80 mb-6 md:max-w-md xl:max-w-lg">you each tell Oliver your side. privately. sort it out tonight.</p>
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+          <a href="#early-access" onclick="scrollToEarlyAccess(event, 'hero')" class="pop-btn px-6 py-3 text-base font-extrabold bg-violet text-white border-2 border-ink rounded-full shadow-pop">meet Oliver, it's free</a>
+          <button type="button" onclick="openGetApp('hero')" class="pop-btn px-6 py-3 text-base font-extrabold bg-canvas border-2 border-ink rounded-full shadow-pop">get the app</button>
+        </div>
+      </div>
+
+      <!-- Oliver between two phones -->
+      <div id="hero-card" class="paper relative w-full max-w-xl mx-auto border-2 border-ink rounded-3xl p-6 sm:p-10 xl:p-12 shadow-pop-lg reveal md:col-span-6 md:max-w-none" data-delay="1">
+        <div class="relative flex items-end justify-between min-h-[230px] sm:min-h-[260px] xl:min-h-[360px]">
+          <svg class="w-16 h-28 sm:w-20 sm:h-36 xl:w-24 xl:h-44 mb-2" viewBox="0 0 60 100" fill="none" aria-hidden="true">
+            <rect x="2" y="2" width="56" height="96" rx="10" fill="#EDE9FE" stroke="#1C1917" stroke-width="3"/>
+            <rect x="7" y="10" width="46" height="74" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2"/>
+            <rect x="12" y="20" width="26" height="8" rx="4" fill="#EDE9FE"/>
+            <rect x="22" y="34" width="26" height="8" rx="4" fill="#FEF08A"/>
+            <rect x="12" y="48" width="20" height="8" rx="4" fill="#EDE9FE"/>
+            <circle cx="30" cy="91" r="3" fill="#1C1917"/>
+          </svg>
+
+          <svg class="w-40 h-44 sm:w-52 sm:h-56 xl:w-72 xl:h-80 z-10" viewBox="0 0 120 130" fill="none" role="img" aria-label="Oliver, a round bear, between two phones">
+            <ellipse cx="60" cy="118" rx="34" ry="12" fill="#1C1917" opacity="0.12"/>
+            <ellipse cx="60" cy="104" rx="30" ry="22" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
+            <ellipse cx="60" cy="108" rx="16" ry="12" fill="#FFF9ED" stroke="#1C1917" stroke-width="2.5"/>
+            <ellipse cx="28" cy="100" rx="10" ry="7" transform="rotate(-25 28 100)" fill="#F4B860" stroke="#1C1917" stroke-width="3"/>
+            <ellipse cx="92" cy="100" rx="10" ry="7" transform="rotate(25 92 100)" fill="#F4B860" stroke="#1C1917" stroke-width="3"/>
+            <g class="ear-l"><circle cx="32" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/><circle cx="32" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/></g>
+            <g class="ear-r"><circle cx="88" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/><circle cx="88" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/></g>
+            <circle cx="60" cy="66" r="36" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
+            <ellipse cx="60" cy="76" rx="15" ry="11" fill="#FFF9ED" stroke="#1C1917" stroke-width="3"/>
+            <path d="M55 72C55 70 57.3 68.5 60 68.5C62.7 68.5 65 70 65 72C65 74.5 60 77 60 77C60 77 55 74.5 55 72Z" fill="#1C1917"/>
+            <path d="M60 77V80.5M56 80.5C57.3 82 62.7 82 64 80.5" stroke="#1C1917" stroke-width="3" stroke-linecap="round"/>
+            <circle class="eye" cx="46" cy="61" r="4" fill="#1C1917"/>
+            <circle class="eye eye-r" cx="74" cy="61" r="4" fill="#1C1917"/>
+            <circle cx="38" cy="72" r="4" fill="#F39A85"/>
+            <circle cx="82" cy="72" r="4" fill="#F39A85"/>
+          </svg>
+
+          <svg class="w-16 h-28 sm:w-20 sm:h-36 xl:w-24 xl:h-44 mb-2" viewBox="0 0 60 100" fill="none" aria-hidden="true">
+            <rect x="2" y="2" width="56" height="96" rx="10" fill="#FFE7EC" stroke="#1C1917" stroke-width="3"/>
+            <rect x="7" y="10" width="46" height="74" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2"/>
+            <rect x="22" y="20" width="26" height="8" rx="4" fill="#FFE7EC"/>
+            <rect x="12" y="34" width="26" height="8" rx="4" fill="#FEF08A"/>
+            <rect x="28" y="48" width="20" height="8" rx="4" fill="#FFE7EC"/>
+            <circle cx="30" cy="91" r="3" fill="#1C1917"/>
+          </svg>
+
+          <div class="bub-l absolute top-0 left-0 px-3 py-1.5 bg-lavender border-2 border-ink rounded-2xl rounded-bl-sm shadow-pop-sm text-xs sm:text-sm xl:text-base font-bold">the call. AGAIN.</div>
+          <div class="bub-r absolute top-2 right-0 px-3 py-1.5 bg-peach border-2 border-ink rounded-2xl rounded-br-sm shadow-pop-sm text-xs sm:text-sm xl:text-base font-bold">i said i'd try.</div>
+          <div class="bub-o absolute -bottom-3 left-1/2 px-4 py-2 bg-lemon border-2 border-ink rounded-2xl shadow-pop text-xs sm:text-sm xl:text-base font-black whitespace-nowrap z-20">heard you both. open a fight?</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- you know the fight -->
+    <section id="problem" class="py-14 md:py-20 xl:py-24 px-4 sm:px-6 max-w-[1200px] mx-auto border-t-2 border-ink">
+      <div class="max-w-xl md:max-w-2xl mx-auto text-center xl:max-w-5xl xl:grid xl:grid-cols-2 xl:gap-14 xl:items-center xl:text-left">
+       <div>
+        <h2 class="font-heading font-black text-3xl sm:text-4xl xl:text-5xl mb-6 reveal">you know the fight.</h2>
+        <div class="flex flex-wrap justify-center xl:justify-start gap-3 mb-6 xl:mb-0 reveal" data-delay="1">
+          <button type="button" onclick="pickChip(0, this)" class="pop-btn chip sticker px-4 py-2 text-sm font-extrabold bg-lemon border-2 border-ink rounded-full shadow-pop" style="--tilt:-2deg">the call they forgot.</button>
+          <button type="button" onclick="pickChip(1, this)" class="pop-btn chip sticker px-4 py-2 text-sm font-extrabold bg-peach border-2 border-ink rounded-full shadow-pop" style="--tilt:1.5deg">the "k." that started a war.</button>
+          <button type="button" onclick="pickChip(2, this)" class="pop-btn chip sticker px-4 py-2 text-sm font-extrabold bg-lavender border-2 border-ink rounded-full shadow-pop" style="--tilt:-1deg">the thing you can't say to their face.</button>
+        </div>
+       </div>
+        <div class="flex items-center justify-center gap-3 max-w-md mx-auto xl:max-w-none xl:mx-0 xl:gap-5 reveal" data-delay="2">
+          <svg class="w-12 h-12 xl:w-24 xl:h-24 shrink-0" aria-hidden="true"><use href="#oliver-face"/></svg>
+          <div class="relative flex-1 bg-white border-2 border-ink rounded-2xl rounded-bl-sm p-4 xl:p-7 shadow-pop-sm xl:shadow-pop min-h-[60px] xl:min-h-[120px] flex items-center">
+            <span id="chip-reply" class="text-sm sm:text-base xl:text-2xl font-extrabold text-left" aria-live="polite">tap one.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- your AI only heard your side -->
+    <section id="why-not-chatbot" class="py-14 md:py-20 xl:py-24 px-4 sm:px-6 max-w-[1200px] mx-auto border-t-2 border-ink">
+      <div class="max-w-xl md:max-w-2xl mx-auto text-center xl:max-w-5xl xl:grid xl:grid-cols-2 xl:gap-14 xl:items-center xl:text-left">
+       <div>
+        <h2 class="font-heading font-black text-3xl sm:text-4xl xl:text-5xl mb-6 reveal">your AI only heard your side.</h2>
+        <div class="inline-flex p-1.5 bg-canvas border-2 border-ink rounded-full shadow-pop mb-8 reveal" data-delay="1" role="tablist" aria-label="who is listening">
+          <button type="button" id="tab-chatbot" role="tab" aria-selected="true" onclick="setListener('chatbot')" class="px-4 py-1.5 text-sm font-extrabold rounded-full transition-colors bg-ink text-white">a chatbot</button>
+          <button type="button" id="tab-oliver" role="tab" aria-selected="false" onclick="setListener('oliver')" class="px-4 py-1.5 text-sm font-extrabold rounded-full transition-colors">Oliver</button>
+        </div>
+        <p class="hidden xl:block text-lg font-bold text-ink/80 reveal" data-delay="2">Oliver hears both of you first.</p>
+       </div>
+        <div id="listener-box" class="paper relative border-2 border-ink rounded-3xl p-6 sm:p-8 xl:p-12 shadow-pop-lg min-h-[200px] xl:min-h-[320px] flex items-center justify-center mb-4 xl:mb-0 reveal" data-delay="2">
+          <div id="state-chatbot" class="state flex flex-col items-center gap-3">
+            <svg class="w-16 h-24" viewBox="0 0 60 100" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="56" height="96" rx="8" fill="#EDE9FE" stroke="#1C1917" stroke-width="3"/>
+              <rect x="8" y="10" width="44" height="72" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2"/>
+              <rect x="13" y="22" width="24" height="7" rx="3.5" fill="#EDE9FE"/>
+              <rect x="23" y="36" width="24" height="7" rx="3.5" fill="#EDE9FE"/>
+              <rect x="13" y="50" width="24" height="7" rx="3.5" fill="#EDE9FE"/>
+              <circle cx="30" cy="90" r="3" fill="#1C1917"/>
+            </svg>
+            <div class="px-4 py-2 bg-white border-2 border-ink rounded-2xl shadow-pop-sm text-sm font-extrabold">you're right.</div>
+          </div>
+          <div id="state-oliver" class="state out flex flex-col items-center gap-3">
+            <div class="flex items-center gap-4">
+              <svg class="w-12 h-20" viewBox="0 0 60 100" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="56" height="96" rx="8" fill="#EDE9FE" stroke="#1C1917" stroke-width="3"/>
+                <rect x="8" y="10" width="44" height="72" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2"/>
+              </svg>
+              <svg class="w-20 h-20 xl:w-28 xl:h-28" aria-hidden="true"><use href="#oliver-face"/></svg>
+              <svg class="w-12 h-20" viewBox="0 0 60 100" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="56" height="96" rx="8" fill="#FFE7EC" stroke="#1C1917" stroke-width="3"/>
+                <rect x="8" y="10" width="44" height="72" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="px-4 py-2 bg-lemon border-2 border-ink rounded-2xl shadow-pop-sm text-sm font-extrabold">you both have a point.</div>
+          </div>
+        </div>
+        <p class="xl:hidden text-sm font-bold text-ink/80 reveal" data-delay="3">Oliver hears both of you first.</p>
+      </div>
+    </section>
+
+    <!-- three steps -->
+    <section id="panel-how-it-works" class="py-14 md:py-20 xl:py-24 px-4 sm:px-6 max-w-[1200px] mx-auto border-t-2 border-ink">
+      <div class="max-w-4xl xl:max-w-6xl mx-auto">
+        <h2 class="font-heading font-black text-3xl sm:text-4xl xl:text-5xl text-center mb-8 xl:mb-12 reveal">three steps.</h2>
+        <div class="relative">
+          <div id="step-line" class="hidden md:block absolute top-1/2 left-[8%] right-[8%] h-1 bg-ink -z-10" aria-hidden="true"></div>
+          <div id="steps" class="grid grid-cols-1 md:grid-cols-3 gap-4 xl:gap-8 mb-6">
+            <div class="step bg-lavender border-2 border-ink rounded-2xl p-5 xl:p-8 shadow-pop reveal">
+              <div class="w-8 h-8 rounded-full bg-white border-2 border-ink flex items-center justify-center font-heading font-black text-sm mb-3 shadow-pop-sm">1</div>
+              <h3 class="font-heading font-bold text-lg xl:text-2xl">your side, privately.</h3>
+              <div class="mt-4 flex justify-end">
+                <svg class="w-11 h-11" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+                  <rect x="8" y="16" width="24" height="18" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2.5"/>
+                  <path d="M14 16V11C14 7.7 16.7 5 20 5C23.3 5 26 7.7 26 11V16" stroke="#1C1917" stroke-width="2.5" stroke-linecap="round"/>
+                  <circle cx="20" cy="25" r="2.5" fill="#1C1917"/>
+                </svg>
+              </div>
+            </div>
+            <div class="step bg-peach border-2 border-ink rounded-2xl p-5 xl:p-8 shadow-pop reveal" data-delay="1">
+              <div class="w-8 h-8 rounded-full bg-white border-2 border-ink flex items-center justify-center font-heading font-black text-sm mb-3 shadow-pop-sm">2</div>
+              <h3 class="font-heading font-bold text-lg xl:text-2xl">theirs, minus the heat.</h3>
+              <div class="mt-4 flex justify-end">
+                <svg class="w-11 h-11" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+                  <path d="M10 26C10 20 16 16 20 8C24 16 30 20 30 26C30 31.5 25.5 36 20 36C14.5 36 10 31.5 10 26Z" fill="#FFFFFF" stroke="#1C1917" stroke-width="2.5"/>
+                  <path d="M16 27C16 24 18 22 20 19C22 22 24 24 24 27C24 29.2 22.2 31 20 31C17.8 31 16 29.2 16 27Z" fill="#FEF08A" stroke="#1C1917" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="step bg-lemon border-2 border-ink rounded-2xl p-5 xl:p-8 shadow-pop reveal" data-delay="2">
+              <div class="w-8 h-8 rounded-full bg-white border-2 border-ink flex items-center justify-center font-heading font-black text-sm mb-3 shadow-pop-sm">3</div>
+              <h3 class="font-heading font-bold text-lg xl:text-2xl">one thing you both said yes to.</h3>
+              <div class="mt-4 flex justify-end">
+                <svg class="w-11 h-11" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+                  <circle cx="20" cy="20" r="14" fill="#FFFFFF" stroke="#1C1917" stroke-width="2.5"/>
+                  <path d="M13 20L18 25L27 15" stroke="#6260D6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="text-sm xl:text-lg font-bold text-center text-ink/80 reveal">between fights: talk, journal, games, stories.</p>
+      </div>
+    </section>
+
+    <!-- Let's Fight -->
+    <section id="panel-lets-fight" class="py-14 md:py-20 xl:py-24 px-4 sm:px-6 max-w-[1200px] mx-auto border-t-2 border-ink">
+      <div class="max-w-xl mx-auto text-center xl:max-w-5xl xl:grid xl:grid-cols-2 xl:gap-14 xl:items-center xl:text-left">
+       <div class="xl:col-start-1 xl:row-start-1 xl:self-end">
+        <div class="inline-block px-3 py-1 bg-peach border-2 border-ink rounded-full text-xs font-black tracking-wider mb-3 shadow-pop-sm reveal">Let's Fight</div>
+        <h2 class="font-heading font-black text-3xl sm:text-4xl xl:text-5xl mb-8 xl:mb-6 reveal">mid-argument? tap once.</h2>
+       </div>
+       <div class="xl:col-start-2 xl:row-start-1 xl:row-span-2">
+        <div id="meter" class="flex items-end justify-center gap-1.5 h-8 mb-4 reveal" data-delay="1" aria-hidden="true">
+          <span class="bar w-2 h-full bg-ink rounded-full" style="transform:scaleY(0.3)"></span>
+          <span class="bar w-2 h-full bg-violet rounded-full" style="transform:scaleY(0.5)"></span>
+          <span class="bar w-2 h-full bg-ink rounded-full" style="transform:scaleY(0.35)"></span>
+          <span class="bar w-2 h-full bg-violet rounded-full" style="transform:scaleY(0.6)"></span>
+          <span class="bar w-2 h-full bg-ink rounded-full" style="transform:scaleY(0.3)"></span>
+        </div>
+
+        <div class="relative inline-block mb-8 reveal" data-delay="1">
+          <span id="loud-ring" class="absolute inset-0 rounded-full bg-violet" aria-hidden="true"></span>
+          <button type="button" onclick="getLoud()" class="pop-btn relative w-44 h-44 sm:w-52 sm:h-52 xl:w-64 xl:h-64 rounded-full bg-violet text-white border-[3px] border-ink shadow-pop-lg flex flex-col items-center justify-center p-4">
+            <svg class="w-9 h-9 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="22"/>
+            </svg>
+            <span class="font-heading font-black text-lg xl:text-2xl leading-tight">it's getting loud</span>
+          </button>
+          <div id="fight-toast" role="status" class="hidden absolute -top-16 left-1/2 w-72 bg-lemon border-2 border-ink rounded-2xl p-3 shadow-pop text-sm font-black z-30">
+            <span class="inline-flex items-center gap-2"><svg class="w-7 h-7 shrink-0" aria-hidden="true"><use href="#oliver-face"/></svg>take ten? i'll hold the thought.</span>
+          </div>
+        </div>
+       </div>
+
+        <div class="flex flex-wrap justify-center xl:justify-start gap-2 xl:col-start-1 xl:row-start-2 xl:self-start reveal" data-delay="2">
+          <span class="sticker inline-block px-3 py-1 bg-white border-2 border-ink rounded-full text-xs xl:text-sm font-bold shadow-pop-sm" style="--tilt:-1.5deg">you both say yes first</span>
+          <span class="sticker inline-block px-3 py-1 bg-lavender border-2 border-ink rounded-full text-xs xl:text-sm font-bold shadow-pop-sm" style="--tilt:1deg">audio deleted once written down</span>
+          <span class="sticker inline-block px-3 py-1 bg-peach border-2 border-ink rounded-full text-xs xl:text-sm font-bold shadow-pop-sm" style="--tilt:-1deg">nobody gets diagnosed</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- privacy -->
+    <section id="panel-privacy" class="py-14 md:py-20 xl:py-24 px-4 sm:px-6 max-w-[1200px] mx-auto border-t-2 border-ink">
+      <div class="paper max-w-2xl md:max-w-3xl xl:max-w-5xl mx-auto border-2 border-ink rounded-3xl p-6 sm:p-10 xl:p-14 shadow-pop-lg reveal">
+        <h2 class="font-heading font-black text-3xl sm:text-4xl xl:text-5xl text-center mb-8">a good friend keeps what you told them.</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 xl:gap-16 items-center">
+          <button type="button" onclick="shakeLock()" class="flex justify-center focus:outline-none" aria-label="try to open the lock">
+            <svg class="w-44 h-44 xl:w-72 xl:h-72" viewBox="0 0 120 130" fill="none" aria-hidden="true">
+              <ellipse cx="60" cy="104" rx="30" ry="22" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
+              <circle cx="32" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
+              <circle cx="32" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/>
+              <circle cx="88" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
+              <circle cx="88" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/>
+              <circle cx="60" cy="66" r="36" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
+              <path d="M40 60 Q46 65 52 60" stroke="#1C1917" stroke-width="3.5" stroke-linecap="round"/>
+              <circle cx="74" cy="61" r="4" fill="#1C1917"/>
+              <ellipse cx="60" cy="76" rx="15" ry="11" fill="#FFF9ED" stroke="#1C1917" stroke-width="3"/>
+              <path d="M55 72C55 70 57.3 68.5 60 68.5C62.7 68.5 65 70 65 72C65 74.5 60 77 60 77C60 77 55 74.5 55 72Z" fill="#1C1917"/>
+              <path d="M54 81C57 83.5 63 83.5 66 81" stroke="#1C1917" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="38" cy="72" r="4" fill="#F39A85"/>
+              <circle cx="82" cy="72" r="4" fill="#F39A85"/>
+              <g id="lock">
+                <rect x="44" y="96" width="32" height="26" rx="5" fill="#EDE9FE" stroke="#1C1917" stroke-width="3"/>
+                <path d="M50 96V88C50 82.5 54.5 78 60 78C65.5 78 70 82.5 70 88V96" stroke="#1C1917" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="60" cy="108" r="3.5" fill="#1C1917"/>
+                <path d="M60 108V114" stroke="#1C1917" stroke-width="3" stroke-linecap="round"/>
+              </g>
+              <ellipse cx="40" cy="106" rx="9" ry="7" fill="#F4B860" stroke="#1C1917" stroke-width="3"/>
+              <ellipse cx="80" cy="106" rx="9" ry="7" fill="#F4B860" stroke="#1C1917" stroke-width="3"/>
+            </svg>
+          </button>
+          <ul class="space-y-4">
+            <li class="flex items-center gap-3 reveal" data-delay="1"><span class="w-7 h-7 rounded-full bg-lemon border-2 border-ink flex items-center justify-center shrink-0 shadow-pop-sm"><svg class="w-4 h-4" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7L6 10L11 4" stroke="#1C1917" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="text-base xl:text-2xl font-extrabold">can't quote you.</span></li>
+            <li class="flex items-center gap-3 reveal" data-delay="2"><span class="w-7 h-7 rounded-full bg-peach border-2 border-ink flex items-center justify-center shrink-0 shadow-pop-sm"><svg class="w-4 h-4" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7L6 10L11 4" stroke="#1C1917" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="text-base xl:text-2xl font-extrabold">can't hint at it.</span></li>
+            <li class="flex items-center gap-3 reveal" data-delay="3"><span class="w-7 h-7 rounded-full bg-lavender border-2 border-ink flex items-center justify-center shrink-0 shadow-pop-sm"><svg class="w-4 h-4" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7L6 10L11 4" stroke="#1C1917" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="text-base xl:text-2xl font-extrabold">nothing shared unless you say so.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- pricing -->
+    <section id="panel-pricing" class="py-14 md:py-20 xl:py-24 px-4 sm:px-6 max-w-[1200px] mx-auto border-t-2 border-ink">
+      <div class="max-w-2xl xl:max-w-4xl mx-auto">
+        <h2 class="font-heading font-black text-3xl sm:text-4xl xl:text-5xl text-center mb-8 xl:mb-12 reveal">one sub covers both of you.</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="bg-white border-2 border-ink rounded-3xl p-6 xl:p-10 shadow-pop reveal" data-delay="1">
+            <h3 class="font-heading font-black text-2xl xl:text-3xl mb-4">free</h3>
+            <ul class="space-y-3 font-bold text-sm xl:text-lg">
+              <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-ink"></span>chat, with a daily cap</li>
+              <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-ink"></span>fights, journal, games</li>
+            </ul>
+          </div>
+          <div class="bg-lemon border-2 border-ink rounded-3xl p-6 xl:p-10 shadow-pop reveal" data-delay="2">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-heading font-black text-2xl xl:text-3xl">plus</h3>
+              <span class="px-3 py-1 bg-peach border-2 border-ink rounded-full text-xs font-black shadow-pop-sm">price at launch</span>
+            </div>
+            <ul class="space-y-3 font-bold text-sm xl:text-lg">
+              <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-ink"></span>no daily cap</li>
+              <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-ink"></span>Let's Fight, live</li>
+              <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-ink"></span>every game</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- faq -->
+    <section id="faq" class="py-14 md:py-20 xl:py-24 px-4 sm:px-6 max-w-[1200px] mx-auto border-t-2 border-ink">
+      <div class="max-w-xl md:max-w-3xl xl:max-w-5xl mx-auto">
+        <h2 class="font-heading font-black text-3xl sm:text-4xl xl:text-5xl text-center mb-8 xl:mb-12 reveal">stuff couples ask first.</h2>
+        <div id="faq-list" class="space-y-3 md:space-y-0 md:grid md:grid-cols-2 md:gap-4 md:items-start reveal" data-delay="1">
+          <div class="border-2 border-ink rounded-2xl bg-white shadow-pop-sm overflow-hidden">
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full text-left px-5 py-3.5 flex items-center justify-between font-extrabold text-sm sm:text-base"><span>can my partner see my private chats?</span><span class="faq-ic font-heading text-lg font-black ml-2" aria-hidden="true">+</span></button>
+            <div class="faq-a hidden px-5 pb-3.5 pt-1 text-sm font-bold text-ink/80 bg-canvas">no.</div>
+          </div>
+          <div class="border-2 border-ink rounded-2xl bg-white shadow-pop-sm overflow-hidden">
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full text-left px-5 py-3.5 flex items-center justify-between font-extrabold text-sm sm:text-base"><span>is Oliver a real person?</span><span class="faq-ic font-heading text-lg font-black ml-2" aria-hidden="true">+</span></button>
+            <div class="faq-a hidden px-5 pb-3.5 pt-1 text-sm font-bold text-ink/80 bg-canvas">no. an AI, and a bear.</div>
+          </div>
+          <div class="border-2 border-ink rounded-2xl bg-white shadow-pop-sm overflow-hidden">
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full text-left px-5 py-3.5 flex items-center justify-between font-extrabold text-sm sm:text-base"><span>is this therapy?</span><span class="faq-ic font-heading text-lg font-black ml-2" aria-hidden="true">+</span></button>
+            <div class="faq-a hidden px-5 pb-3.5 pt-1 text-sm font-bold text-ink/80 bg-canvas">no. if it spots crisis or abuse, it points you to real help.</div>
+          </div>
+          <div class="border-2 border-ink rounded-2xl bg-white shadow-pop-sm overflow-hidden">
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full text-left px-5 py-3.5 flex items-center justify-between font-extrabold text-sm sm:text-base"><span>is what i tell Oliver used to train AI?</span><span class="faq-ic font-heading text-lg font-black ml-2" aria-hidden="true">+</span></button>
+            <div class="faq-a hidden px-5 pb-3.5 pt-1 text-sm font-bold text-ink/80 bg-canvas">no.</div>
+          </div>
+          <div class="border-2 border-ink rounded-2xl bg-white shadow-pop-sm overflow-hidden">
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full text-left px-5 py-3.5 flex items-center justify-between font-extrabold text-sm sm:text-base"><span>what if we break up?</span><span class="faq-ic font-heading text-lg font-black ml-2" aria-hidden="true">+</span></button>
+            <div class="faq-a hidden px-5 pb-3.5 pt-1 text-sm font-bold text-ink/80 bg-canvas">either of you can lock it for both. we wipe it on request.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- early access -->
+    <section id="early-access" class="py-14 md:py-20 xl:py-24 px-4 sm:px-6 max-w-[1200px] mx-auto border-t-2 border-ink">
+      <div class="max-w-xl md:max-w-3xl xl:max-w-5xl mx-auto bg-lemon border-2 border-ink rounded-3xl p-6 sm:p-10 xl:p-14 shadow-pop-lg text-center md:text-left md:grid md:grid-cols-[auto_1fr] md:gap-x-8 xl:gap-x-14 md:items-center reveal">
+        <svg class="w-16 h-16 mx-auto mb-3 md:w-36 md:h-36 md:mx-0 md:mb-0 md:row-span-4 xl:w-52 xl:h-52" aria-hidden="true"><use href="#oliver-face"/></svg>
+        <h2 class="font-heading font-black text-2xl sm:text-3xl xl:text-5xl mb-6">be one of the first couples to meet Oliver.</h2>
+        <form onsubmit="handleWaitlist(event)" class="max-w-md mx-auto md:mx-0 xl:max-w-lg space-y-3 mb-3">
+          <input type="hidden" name="ref" id="waitlist-ref" value="">
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input type="email" id="waitlist-email" required placeholder="your email" autocomplete="email" class="w-full min-w-0 px-4 py-3 bg-white border-2 border-ink rounded-full text-sm font-bold placeholder:text-ink/50 focus:outline-none focus:ring-2 focus:ring-violet shadow-pop-sm">
+            <button type="submit" id="waitlist-submit" class="pop-btn px-6 py-3 bg-violet text-white font-extrabold text-sm border-2 border-ink rounded-full shadow-pop whitespace-nowrap"><span>count us in</span></button>
+          </div>
+          <div id="waitlist-success" class="hidden text-sm font-bold bg-white border-2 border-ink rounded-full py-2 px-4">you're in. now send this to your person.</div>
+          <div id="share-wrap" class="hidden justify-center md:justify-start">
+            <button type="button" id="share-btn" onclick="shareInvite()" class="pop-btn px-6 py-3 bg-violet text-white font-extrabold text-sm border-2 border-ink rounded-full shadow-pop"><span id="share-label">send to your person</span></button>
+          </div>
+        </form>
+        <p class="text-xs font-bold text-ink/80">no card. one email when it's your turn.</p>
+        <p class="text-xs font-bold mt-2"><button type="button" onclick="openGetApp('footer')" class="underline underline-offset-2 decoration-2 hover:text-violet">get the app</button></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-10 px-4 sm:px-6 max-w-[1200px] mx-auto border-t-2 border-ink">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+      <div>
+        <div class="font-heading font-black text-xl">Cuddle Pop</div>
+        <div class="text-xs font-bold text-ink/80">the friend who's heard both sides.</div>
+        <div class="text-xs font-bold text-ink/60 mt-1">an AI friend for two. not therapy, not for emergencies.</div>
+      </div>
+      <div class="text-xs font-bold text-ink/70">&copy; 2026 Cuddle Pop</div>
+    </div>
+  </footer>
+
+  <!-- get the app: platform picker. switches itself on when APP_LINKS are filled in -->
+  <div id="get-app" class="hidden fixed inset-0 z-[60] bg-ink/40 flex items-center justify-center" onclick="if (event.target === this) closeGetApp()">
+    <div role="dialog" aria-modal="true" aria-labelledby="get-app-title" class="relative bg-white border-2 border-ink rounded-3xl shadow-pop-lg p-6 max-w-sm w-[calc(100%-2rem)] space-y-4">
+      <button type="button" onclick="closeGetApp()" aria-label="close" class="absolute top-3 right-3 w-8 h-8 inline-flex items-center justify-center rounded-full border-2 border-ink bg-white font-heading font-bold hover:bg-canvas"><span aria-hidden="true" class="text-lg leading-none">&times;</span></button>
+      <div class="pr-10">
+        <h2 id="get-app-title" tabindex="-1" class="font-heading font-black text-2xl focus:outline-none">get the app.</h2>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <button type="button" id="get-app-android" onclick="pickPlatform('android')" class="pop-btn font-extrabold border-2 border-ink rounded-full py-3 bg-lemon shadow-pop-sm">android</button>
+        <button type="button" id="get-app-ios" onclick="pickPlatform('ios')" class="pop-btn font-extrabold border-2 border-ink rounded-full py-3 bg-lavender shadow-pop-sm">iOS</button>
+      </div>
+      <div id="get-app-ready-android" class="hidden space-y-2 text-center">
+        <a id="get-app-dl-android" download href="#" onclick="window.track && track('get_app_download', { platform: 'android' })" class="pop-btn inline-flex w-full items-center justify-center bg-violet text-white font-extrabold text-sm px-5 py-3 rounded-full border-2 border-ink shadow-pop">download for android</a>
+        <p class="text-xs font-bold text-ink/70">your phone will ask to allow installs from the browser. that's normal.</p>
+      </div>
+      <div id="get-app-ready-ios" class="hidden text-center">
+        <a id="get-app-dl-ios" href="#" onclick="window.track && track('get_app_download', { platform: 'ios' })" class="pop-btn inline-flex w-full items-center justify-center bg-violet text-white font-extrabold text-sm px-5 py-3 rounded-full border-2 border-ink shadow-pop">get it on iOS</a>
+      </div>
+      <div id="get-app-not-ready" class="hidden space-y-3 text-center">
+        <p class="text-sm font-bold">not out yet. leave your email, we'll send the link the day it's ready.</p>
+        <button type="button" onclick="closeGetApp(); goToWaitlist();" class="pop-btn inline-flex w-full items-center justify-center bg-violet text-white font-extrabold text-sm px-5 py-3 rounded-full border-2 border-ink shadow-pop">count us in</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const APP_LINKS = { android: '', ios: '' }; // TODO(ready): set the APK URL (e.g. 'assets/cuddlepop.apk') and the iOS link when the builds are ready
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Old hashes (and a few aliases) still land on the right section
+    const HASH_MAP = {
+      'home': 'panel-home', 'hero': 'panel-home', 'how-it-works': 'panel-how-it-works', 'lets-fight': 'panel-lets-fight',
+      'privacy': 'panel-privacy', 'pricing': 'panel-pricing', 'cta': 'early-access'
+    };
+    function resolveTarget(hash) {
+      hash = (hash || '').replace('#', '').toLowerCase();
+      if (!hash) return null;
+      return document.getElementById(HASH_MAP[hash] || hash);
+    }
+
+    // Scroll reveal; the step cards light up in order once they are on screen
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal, #step-line').forEach(el => el.classList.add('in'));
+      document.querySelectorAll('#steps .step').forEach(el => el.classList.add('lit'));
+    }
+    const io = ('IntersectionObserver' in window) ? new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+        if (entry.target.id === 'steps') lightSteps();
+        if (entry.target.id === 'listener-box') autoFlipListener();
+      });
+    }, { threshold: 0.2 }) : null;
+    if (io) document.querySelectorAll('.reveal, #steps, #listener-box').forEach(el => io.observe(el));
+
+
+    function lightSteps() {
+      const line = document.getElementById('step-line');
+      if (line) line.classList.add('in');
+      document.querySelectorAll('#steps .step').forEach((card, i) => {
+        setTimeout(() => card.classList.add('lit'), reducedMotion ? 0 : 500 + i * 450);
+      });
+    }
+
+    // Hero card leans toward the pointer
+    (function heroTilt() {
+      const card = document.getElementById('hero-card');
+      if (!card || reducedMotion || !window.matchMedia('(hover: hover)').matches) return;
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg');
+        card.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg');
+      });
+      card.addEventListener('mouseleave', () => { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); });
+    })();
+
+    // "you know the fight": tap a chip, Oliver types a reply
+    const CHIP_REPLIES = ['that would get to me too.', 'ok. two sides to that one.', 'say it here. only Oliver hears it.'];
+    let typeTimer = null;
+    function pickChip(i, btn) {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('ring-4', 'ring-violet/40'));
+      btn.classList.add('ring-4', 'ring-violet/40');
+      typeInto(document.getElementById('chip-reply'), CHIP_REPLIES[i]);
+      window.track && track('chip_tap', { chip: i });
+    }
+    function typeInto(el, text) {
+      clearTimeout(typeTimer);
+      if (reducedMotion) { el.textContent = text; return; }
+      el.textContent = '';
+      el.classList.add('typing');
+      let n = 0;
+      (function step() {
+        el.textContent = text.slice(0, ++n);
+        if (n < text.length) typeTimer = setTimeout(step, 28);
+        else typeTimer = setTimeout(() => el.classList.remove('typing'), 900);
+      })();
+    }
+
+    // chatbot vs Oliver
+    let listenerTouched = false;
+    function setListener(which, auto) {
+      if (!auto) listenerTouched = true;
+      const isOliver = which === 'oliver';
+      document.getElementById('state-oliver').classList.toggle('out', !isOliver);
+      document.getElementById('state-chatbot').classList.toggle('out', isOliver);
+      [['tab-chatbot', !isOliver], ['tab-oliver', isOliver]].forEach(([id, on]) => {
+        const b = document.getElementById(id);
+        b.setAttribute('aria-selected', String(on));
+        b.classList.toggle('bg-ink', on);
+        b.classList.toggle('text-white', on);
+      });
+      if (!auto) window.track && track('listener_toggle', { which: which });
+    }
+    function autoFlipListener() {
+      setTimeout(() => { if (!listenerTouched) setListener('oliver', true); }, reducedMotion ? 0 : 1800);
+    }
+
+    // Let's Fight: the meter spikes, Oliver steps in
+    let toastTimer = null;
+    function getLoud() {
+      const meter = document.getElementById('meter');
+      const toast = document.getElementById('fight-toast');
+      const ring = document.getElementById('loud-ring');
+      meter.classList.remove('loud'); void meter.offsetWidth; meter.classList.add('loud');
+      ring.classList.add('off');
+      clearTimeout(toastTimer);
+      toast.classList.remove('show'); void toast.offsetWidth;
+      setTimeout(() => toast.classList.add('show'), reducedMotion ? 0 : 900);
+      toastTimer = setTimeout(() => { toast.classList.remove('show'); ring.classList.remove('off'); }, 4500);
+      window.track && track('lets_fight_demo', {});
+    }
+
+    // privacy: the lock does not open
+    function shakeLock() {
+      const lock = document.getElementById('lock');
+      lock.classList.remove('nope'); void lock.getBBox(); lock.classList.add('nope');
+    }
+
+    // FAQ accordion, one open at a time
+    function toggleFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const open = answer.classList.contains('hidden');
+      document.querySelectorAll('#faq-list .faq-a').forEach(a => a.classList.add('hidden'));
+      document.querySelectorAll('#faq-list .faq-ic').forEach(i => i.textContent = '+');
+      document.querySelectorAll('#faq-list button').forEach(b => b.setAttribute('aria-expanded', 'false'));
+      if (open) {
+        answer.classList.remove('hidden');
+        btn.querySelector('.faq-ic').textContent = '−';
+        btn.setAttribute('aria-expanded', 'true');
+        const q = btn.querySelector('span');
+        window.track && track('faq_open', { question: q ? q.textContent.trim() : '' });
+      }
+    }
+
+    // Early access
+    function goToWaitlist() {
+      const el = document.getElementById('early-access');
+      if (!el) return;
+      el.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'center' });
+      const input = document.getElementById('waitlist-email');
+      if (input) setTimeout(() => input.focus({ preventScroll: true }), 500);
+    }
+    function scrollToEarlyAccess(e, location) {
+      if (e) e.preventDefault();
+      if (location) window.track && track('cta_click', { location: location });
+      goToWaitlist();
+    }
+    function handleWaitlist(e) {
+      e.preventDefault();
+      const input = document.getElementById('waitlist-email');
+      const submitBtn = document.getElementById('waitlist-submit');
+      const successMsg = document.getElementById('waitlist-success');
+      if (!input || !input.value) return;
+      window.track && track('cta_click', { location: 'footer' });
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>one sec...</span>';
+      setTimeout(() => {
+        submitBtn.classList.add('hidden');
+        input.disabled = true;
+        successMsg.classList.remove('hidden');
+        const refInput = document.getElementById('waitlist-ref');
+        window.track && track('waitlist_signup', { ref: refInput ? refInput.value : '' });
+        showShare();
+      }, 600);
+    }
+    (function fillRef() {
+      try {
+        const ref = new URLSearchParams(window.location.search).get('ref');
+        const el = document.getElementById('waitlist-ref');
+        if (ref && el) el.value = ref.replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
+      } catch (err) { /* old browser: leave ref empty */ }
+    })();
+
+    // Share step after sign-up: native share sheet when available, else copy the link
+    const INVITE_URL = 'https://cuddlepop.com/?ref=invite';
+    const INVITE_TEXT = 'Oliver wants to hear your side.';
+    const canShare = typeof navigator.share === 'function';
+    function showShare() {
+      const wrap = document.getElementById('share-wrap');
+      const label = document.getElementById('share-label');
+      if (!wrap) return;
+      if (!canShare && label) label.textContent = 'copy link';
+      wrap.classList.remove('hidden');
+      wrap.classList.add('flex');
+    }
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+      return new Promise((resolve, reject) => {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        ok ? resolve() : reject(new Error('copy failed'));
+      });
+    }
+    let copyTimer = null;
+    function copyInvite() {
+      const label = document.getElementById('share-label');
+      copyText(INVITE_TEXT + ' ' + INVITE_URL).then(() => {
+        if (!label) return;
+        label.textContent = 'copied.';
+        clearTimeout(copyTimer);
+        copyTimer = setTimeout(() => { label.textContent = 'copy link'; }, 2000);
+      }).catch(() => {});
+    }
+    function shareInvite() {
+      if (canShare) {
+        window.track && track('invite_share', { method: 'share' });
+        navigator.share({ title: 'Cuddle Pop', text: INVITE_TEXT, url: INVITE_URL }).catch(() => {});
+      } else {
+        window.track && track('invite_share', { method: 'copy' });
+        copyInvite();
+      }
+    }
+
+    // Get the app: platform picker modal
+    let getAppOpener = null;
+    function detectPlatform() {
+      const ua = navigator.userAgent || '';
+      if (/android/i.test(ua)) return 'android';
+      if (/iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1)) return 'ios';
+      return null;
+    }
+    function openGetApp(location) {
+      const modal = document.getElementById('get-app');
+      if (!modal) return;
+      getAppOpener = document.activeElement;
+      ['get-app-ready-android', 'get-app-ready-ios', 'get-app-not-ready'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      const guess = detectPlatform();
+      ['android', 'ios'].forEach(p => {
+        const b = document.getElementById('get-app-' + p);
+        b.classList.toggle('ring-4', p === guess);
+        b.classList.toggle('ring-violet/40', p === guess);
+        b.setAttribute('aria-pressed', 'false');
+      });
+      modal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      document.getElementById('get-app-title').focus();
+      window.track && track('get_app_open', { location: location || '' });
+    }
+    function closeGetApp() {
+      const modal = document.getElementById('get-app');
+      if (!modal || modal.classList.contains('hidden')) return;
+      modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      if (getAppOpener && getAppOpener.focus) getAppOpener.focus({ preventScroll: true });
+      getAppOpener = null;
+    }
+    function pickPlatform(platform) {
+      const url = APP_LINKS[platform] || '';
+      const ready = url !== '';
+      ['android', 'ios'].forEach(p => document.getElementById('get-app-' + p).setAttribute('aria-pressed', String(p === platform)));
+      ['get-app-ready-android', 'get-app-ready-ios', 'get-app-not-ready'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      if (ready) {
+        document.getElementById('get-app-dl-' + platform).setAttribute('href', url);
+        document.getElementById('get-app-ready-' + platform).classList.remove('hidden');
+      } else {
+        document.getElementById('get-app-not-ready').classList.remove('hidden');
+      }
+      window.track && track('get_app_pick', { platform: platform, ready: ready });
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGetApp(); });
+
+    // On load: land on the hashed section, open the app picker from ?getapp=1
+    function jumpToHash() {
+      const el = resolveTarget(window.location.hash);
+      if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      jumpToHash();
+      if (/[?&]getapp=1(&|$)/.test(window.location.search)) openGetApp('url');
+    });
+    window.addEventListener('load', () => { jumpToHash(); setTimeout(jumpToHash, 400); });
+    window.addEventListener('hashchange', () => {
+      const el = resolveTarget(window.location.hash);
+      if (el) el.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
+    });
+  </script>
+</body>
+</html>

@@ -26,16 +26,17 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-
-  <!-- Google Fonts: Epilogue (headlines), Plus Jakarta Sans (body) -->
+  
+  <!-- Google Fonts: Epilogue, Plus Jakarta Sans, JetBrains Mono, Instrument Serif (italic accent), Caveat (hand captions) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&amp;family=Plus+Jakarta+Sans:wght@500;700;800&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&amp;family=Plus+Jakarta+Sans:wght@500;700;800&amp;display=swap"></noscript>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@500;600&amp;family=Instrument+Serif:ital@1&amp;family=Caveat:wght@500&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@500;600&amp;family=Instrument+Serif:ital@1&amp;family=Caveat:wght@500&amp;display=swap"></noscript>
 
   <link rel="stylesheet" href="assets/site.css">
 
   <style>
+    /* Prevent iOS horizontal rubber banding, hide scrollbars */
     body {
       background-color: #FCF9F4;
       color: #1C1917;
@@ -43,92 +44,53 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-    h1, h2, h3, .font-heading { font-family: 'Epilogue', sans-serif; }
-    section { scroll-margin-top: 4.5rem; }
-
-    /* paper dots behind the illustrations */
-    .paper {
-      background-color: #FAF6ED;
-      background-image: radial-gradient(rgba(28, 25, 23, 0.10) 1.2px, transparent 1.2px);
-      background-size: 18px 18px;
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
     }
-
-    /* buttons press down like a stamp */
-    .pop-btn { transition: transform 0.12s ease, box-shadow 0.12s ease; }
-    .pop-btn:hover { transform: translateY(-2px); }
-    .pop-btn:active { transform: translate(3px, 3px) !important; box-shadow: 1px 1px 0 #1C1917 !important; }
-
-    /* Oliver: ears wiggle, eyes blink */
-    @keyframes earL { 0%, 78%, 100% { transform: rotate(0); } 82% { transform: rotate(-14deg); } 87% { transform: rotate(9deg); } 92% { transform: rotate(-6deg); } 96% { transform: rotate(0); } }
-    @keyframes earR { 0%, 78%, 100% { transform: rotate(0); } 82% { transform: rotate(14deg); } 87% { transform: rotate(-9deg); } 92% { transform: rotate(6deg); } 96% { transform: rotate(0); } }
-    @keyframes blink { 0%, 91%, 100% { transform: scaleY(1); } 94% { transform: scaleY(0.08); } }
-    .ear-l { transform-origin: 32px 40px; animation: earL 5s ease-in-out infinite; }
-    .ear-r { transform-origin: 88px 40px; animation: earR 5s ease-in-out infinite 0.3s; }
-    .eye { transform-box: fill-box; transform-origin: center; animation: blink 4.2s ease-in-out infinite; }
-    .eye-r { animation-delay: 0.05s; }
-
-    /* hero bubbles take turns */
-    @keyframes bubL { 0%, 8% { opacity: 0; transform: translate(-24px, 6px) scale(0.85); } 14%, 86% { opacity: 1; transform: none; } 93%, 100% { opacity: 0; transform: translate(-12px, 0) scale(0.95); } }
-    @keyframes bubR { 0%, 24% { opacity: 0; transform: translate(24px, 6px) scale(0.85); } 30%, 86% { opacity: 1; transform: none; } 93%, 100% { opacity: 0; transform: translate(12px, 0) scale(0.95); } }
-    @keyframes bubO { 0%, 44% { opacity: 0; transform: translate(-50%, 14px) scale(0.8); } 50%, 86% { opacity: 1; transform: translate(-50%, 0) scale(1); } 93%, 100% { opacity: 0; transform: translate(-50%, 8px) scale(0.9); } }
-    .bub-l { animation: bubL 8s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
-    .bub-r { animation: bubR 8s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
-    .bub-o { animation: bubO 8s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
-
-    /* stickers drift a little */
-    @keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); } 50% { transform: translateY(-4px) rotate(var(--tilt, 0deg)); } }
-    .sticker { animation: bob 3.6s ease-in-out infinite; }
-    .sticker:nth-child(2) { animation-delay: 0.6s; }
-    .sticker:nth-child(3) { animation-delay: 1.2s; }
-
-    /* hero card leans toward the pointer (desktop only) */
-    #hero-card { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.25s ease; will-change: transform; }
-
-    /* things slide in as you scroll */
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-    .reveal.in { opacity: 1; transform: none; }
-    .reveal[data-delay="1"] { transition-delay: 0.15s; }
-    .reveal[data-delay="2"] { transition-delay: 0.3s; }
-    .reveal[data-delay="3"] { transition-delay: 0.45s; }
-
-    /* step cards light up one after another; the line between them draws itself */
-    .step { transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease; filter: saturate(0.4); }
-    .step.lit { filter: none; transform: translateY(-4px); box-shadow: 5px 5px 0 #1C1917; }
-    #step-line { transform: scaleX(0); transform-origin: left; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-    #step-line.in { transform: scaleX(1); }
-
-    /* typing cursor on Oliver's replies */
-    .typing::after { content: '|'; margin-left: 1px; animation: cursor 0.8s steps(1) infinite; }
-    @keyframes cursor { 50% { opacity: 0; } }
-
-    /* Let's Fight: the button hums, the meter spikes, the toast pops */
-    @keyframes ring { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(1.45); opacity: 0; } }
-    #loud-ring { animation: ring 2.2s ease-out infinite; }
-    #loud-ring.off { animation: none; opacity: 0; }
-    .bar { transform-origin: bottom; transition: transform 0.25s ease; }
-    #meter.loud .bar { animation: spike 0.5s ease-in-out 3; }
-    @keyframes spike { 0%, 100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
-    .bar:nth-child(2) { animation-delay: 0.08s !important; }
-    .bar:nth-child(3) { animation-delay: 0.16s !important; }
-    .bar:nth-child(4) { animation-delay: 0.24s !important; }
-    .bar:nth-child(5) { animation-delay: 0.32s !important; }
-    @keyframes popIn { 0% { opacity: 0; transform: translate(-50%, 12px) scale(0.7); } 60% { transform: translate(-50%, -4px) scale(1.05); } 100% { opacity: 1; transform: translate(-50%, 0) scale(1); } }
-    #fight-toast.show { display: block; animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
-
-    /* privacy: the lock says nope */
-    @keyframes nope { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
-    .nope { animation: nope 0.45s ease-in-out; }
-
-    /* chatbot vs Oliver crossfade */
-    .state { transition: opacity 0.35s ease, transform 0.35s ease; }
-    .state.out { opacity: 0; transform: scale(0.96); position: absolute; pointer-events: none; }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-      .bub-l, .bub-r, .bub-o, .reveal, #step-line { opacity: 1 !important; transform: none !important; }
-      .step { filter: none; }
-      #hero-card { transform: none !important; }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
+    /* Polaroids, tape */
+    .polaroid-frame {
+      box-shadow: 3px 4px 10px rgba(0,0,0,0.06), 0 0 0 1.5px #1C1917;
+    }
+    .washi-tape {
+      background: rgba(254, 240, 138, 0.85);
+      backdrop-filter: blur(1px);
+      border: 1px dashed rgba(28, 25, 23, 0.4);
+    }
+    /* Soundwave animation */
+    @keyframes pulse-wave {
+      0%, 100% { height: 6px; }
+      50% { height: 26px; }
+    }
+    .wave-bar {
+      animation: pulse-wave 1.2s infinite ease-in-out;
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+    .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+    .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+    .wave-bar:nth-child(5) { animation-delay: 0.2s; }
+    .wave-bar:nth-child(6) { animation-delay: 0.35s; }
+
+
+    /* Floating dock: bottom on phones, top on md+ */
+    [id^="panel-"],#problem,#why-not-chatbot,#note,#faq,#early-access{scroll-margin-top:1rem}
+    #dock-wrap{bottom:calc(12px + env(safe-area-inset-bottom))}
+    #dock .tab-btn{position:relative}
+    @media (max-width:767px){#dock .ic{width:1.25rem;height:1.25rem}}
+    #dock .tab-btn[aria-current]{background:#EDE9FE;border-color:#2B2749}
+    #dock .tab-btn[aria-current]::after{content:"";position:absolute;left:50%;bottom:3px;width:4px;height:4px;margin-left:-2px;border-radius:9999px;background:#2B2749}
+    @media (min-width:768px){
+      [id^="panel-"],#problem,#why-not-chatbot,#note,#faq,#early-access{scroll-margin-top:5rem}
+      #dock-wrap{bottom:auto;top:12px}
+      #dock .tab-btn[aria-current]{background:#6260D6;color:#fff}
+      #dock .tab-btn[aria-current]::after{display:none}
+    }
+    .ic{width:1.15em;height:1.15em;display:inline-block;vertical-align:-0.22em;flex-shrink:0}
+    .ic-lg{width:2rem;height:2rem}
+    .ic-xl{width:2.75rem;height:2.75rem}
   </style>
 
   <script src="assets/track.js" defer></script>
@@ -156,614 +118,724 @@
   }
   </script>
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      { "@type": "Question", "name": "can my partner see my private chats?", "acceptedAnswer": { "@type": "Answer", "text": "no." } },
-      { "@type": "Question", "name": "is Oliver a real person?", "acceptedAnswer": { "@type": "Answer", "text": "no. an AI, and a bear." } },
-      { "@type": "Question", "name": "is this therapy?", "acceptedAnswer": { "@type": "Answer", "text": "no. if it spots crisis or abuse, it points you to real help." } },
-      { "@type": "Question", "name": "is what i tell Oliver used to train AI?", "acceptedAnswer": { "@type": "Answer", "text": "no." } },
-      { "@type": "Question", "name": "what if we break up?", "acceptedAnswer": { "@type": "Answer", "text": "either of you can lock it for both. we wipe it on request." } }
-    ]
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "can my partner see my private chats?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "no. only your effort trend, if you both opt in."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "why not just ask ChatGPT?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "a chatbot hears one side: whoever's typing. so it tends to agree with you, and your person's chatbot agrees with them. Oliver hears both of you privately before saying anything, then helps you land on something you'd both actually do."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "what if Oliver sides with my partner?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "no side gets picked. Oliver only says what you've both agreed is fair."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "is Oliver a real person?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "no. Oliver is an AI, built to be fair to both of you and to keep what each of you shares private. also, a bear. that should have been a clue."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "is this therapy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "no. if it spots crisis or abuse, it stops and points you to real help."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "do we both need Cuddle Pop?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "to sort out a fight together, yes. but you can start solo: tell Oliver your side, and invite your person when you're ready. you won't pay twice either."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "what does my person see when i invite them?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "a link and one line: \"Oliver wants to hear your side.\" the link works in any messaging app. it installs the app and connects the two of you automatically. nothing you told Oliver goes with it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "do i have to use it every day?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "no. open it when there's a fight and ignore it when things are fine. the journal and games are there if you want them, and nobody will nag you about a streak."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "is Let's Fight always recording?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "no. you both opt in each time, and audio is deleted once transcribed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "is what i tell Oliver used to train AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "no. what you tell Oliver stays between you and Oliver. none of it is used to train AI."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "how much will plus cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "we haven't set it yet. it'll be one price for the two of you, and the first couples in get it free."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "does it work long distance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "yes. Let's Fight works on video calls too. the time zones are still your problem."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "what if we break up?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "either of you can lock it for both. we wipe the data on request. Oliver won't take it personally."
+      }
+    }
+  ]
+}
   </script>
 </head>
+<body class="min-h-screen pb-24 md:pb-0 bg-brand-cream selection:bg-brand-rose selection:text-brand-dark">
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="i-home" viewBox="0 0 64 64"><g fill="none"><path d="M14 28.5L32 12L50 28.5V50C50 51.6 48.6 53 47 53H17C15.4 53 14 51.6 14 50V28.5Z" fill="#FEF08A" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <path d="M10 30L32 10L54 30" stroke="#2B2749" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/> <path d="M42 20.5V14H47V25" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="#F4B860"/> <path d="M32 37.5C32 37.5 27 33.5 27 30.5C27 28.5 28.5 27 30.5 27C31.5 27 32 27.5 32 27.5C32 27.5 32.5 27 33.5 27C35.5 27 37 28.5 37 30.5C37 33.5 32 37.5 32 37.5Z" fill="#F39A85" stroke="#2B2749" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M26 53V44C26 42.5 27.5 41 29 41H35C36.5 41 38 42.5 38 44V53" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="#FFFFFF"/></g></symbol><symbol id="i-how-it-works" viewBox="0 0 64 64"><g fill="none"><path d="M22 14C33 14 42 20.5 42 28.5C42 31.2 40.5 33.7 38 35.8L40 43L33.5 39.8C29.8 41.5 25.8 42 22 42C11 42 2 35.5 2 27.5C2 19.5 11 14 22 14Z" transform="translate(18, -2)" fill="#FFE7EC" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <path d="M22 18C12 18 4 24.5 4 33C4 36.8 5.8 40.2 9 42.8L7 51L15.5 47.5C17.5 48.5 19.7 49 22 49C32 49 40 42.5 40 33C40 24.5 32 18 22 18Z" fill="#F4B860" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <circle cx="16" cy="33" r="2" fill="#2B2749"/> <circle cx="22" cy="33" r="2" fill="#2B2749"/> <circle cx="28" cy="33" r="2" fill="#2B2749"/></g></symbol><symbol id="i-lets-fight" viewBox="0 0 64 64"><g fill="none"><path d="M19 23C11 23 5 28.5 5 35.5C5 38.8 6.5 41.8 9.5 44L7 51L14.5 48C16 48.6 17.5 49 19 49C27 49 31 43.5 31 36.5C31 29.5 26 23 19 23Z" fill="#F39A85" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <path d="M45 23C53 23 59 28.5 59 35.5C59 38.8 57.5 41.8 54.5 44L57 51L49.5 48C48 48.6 46.5 49 45 49C37 49 33 43.5 33 36.5C33 29.5 38 23 45 23Z" fill="#6260D6" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <path d="M32 9L34.5 17L42 19.5L34.5 22L32 30L29.5 22L22 19.5L29.5 17L32 9Z" fill="#FEF08A" stroke="#2B2749" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-privacy" viewBox="0 0 64 64"><g fill="none"><path d="M21 28V20C21 14 26 9 32 9C38 9 43 14 43 20V28" stroke="#2B2749" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/> <rect x="14" y="27" width="36" height="27" rx="7" fill="#F4B860" stroke="#2B2749" stroke-width="3" stroke-linejoin="round"/> <path d="M32 44C32 44 28 40.5 28 38C28 36.3 29.3 35 30.7 35C31.5 35 32 35.5 32 35.5C32 35.5 32.5 35 33.3 35C34.7 35 36 36.3 36 38C36 40.5 32 44 32 44Z" fill="#2B2749" stroke="#2B2749" stroke-width="1.5" stroke-linejoin="round"/> <path d="M32 42.5V47" stroke="#2B2749" stroke-width="2.5" stroke-linecap="round"/></g></symbol><symbol id="i-pricing" viewBox="0 0 64 64"><g fill="none"><g transform="rotate(-10 32 32)"> <path d="M12 21C12 18.5 14 16.5 16.5 16.5H47.5C50 16.5 52 18.5 52 21V28.5C49.5 28.5 47.5 30.5 47.5 33C47.5 35.5 49.5 37.5 52 37.5V45C52 47.5 50 49.5 47.5 49.5H16.5C14 49.5 12 47.5 12 45V37.5C14.5 37.5 16.5 35.5 16.5 33C16.5 30.5 14.5 28.5 12 28.5V21Z" fill="#FEF08A" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <line x1="25" y1="18" x2="25" y2="48" stroke="#2B2749" stroke-width="2.5" stroke-dasharray="3 3" stroke-linecap="round"/> <path d="M37 27C37 27 34 31 34 33C34 34.5 35.2 35.5 36.5 35.5C37.2 35.5 38 35 38 35C38 35 38.8 35.5 39.5 35.5C40.8 35.5 42 34.5 42 33C42 31 37 27 37 27Z" transform="translate(1, 1)" fill="#F39A85" stroke="#2B2749" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g></g></symbol><symbol id="i-friend" viewBox="0 0 64 64"><g fill="none"><circle cx="17" cy="18" r="8" fill="#F4B860" stroke="#2B2749" stroke-width="3"/> <circle cx="17" cy="18" r="4" fill="#F39A85" stroke="#2B2749" stroke-width="2"/> <circle cx="47" cy="18" r="8" fill="#F4B860" stroke="#2B2749" stroke-width="3"/> <circle cx="47" cy="18" r="4" fill="#F39A85" stroke="#2B2749" stroke-width="2"/> <circle cx="32" cy="35" r="19" fill="#F4B860" stroke="#2B2749" stroke-width="3"/> <ellipse cx="32" cy="40.5" rx="9" ry="7" fill="#FFF9ED" stroke="#2B2749" stroke-width="2.5"/> <path d="M29 38C29 36.8 30.3 36 32 36C33.7 36 35 36.8 35 38C35 39.5 32 41 32 41C32 41 29 39.5 29 38Z" fill="#2B2749"/> <path d="M32 41V43.5M29.5 43.5C30.5 44.5 33.5 44.5 34.5 43.5" stroke="#2B2749" stroke-width="2.5" stroke-linecap="round"/> <circle cx="24.5" cy="32" r="2.8" fill="#2B2749"/> <circle cx="39.5" cy="32" r="2.8" fill="#2B2749"/> <circle cx="20" cy="38" r="2" fill="#F39A85"/> <circle cx="44" cy="38" r="2" fill="#F39A85"/></g></symbol><symbol id="i-your-side" viewBox="0 0 64 64"><g fill="none"><path d="M12 16C12 13 15 10 20 10H46C51 10 54 13 54 16V36C54 40 50 43 45 43H24L14 51V43H18C14 43 12 39 12 36V16Z" fill="#FFE7EC" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <path d="M29 27V23C29 20.8 30.5 19 32.5 19C34.5 19 36 20.8 36 23V27" stroke="#2B2749" stroke-width="2.5" stroke-linecap="round"/> <rect x="25" y="27" width="15" height="11" rx="3" fill="#F39A85" stroke="#2B2749" stroke-width="2.5"/> <circle cx="32.5" cy="32.5" r="1.5" fill="#2B2749"/></g></symbol><symbol id="i-their-side" viewBox="0 0 64 64"><g fill="none"><path d="M52 16C52 13 49 10 44 10H18C13 10 10 13 10 16V36C10 40 14 43 19 43H40L50 51V43H46C50 43 52 39 52 36V16Z" fill="#ECE8FF" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <path d="M31 34C31 34 24 29 24 24C24 21.5 26 19.5 28.5 19.5C29.8 19.5 31 20.2 31 20.2C31 20.2 32.2 19.5 33.5 19.5C36 19.5 38 21.5 38 24C38 29 31 34 31 34Z" fill="#6260D6" stroke="#2B2749" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-both-sides" viewBox="0 0 64 64"><g fill="none"><path d="M7 44L17 41C21 39.5 23 37 25 33L26 27C26.5 24 29 23 31 25C32.5 26.5 32 29 30 32L26 39L15 48L8 47" fill="#F4B860" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <path d="M57 44L47 41C43 39.5 41 37 39 33L38 27C37.5 24 35 23 33 25C31.5 26.5 32 29 34 32L38 39L49 48L56 47" fill="#F39A85" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <path d="M32 20C32 20 29.5 17.5 29.5 15.5C29.5 14 30.5 13 31.5 13C32 13 32 13.5 32 13.5C32 13.5 32 13 32.5 13C33.5 13 34.5 14 34.5 15.5C34.5 17.5 32 20 32 20Z" fill="#6260D6" stroke="#2B2749" stroke-width="2"/></g></symbol><symbol id="i-chat" viewBox="0 0 64 64"><g fill="none"><path d="M12 30C12 18.5 21 11 32 11C43 11 52 18.5 52 30C52 41.5 43 48 32 48C28 48 24.5 47 21 45.2L11 49L13.5 40.5C12.5 37.5 12 34 12 30Z" fill="#FEF08A" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <circle cx="23" cy="30" r="3.2" fill="#2B2749"/> <circle cx="32" cy="30" r="3.2" fill="#2B2749"/> <circle cx="41" cy="30" r="3.2" fill="#2B2749"/></g></symbol><symbol id="i-mic" viewBox="0 0 64 64"><g fill="none"><rect x="23" y="10" width="18" height="26" rx="9" fill="#6260D6" stroke="#2B2749" stroke-width="3" stroke-linejoin="round"/> <path d="M23 23H41" stroke="#FEF08A" stroke-width="2.5" stroke-linecap="round"/> <path d="M17 26C17 35 23.5 40 32 40C40.5 40 47 35 47 26" stroke="#2B2749" stroke-width="3" stroke-linecap="round"/> <path d="M32 40V51" stroke="#2B2749" stroke-width="3.5" stroke-linecap="round"/> <path d="M20 52C23 50.8 41 50.8 44 52" stroke="#2B2749" stroke-width="3.5" stroke-linecap="round"/></g></symbol><symbol id="i-journal" viewBox="0 0 64 64"><g fill="none"><rect x="14" y="12" width="28" height="38" rx="4" fill="#F4B860" stroke="#2B2749" stroke-width="3" stroke-linejoin="round"/> <path d="M14 19H10M14 27H10M14 35H10M14 43H10" stroke="#2B2749" stroke-width="3" stroke-linecap="round"/> <path d="M28 28C28 28 24 24 24 22C24 20.5 25 19.5 26.5 19.5C27.2 19.5 28 20 28 20C28 20 28.8 19.5 29.5 19.5C31 19.5 32 20.5 32 22C32 24 28 28 28 28Z" fill="#F39A85" stroke="#2B2749" stroke-width="1.8"/> <g transform="rotate(35 44 34)"> <rect x="38" y="14" width="7" height="26" fill="#FEF08A" stroke="#2B2749" stroke-width="2.5" stroke-linejoin="round"/> <path d="M38 40L41.5 47L45 40H38Z" fill="#F39A85" stroke="#2B2749" stroke-width="2.5" stroke-linejoin="round"/> <circle cx="41.5" cy="45" r="1" fill="#2B2749"/> <rect x="38" y="10" width="7" height="4" fill="#FFE7EC" stroke="#2B2749" stroke-width="2.5" stroke-linejoin="round"/> </g></g></symbol><symbol id="i-games" viewBox="0 0 64 64"><g fill="none"><rect x="25" y="11" width="26" height="26" rx="6" transform="rotate(12 38 24)" fill="#6260D6" stroke="#2B2749" stroke-width="3" stroke-linejoin="round"/> <circle cx="34" cy="20" r="2.2" fill="#FFFFFF"/> <circle cx="43" cy="29" r="2.2" fill="#FFFFFF"/> <rect x="11" y="25" width="27" height="27" rx="6" transform="rotate(-6 24 38)" fill="#FEF08A" stroke="#2B2749" stroke-width="3" stroke-linejoin="round"/> <circle cx="18" cy="32" r="2.2" fill="#2B2749"/> <circle cx="24.5" cy="38" r="2.2" fill="#2B2749"/> <circle cx="31" cy="44" r="2.2" fill="#2B2749"/></g></symbol><symbol id="i-stories" viewBox="0 0 64 64"><g fill="none"><g transform="rotate(-5 32 32)"> <rect x="13" y="10" width="38" height="46" rx="4" fill="#FFFFFF" stroke="#2B2749" stroke-width="3" stroke-linejoin="round"/> <rect x="18" y="15" width="28" height="26" rx="2" fill="#FFE7EC" stroke="#2B2749" stroke-width="2.5"/> <circle cx="36" cy="21" r="3" fill="#F4B860"/> <path d="M19 36C22 32 26 31 29 34C32 37 38 31 45 35V40H19V36Z" fill="#F39A85" stroke="#2B2749" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> <path d="M32 49C32 49 30 47.5 30 46C30 45 30.8 44.5 31.5 44.5C31.8 44.5 32 45 32 45C32 45 32.2 44.5 32.5 44.5C33.2 44.5 34 45 34 46C34 47.5 32 49 32 49Z" fill="#6260D6"/> </g></g></symbol><symbol id="i-check" viewBox="0 0 64 64"><g fill="none"><path d="M32 8C45 7 55 18 55 31C55 45 44 56 31 55C18 54 9 44 9 32C9 19 19 9 32 8Z" fill="#FEF08A" stroke="#2B2749" stroke-width="2.8"/> <path d="M19 32.5L27.5 42L45 20.5" stroke="#2B2749" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-sparkle" viewBox="0 0 64 64"><g fill="none"><path d="M32 7C32 20 20 32 7 32C20 32 32 44 32 57C32 44 44 32 57 32C44 32 32 20 32 7Z" fill="#F4B860" stroke="#2B2749" stroke-width="3" stroke-linejoin="round"/> <path d="M48 11C48 15 44 18 41 18C44 18 48 21 48 25C48 21 52 18 55 18C52 18 48 15 48 11Z" fill="#6260D6" stroke="#2B2749" stroke-width="2" stroke-linejoin="round"/> <circle cx="15" cy="48" r="2.5" fill="#F39A85" stroke="#2B2749" stroke-width="1.5"/></g></symbol><symbol id="i-heart" viewBox="0 0 64 64"><g fill="none"><path d="M31.5 52C31.5 52 11 39 10 25C9 16 16 10 24 11C28 11.5 31.5 15 31.5 15C31.5 15 35 11.5 39 11C47 10 54 16 53 25C52 39 31.5 52 31.5 52Z" fill="#F39A85" stroke="#2B2749" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M17 21C16.5 17 19.5 15 22.5 15" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/></g></symbol><symbol id="i-arrow" viewBox="0 0 64 64"><g fill="none"><rect x="9" y="19" width="46" height="26" rx="13" fill="#FFE7EC" stroke="#2B2749" stroke-width="2.5"/> <path d="M18 32H44" stroke="#2B2749" stroke-width="3.8" stroke-linecap="round"/> <path d="M34 22L45 32L34 42" stroke="#2B2749" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-envelope" viewBox="0 0 64 64"><g fill="none"><rect x="9" y="17" width="46" height="32" rx="5" fill="#FFFFFF" stroke="#2B2749" stroke-width="3" stroke-linejoin="round"/> <path d="M9 19L32 36L55 19" stroke="#2B2749" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/> <path d="M9 47L24 33M55 47L40 33" stroke="#2B2749" stroke-width="2.5" stroke-linecap="round"/> <circle cx="32" cy="35" r="7" fill="#F39A85" stroke="#2B2749" stroke-width="2"/> <path d="M32 38C32 38 29.5 35.5 29.5 34C29.5 32.8 30.2 32 31.2 32C31.7 32 32 32.4 32 32.4C32 32.4 32.3 32 32.8 32C33.8 32 34.5 32.8 34.5 34C34.5 35.5 32 38 32 38Z" fill="#FFFFFF"/></g></symbol><symbol id="i-glue" viewBox="0 0 64 64"><g fill="none"><g transform="rotate(22 32 32)"> <rect x="27" y="11" width="10" height="7" rx="1.5" fill="#FFE7EC" stroke="#2B2749" stroke-width="2.5" stroke-linejoin="round"/> <rect x="24" y="17" width="16" height="5" rx="1" fill="#FEF08A" stroke="#2B2749" stroke-width="2.5"/> <rect x="22" y="21" width="20" height="28" rx="2" fill="#6260D6" stroke="#2B2749" stroke-width="3" stroke-linejoin="round"/> <rect x="23" y="47" width="18" height="6" rx="2" fill="#F4B860" stroke="#2B2749" stroke-width="2.8"/> <rect x="24" y="26" width="16" height="15" rx="2" fill="#FFFFFF" stroke="#2B2749" stroke-width="2"/> <path d="M32 35C32 35 29 32.5 29 31C29 29.8 30 29 31 29C31.5 29 32 29.4 32 29.4C32 29.4 32.5 29 33 29C34 29 35 29.8 35 31C35 32.5 32 35 32 35Z" fill="#F39A85"/> </g></g></symbol><symbol id="i-chevron" viewBox="0 0 64 64"><g fill="none" stroke="#2B2749" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 25.5C22.5 30.5 27 35 32 39.5C37 35 41.5 30.5 46 25.5"/></g></symbol></svg>
 
-<body class="bg-canvas text-ink antialiased selection:bg-lemon selection:text-ink">
-
-  <!-- Oliver's face, reused by the small illustrations -->
-  <svg width="0" height="0" class="absolute" aria-hidden="true">
-    <symbol id="oliver-face" viewBox="0 0 120 110">
-      <circle cx="32" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
-      <circle cx="32" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/>
-      <circle cx="88" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
-      <circle cx="88" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/>
-      <circle cx="60" cy="66" r="36" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
-      <ellipse cx="60" cy="76" rx="15" ry="11" fill="#FFF9ED" stroke="#1C1917" stroke-width="3"/>
-      <path d="M55 72C55 70 57.3 68.5 60 68.5C62.7 68.5 65 70 65 72C65 74.5 60 77 60 77C60 77 55 74.5 55 72Z" fill="#1C1917"/>
-      <path d="M60 77V80.5M56 80.5C57.3 82 62.7 82 64 80.5" stroke="#1C1917" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="46" cy="61" r="4" fill="#1C1917"/>
-      <circle cx="74" cy="61" r="4" fill="#1C1917"/>
-      <circle cx="38" cy="72" r="4" fill="#F39A85"/>
-      <circle cx="82" cy="72" r="4" fill="#F39A85"/>
-    </symbol>
-  </svg>
-
-  <!-- Header -->
-  <header class="sticky top-0 z-50 bg-canvas/90 backdrop-blur-md border-b-2 border-ink">
-    <div class="max-w-[1100px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <a href="#panel-home" class="flex items-center gap-2.5">
-        <svg class="w-9 h-9" aria-hidden="true"><use href="#oliver-face"/></svg>
-        <span class="font-heading font-black text-xl sm:text-2xl tracking-tight whitespace-nowrap">Cuddle Pop</span>
-        <span class="px-2.5 py-0.5 text-xs font-bold bg-peach border-2 border-ink rounded-full shadow-pop-sm">beta</span>
+  <!-- ================= TOP BAR (scrolls with the page; on md-lg the top band is left free for the dock) ================= -->
+  <header id="site-header" class="bg-brand-cream border-b-2 border-brand-border shadow-[0_2px_0_rgba(43,39,73,0.06)]">
+    <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between md:px-8 md:pt-[76px] md:pb-3 xl:max-w-7xl xl:px-10 xl:py-2.5 xl:min-h-[76px]">
+      <a href="#panel-home" class="flex items-center gap-2 group">
+        <span class="text-2xl filter drop-shadow group-hover:scale-110 transition-transform"><svg class="ic ic-lg" aria-hidden="true"><use href="#i-friend"/></svg></span>
+        <div class="flex items-center gap-1.5">
+          <span class="font-heading font-extrabold text-xl tracking-tight text-brand-dark">Cuddle Pop</span>
+          <span class="bg-brand-lemon text-brand-dark text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-full border border-brand-dark">beta</span>
+        </div>
       </a>
-      <a href="#early-access" onclick="scrollToEarlyAccess(event, 'header')" class="pop-btn px-4 py-1.5 text-sm font-extrabold bg-lemon border-2 border-ink rounded-full shadow-pop whitespace-nowrap">meet Oliver</a>
+      <div class="flex items-center gap-2">
+        <a href="/adhd/" onclick="window.track && track('mode_switch', { to: 'adhd' })" class="inline-flex items-center gap-1.5 bg-brand-lemon text-brand-dark text-xs font-heading font-bold px-3 py-1.5 rounded-full border-2 border-brand-dark shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all xl:text-sm xl:px-4 xl:py-2">
+          <span>adhd Mode</span>
+        </a>
+        <a href="#early-access" onclick="scrollToEarlyAccess(event, 'nav')" class="xl:text-sm xl:px-4 xl:py-2 hidden items-center gap-1.5 bg-brand-primary text-white text-xs font-bold px-3 py-1.5 rounded-full border-2 border-brand-dark shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+          <span>meet Oliver</span>
+          <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
     </div>
   </header>
 
-  <main>
-    <!-- Hero -->
-    <section id="panel-home" class="pt-10 pb-16 px-4 sm:px-6 max-w-[1100px] mx-auto">
-      <div class="text-center max-w-2xl mx-auto mb-10 reveal">
-        <h1 class="font-heading font-black text-[2.6rem] sm:text-6xl tracking-tight leading-[1.05] mb-4">the friend who's heard both sides.</h1>
-        <p class="text-base sm:text-lg font-semibold text-ink/80 mb-6">you each tell Oliver your side. privately. sort it out tonight.</p>
-        <div class="flex flex-wrap items-center justify-center gap-3">
-          <a href="#early-access" onclick="scrollToEarlyAccess(event, 'hero')" class="pop-btn px-6 py-3 text-base font-extrabold bg-violet text-white border-2 border-ink rounded-full shadow-pop">meet Oliver, it's free</a>
-          <button type="button" onclick="openGetApp('hero')" class="pop-btn px-6 py-3 text-base font-extrabold bg-canvas border-2 border-ink rounded-full shadow-pop">get the app</button>
-        </div>
-      </div>
+  <!-- ================= FLOATING DOCK ================= -->
+  <div id="dock-wrap" class="fixed inset-x-0 z-50 flex justify-center px-2 pointer-events-none">
+    <nav id="dock" aria-label="Sections" class="pointer-events-auto max-w-full flex items-center gap-0.5 md:gap-1 p-1 md:p-1.5 rounded-[1.75rem] md:rounded-full bg-brand-cream/[0.92] backdrop-blur-md border-2 border-[#2B2749] shadow-[3px_3px_0px_#2B2749]">
+      <a href="#panel-home" data-section="panel-home" aria-label="what it is" class="tab-btn flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-2 py-1 md:px-3 md:py-1.5 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
+        <svg class="ic" aria-hidden="true"><use href="#i-home"/></svg>
+        <span class="md:hidden text-[10px] leading-none">what</span><span class="sr-only md:not-sr-only">what it is</span>
+      </a>
+      <a href="#panel-how-it-works" data-section="panel-how-it-works" aria-label="how it works" class="tab-btn flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-2 py-1 md:px-3 md:py-1.5 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
+        <svg class="ic" aria-hidden="true"><use href="#i-how-it-works"/></svg>
+        <span class="md:hidden text-[10px] leading-none">how</span><span class="sr-only md:not-sr-only">how it works</span>
+      </a>
+      <a href="#panel-lets-fight" data-section="panel-lets-fight" aria-label="Let&#39;s Fight" class="tab-btn flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-2 py-1 md:px-3 md:py-1.5 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
+        <svg class="ic" aria-hidden="true"><use href="#i-lets-fight"/></svg>
+        <span class="md:hidden text-[10px] leading-none">fight</span><span class="sr-only md:not-sr-only">Let's Fight</span>
+      </a>
+      <a href="#panel-privacy" data-section="panel-privacy" aria-label="privacy" class="tab-btn flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-2 py-1 md:px-3 md:py-1.5 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
+        <svg class="ic" aria-hidden="true"><use href="#i-privacy"/></svg>
+        <span class="md:hidden text-[10px] leading-none">privacy</span><span class="sr-only md:not-sr-only">privacy</span>
+      </a>
+      <a href="#panel-pricing" data-section="panel-pricing" aria-label="price" class="tab-btn flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-transparent px-2 py-1 md:px-3 md:py-1.5 text-sm font-heading font-bold text-brand-dark transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-butter">
+        <svg class="ic" aria-hidden="true"><use href="#i-pricing"/></svg>
+        <span class="md:hidden text-[10px] leading-none">price</span><span class="sr-only md:not-sr-only">pricing</span>
+      </a>
+      <a href="#early-access" onclick="scrollToEarlyAccess(event, 'nav')" aria-label="meet Oliver" class="flex flex-col md:flex-row items-center gap-0.5 md:gap-1.5 whitespace-nowrap rounded-full border-2 border-[#2B2749] bg-brand-primary text-white px-3 py-1.5 text-sm font-heading font-bold transition-[transform,background-color] duration-150 ease-out will-change-transform [@media(hover:hover)]:hover:scale-[1.12] [@media(hover:hover)]:hover:bg-brand-primaryHover">
+        <svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>
+        <span class="md:hidden text-[10px] leading-none">Oliver</span><span class="sr-only md:not-sr-only">meet Oliver</span>
+      </a>
+    </nav>
+  </div>
 
-      <!-- Oliver between two phones -->
-      <div id="hero-card" class="paper relative w-full max-w-xl mx-auto border-2 border-ink rounded-3xl p-6 sm:p-10 shadow-pop-lg reveal" data-delay="1">
-        <div class="relative flex items-end justify-between min-h-[230px] sm:min-h-[260px]">
-          <svg class="w-16 h-28 sm:w-20 sm:h-36 mb-2" viewBox="0 0 60 100" fill="none" aria-hidden="true">
-            <rect x="2" y="2" width="56" height="96" rx="10" fill="#EDE9FE" stroke="#1C1917" stroke-width="3"/>
-            <rect x="7" y="10" width="46" height="74" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2"/>
-            <rect x="12" y="20" width="26" height="8" rx="4" fill="#EDE9FE"/>
-            <rect x="22" y="34" width="26" height="8" rx="4" fill="#FEF08A"/>
-            <rect x="12" y="48" width="20" height="8" rx="4" fill="#EDE9FE"/>
-            <circle cx="30" cy="91" r="3" fill="#1C1917"/>
-          </svg>
+  <main class="max-w-xl mx-auto px-4 pt-6 space-y-20 md:max-w-4xl md:px-8 md:pt-10 md:space-y-24 xl:max-w-7xl xl:px-10 xl:pt-14 xl:space-y-28">
 
-          <svg class="w-40 h-44 sm:w-52 sm:h-56 z-10" viewBox="0 0 120 130" fill="none" role="img" aria-label="Oliver, a round bear, between two phones">
-            <ellipse cx="60" cy="118" rx="34" ry="12" fill="#1C1917" opacity="0.12"/>
-            <ellipse cx="60" cy="104" rx="30" ry="22" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
-            <ellipse cx="60" cy="108" rx="16" ry="12" fill="#FFF9ED" stroke="#1C1917" stroke-width="2.5"/>
-            <ellipse cx="28" cy="100" rx="10" ry="7" transform="rotate(-25 28 100)" fill="#F4B860" stroke="#1C1917" stroke-width="3"/>
-            <ellipse cx="92" cy="100" rx="10" ry="7" transform="rotate(25 92 100)" fill="#F4B860" stroke="#1C1917" stroke-width="3"/>
-            <g class="ear-l"><circle cx="32" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/><circle cx="32" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/></g>
-            <g class="ear-r"><circle cx="88" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/><circle cx="88" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/></g>
-            <circle cx="60" cy="66" r="36" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
-            <ellipse cx="60" cy="76" rx="15" ry="11" fill="#FFF9ED" stroke="#1C1917" stroke-width="3"/>
-            <path d="M55 72C55 70 57.3 68.5 60 68.5C62.7 68.5 65 70 65 72C65 74.5 60 77 60 77C60 77 55 74.5 55 72Z" fill="#1C1917"/>
-            <path d="M60 77V80.5M56 80.5C57.3 82 62.7 82 64 80.5" stroke="#1C1917" stroke-width="3" stroke-linecap="round"/>
-            <circle class="eye" cx="46" cy="61" r="4" fill="#1C1917"/>
-            <circle class="eye eye-r" cx="74" cy="61" r="4" fill="#1C1917"/>
-            <circle cx="38" cy="72" r="4" fill="#F39A85"/>
-            <circle cx="82" cy="72" r="4" fill="#F39A85"/>
-          </svg>
-
-          <svg class="w-16 h-28 sm:w-20 sm:h-36 mb-2" viewBox="0 0 60 100" fill="none" aria-hidden="true">
-            <rect x="2" y="2" width="56" height="96" rx="10" fill="#FFE7EC" stroke="#1C1917" stroke-width="3"/>
-            <rect x="7" y="10" width="46" height="74" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2"/>
-            <rect x="22" y="20" width="26" height="8" rx="4" fill="#FFE7EC"/>
-            <rect x="12" y="34" width="26" height="8" rx="4" fill="#FEF08A"/>
-            <rect x="28" y="48" width="20" height="8" rx="4" fill="#FFE7EC"/>
-            <circle cx="30" cy="91" r="3" fill="#1C1917"/>
-          </svg>
-
-          <div class="bub-l absolute top-0 left-0 px-3 py-1.5 bg-lavender border-2 border-ink rounded-2xl rounded-bl-sm shadow-pop-sm text-xs sm:text-sm font-bold">the call. AGAIN.</div>
-          <div class="bub-r absolute top-2 right-0 px-3 py-1.5 bg-peach border-2 border-ink rounded-2xl rounded-br-sm shadow-pop-sm text-xs sm:text-sm font-bold">i said i'd try.</div>
-          <div class="bub-o absolute -bottom-3 left-1/2 px-4 py-2 bg-lemon border-2 border-ink rounded-2xl shadow-pop text-xs sm:text-sm font-black whitespace-nowrap z-20">heard you both. open a fight?</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- you know the fight -->
-    <section id="problem" class="py-14 px-4 sm:px-6 max-w-[1100px] mx-auto border-t-2 border-ink">
-      <div class="max-w-xl mx-auto text-center">
-        <h2 class="font-heading font-black text-3xl sm:text-4xl mb-6 reveal">you know the fight.</h2>
-        <div class="flex flex-wrap justify-center gap-3 mb-6 reveal" data-delay="1">
-          <button type="button" onclick="pickChip(0, this)" class="pop-btn chip sticker px-4 py-2 text-sm font-extrabold bg-lemon border-2 border-ink rounded-full shadow-pop" style="--tilt:-2deg">the call they forgot.</button>
-          <button type="button" onclick="pickChip(1, this)" class="pop-btn chip sticker px-4 py-2 text-sm font-extrabold bg-peach border-2 border-ink rounded-full shadow-pop" style="--tilt:1.5deg">the "k." that started a war.</button>
-          <button type="button" onclick="pickChip(2, this)" class="pop-btn chip sticker px-4 py-2 text-sm font-extrabold bg-lavender border-2 border-ink rounded-full shadow-pop" style="--tilt:-1deg">the thing you can't say to their face.</button>
-        </div>
-        <div class="flex items-center justify-center gap-3 max-w-md mx-auto reveal" data-delay="2">
-          <svg class="w-12 h-12 shrink-0" aria-hidden="true"><use href="#oliver-face"/></svg>
-          <div class="relative flex-1 bg-white border-2 border-ink rounded-2xl rounded-bl-sm p-4 shadow-pop-sm min-h-[60px] flex items-center">
-            <span id="chip-reply" class="text-sm sm:text-base font-extrabold text-left" aria-live="polite">tap one.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- your AI only heard your side -->
-    <section id="why-not-chatbot" class="py-14 px-4 sm:px-6 max-w-[1100px] mx-auto border-t-2 border-ink">
-      <div class="max-w-xl mx-auto text-center">
-        <h2 class="font-heading font-black text-3xl sm:text-4xl mb-6 reveal">your AI only heard your side.</h2>
-        <div class="inline-flex p-1.5 bg-canvas border-2 border-ink rounded-full shadow-pop mb-8 reveal" data-delay="1" role="tablist" aria-label="who is listening">
-          <button type="button" id="tab-chatbot" role="tab" aria-selected="true" onclick="setListener('chatbot')" class="px-4 py-1.5 text-sm font-extrabold rounded-full transition-colors bg-ink text-white">a chatbot</button>
-          <button type="button" id="tab-oliver" role="tab" aria-selected="false" onclick="setListener('oliver')" class="px-4 py-1.5 text-sm font-extrabold rounded-full transition-colors">Oliver</button>
-        </div>
-        <div id="listener-box" class="paper relative border-2 border-ink rounded-3xl p-6 sm:p-8 shadow-pop-lg min-h-[200px] flex items-center justify-center mb-4 reveal" data-delay="2">
-          <div id="state-chatbot" class="state flex flex-col items-center gap-3">
-            <svg class="w-16 h-24" viewBox="0 0 60 100" fill="none" aria-hidden="true">
-              <rect x="2" y="2" width="56" height="96" rx="8" fill="#EDE9FE" stroke="#1C1917" stroke-width="3"/>
-              <rect x="8" y="10" width="44" height="72" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2"/>
-              <rect x="13" y="22" width="24" height="7" rx="3.5" fill="#EDE9FE"/>
-              <rect x="23" y="36" width="24" height="7" rx="3.5" fill="#EDE9FE"/>
-              <rect x="13" y="50" width="24" height="7" rx="3.5" fill="#EDE9FE"/>
-              <circle cx="30" cy="90" r="3" fill="#1C1917"/>
-            </svg>
-            <div class="px-4 py-2 bg-white border-2 border-ink rounded-2xl shadow-pop-sm text-sm font-extrabold">you're right.</div>
-          </div>
-          <div id="state-oliver" class="state out flex flex-col items-center gap-3">
-            <div class="flex items-center gap-4">
-              <svg class="w-12 h-20" viewBox="0 0 60 100" fill="none" aria-hidden="true">
-                <rect x="2" y="2" width="56" height="96" rx="8" fill="#EDE9FE" stroke="#1C1917" stroke-width="3"/>
-                <rect x="8" y="10" width="44" height="72" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2"/>
-              </svg>
-              <svg class="w-20 h-20" aria-hidden="true"><use href="#oliver-face"/></svg>
-              <svg class="w-12 h-20" viewBox="0 0 60 100" fill="none" aria-hidden="true">
-                <rect x="2" y="2" width="56" height="96" rx="8" fill="#FFE7EC" stroke="#1C1917" stroke-width="3"/>
-                <rect x="8" y="10" width="44" height="72" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2"/>
-              </svg>
-            </div>
-            <div class="px-4 py-2 bg-lemon border-2 border-ink rounded-2xl shadow-pop-sm text-sm font-extrabold">you both have a point.</div>
-          </div>
-        </div>
-        <p class="text-sm font-bold text-ink/80 reveal" data-delay="3">Oliver hears both of you first.</p>
-      </div>
-    </section>
-
-    <!-- three steps -->
-    <section id="panel-how-it-works" class="py-14 px-4 sm:px-6 max-w-[1100px] mx-auto border-t-2 border-ink">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="font-heading font-black text-3xl sm:text-4xl text-center mb-8 reveal">three steps.</h2>
-        <div class="relative">
-          <div id="step-line" class="hidden md:block absolute top-1/2 left-[8%] right-[8%] h-1 bg-ink -z-10" aria-hidden="true"></div>
-          <div id="steps" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div class="step bg-lavender border-2 border-ink rounded-2xl p-5 shadow-pop reveal">
-              <div class="w-8 h-8 rounded-full bg-white border-2 border-ink flex items-center justify-center font-heading font-black text-sm mb-3 shadow-pop-sm">1</div>
-              <h3 class="font-heading font-bold text-lg">your side, privately.</h3>
-              <div class="mt-4 flex justify-end">
-                <svg class="w-11 h-11" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-                  <rect x="8" y="16" width="24" height="18" rx="4" fill="#FFFFFF" stroke="#1C1917" stroke-width="2.5"/>
-                  <path d="M14 16V11C14 7.7 16.7 5 20 5C23.3 5 26 7.7 26 11V16" stroke="#1C1917" stroke-width="2.5" stroke-linecap="round"/>
-                  <circle cx="20" cy="25" r="2.5" fill="#1C1917"/>
-                </svg>
-              </div>
-            </div>
-            <div class="step bg-peach border-2 border-ink rounded-2xl p-5 shadow-pop reveal" data-delay="1">
-              <div class="w-8 h-8 rounded-full bg-white border-2 border-ink flex items-center justify-center font-heading font-black text-sm mb-3 shadow-pop-sm">2</div>
-              <h3 class="font-heading font-bold text-lg">theirs, minus the heat.</h3>
-              <div class="mt-4 flex justify-end">
-                <svg class="w-11 h-11" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-                  <path d="M10 26C10 20 16 16 20 8C24 16 30 20 30 26C30 31.5 25.5 36 20 36C14.5 36 10 31.5 10 26Z" fill="#FFFFFF" stroke="#1C1917" stroke-width="2.5"/>
-                  <path d="M16 27C16 24 18 22 20 19C22 22 24 24 24 27C24 29.2 22.2 31 20 31C17.8 31 16 29.2 16 27Z" fill="#FEF08A" stroke="#1C1917" stroke-width="1.5"/>
-                </svg>
-              </div>
-            </div>
-            <div class="step bg-lemon border-2 border-ink rounded-2xl p-5 shadow-pop reveal" data-delay="2">
-              <div class="w-8 h-8 rounded-full bg-white border-2 border-ink flex items-center justify-center font-heading font-black text-sm mb-3 shadow-pop-sm">3</div>
-              <h3 class="font-heading font-bold text-lg">one thing you both said yes to.</h3>
-              <div class="mt-4 flex justify-end">
-                <svg class="w-11 h-11" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-                  <circle cx="20" cy="20" r="14" fill="#FFFFFF" stroke="#1C1917" stroke-width="2.5"/>
-                  <path d="M13 20L18 25L27 15" stroke="#6260D6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class="text-sm font-bold text-center text-ink/80 reveal">between fights: talk, journal, games, stories.</p>
-      </div>
-    </section>
-
-    <!-- Let's Fight -->
-    <section id="panel-lets-fight" class="py-14 px-4 sm:px-6 max-w-[1100px] mx-auto border-t-2 border-ink">
-      <div class="max-w-xl mx-auto text-center">
-        <div class="inline-block px-3 py-1 bg-peach border-2 border-ink rounded-full text-xs font-black tracking-wider mb-3 shadow-pop-sm reveal">Let's Fight</div>
-        <h2 class="font-heading font-black text-3xl sm:text-4xl mb-8 reveal">mid-argument? tap once.</h2>
-
-        <div id="meter" class="flex items-end justify-center gap-1.5 h-8 mb-4 reveal" data-delay="1" aria-hidden="true">
-          <span class="bar w-2 h-full bg-ink rounded-full" style="transform:scaleY(0.3)"></span>
-          <span class="bar w-2 h-full bg-violet rounded-full" style="transform:scaleY(0.5)"></span>
-          <span class="bar w-2 h-full bg-ink rounded-full" style="transform:scaleY(0.35)"></span>
-          <span class="bar w-2 h-full bg-violet rounded-full" style="transform:scaleY(0.6)"></span>
-          <span class="bar w-2 h-full bg-ink rounded-full" style="transform:scaleY(0.3)"></span>
-        </div>
-
-        <div class="relative inline-block mb-8 reveal" data-delay="1">
-          <span id="loud-ring" class="absolute inset-0 rounded-full bg-violet" aria-hidden="true"></span>
-          <button type="button" onclick="getLoud()" class="pop-btn relative w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-violet text-white border-[3px] border-ink shadow-pop-lg flex flex-col items-center justify-center p-4">
-            <svg class="w-9 h-9 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-              <line x1="12" y1="19" x2="12" y2="22"/>
-            </svg>
-            <span class="font-heading font-black text-lg leading-tight">it's getting loud</span>
+    <!-- ========== 1. HERO: what is this, is it for me? ========== -->
+    <section id="panel-home" class="space-y-8 md:space-y-0 md:grid md:grid-cols-2 md:gap-8 md:items-center xl:grid-cols-[1.05fr_1fr] xl:gap-14">
+      <div class="text-center space-y-4 md:text-left xl:space-y-6">
+        <p class="text-[11px] font-mono tracking-[0.06em] text-stone-500 md:text-xs"><span aria-hidden="true" class="inline-block w-5 h-[6px] mr-2 align-middle bg-brand-lemon border border-brand-dark"></span><span>for people who love their person and also have a 9am.</span></p>
+        <h1 class="font-heading font-extrabold text-4xl sm:text-5xl md:text-4xl lg:text-5xl text-brand-dark leading-[1.04] tracking-[-0.035em] xl:text-7xl xl:leading-[0.98]">
+          every couple needs that one friend who's <span class="bg-brand-lemon px-2 py-0.5 rounded-md border border-brand-dark shadow-pop-sm inline-block rotate-[-1deg] px-3"><span class="font-accent italic font-normal text-[1.08em] tracking-[-0.01em]">heard both sides.</span></span>
+        </h1>
+        <p class="text-base text-stone-600 max-w-[60ch] mx-auto leading-[1.6] md:mx-0 xl:text-lg xl:leading-[1.6]">
+          Oliver is the friend you'd both text after a fight, if that friend somehow wasn't on anyone's side. you each share your version, privately. then Oliver helps the two of you sort it out tonight instead of after a week of silence.
+        </p>
+        <div class="pt-1 space-y-2">
+          <div class="flex flex-wrap items-center justify-center gap-3 md:justify-start">
+          <a href="#early-access" onclick="scrollToEarlyAccess(event, 'hero')" class="inline-flex items-center gap-2 bg-brand-primary text-white font-heading font-bold tracking-[-0.01em] text-sm sm:text-base px-5 py-3 rounded-xl border-2 border-brand-dark shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+            <span>meet Oliver, it's free</span>
+            <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <button type="button" onclick="openGetApp('hero')" class="inline-flex items-center gap-2 bg-white text-brand-dark font-heading font-bold tracking-[-0.01em] text-sm sm:text-base px-5 py-3 rounded-xl border-2 border-brand-dark shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+            <span>get the app</span>
           </button>
-          <div id="fight-toast" role="status" class="hidden absolute -top-16 left-1/2 w-72 bg-lemon border-2 border-ink rounded-2xl p-3 shadow-pop text-sm font-black z-30">
-            <span class="inline-flex items-center gap-2"><svg class="w-7 h-7 shrink-0" aria-hidden="true"><use href="#oliver-face"/></svg>take ten? i'll hold the thought.</span>
+          </div>
+          <p class="text-[11px] font-mono text-stone-500">no card. one email when it's your turn. what you said never reaches them.</p>
+        </div>
+        <p class="flex items-center justify-center gap-3 max-w-md mx-auto text-sm text-brand-dark text-left leading-snug md:mx-0 md:justify-start xl:text-base">
+          <svg class="ic ic-xl" aria-hidden="true"><use href="#i-friend"/></svg>
+          <span>Oliver is the bear. an AI, too, which is how both of you get heard and nothing gets repeated.</span>
+        </p>
+      </div>
+
+      <!-- Real product in use: the chat demo, with one polaroid tucked behind -->
+      <div class="relative pt-10 md:pt-12 xl:pr-4">
+        <div class="hidden sm:block absolute top-0 right-2 w-36 xl:w-44 polaroid-frame bg-white p-2 rounded-xl rotate-[6deg]">
+          <div class="overflow-hidden rounded-lg aspect-square border border-stone-200">
+            <img src="assets/rooftop.jpg" alt="couple laughing cheek to cheek in a selfie on a city street at night" width="605" height="810" loading="eager" fetchpriority="high" class="w-full h-full object-cover">
+          </div>
+                  </div>
+
+        <div class="relative bg-white border-2 border-brand-dark rounded-2xl shadow-pop overflow-hidden sm:mr-10 xl:mr-16">
+          <div class="bg-stone-100 border-b-2 border-brand-dark p-1.5 flex gap-1">
+            <button onclick="toggleChatView('split')" id="chat-tab-split" class="flex-1 py-1.5 text-[11px] font-mono font-bold rounded-lg bg-brand-primary text-white border border-brand-dark transition-all">both</button>
+            <button onclick="toggleChatView('private')" id="chat-tab-private" class="flex-1 py-1.5 text-[11px] font-mono font-bold rounded-lg text-brand-dark hover:bg-stone-200 transition-all">maya</button>
+            <button onclick="toggleChatView('shared')" id="chat-tab-shared" class="flex-1 py-1.5 text-[11px] font-mono font-bold rounded-lg text-brand-dark hover:bg-stone-200 transition-all">shared</button>
+          </div>
+
+          <div class="p-3.5 space-y-3">
+            <div id="view-chat-private" class="p-3 rounded-xl bg-amber-50/70 border border-brand-dark space-y-2">
+              <div class="space-y-2 text-xs">
+                <div class="bg-amber-200/80 p-2.5 rounded-lg rounded-tr-none text-stone-900 max-w-[85%] ml-auto border border-amber-300">
+                  he forgot the call AGAIN. third time this month.
+                </div>
+                <div class="bg-white p-2.5 rounded-lg rounded-tl-none text-stone-800 max-w-[90%] border border-stone-200">
+                  <span class="font-bold text-brand-primary font-mono text-[10px]">Oliver:</span>
+                  that would get to me too. heads up, i'm hearing his side as well. open a fight?
+                </div>
+              </div>
+            </div>
+
+            <div id="view-chat-shared" class="p-3 rounded-xl bg-indigo-50/60 border border-brand-dark space-y-2">
+              <div class="space-y-2 text-xs">
+                <div class="bg-white p-2.5 rounded-lg text-stone-800 border border-indigo-100">
+                  <span class="font-mono text-[10px] text-stone-500 font-bold">jonah:</span>
+                  sorry. didn't realize.
+                </div>
+                <div class="bg-white p-2.5 rounded-lg border-2 border-brand-primary/40">
+                  <span class="text-[10px] font-mono font-bold text-brand-primary">Oliver:</span>
+                  <span class="text-[11px] text-stone-700 leading-relaxed">maya feels alone keeping the call going. jonah missed it.</span>
+                </div>
+                <div class="bg-brand-lemon/60 p-2 rounded-lg border border-brand-dark text-[11px] space-y-1">
+                  <div class="font-mono font-bold text-[10px]">agreed:</div>
+                  <div class="text-[10px] text-stone-800">
+                    <strong>maya:</strong> say it the 1st time.<br>
+                    <strong>jonah:</strong> 11pm goes in the calendar.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 2. THE PROBLEM: is this my situation? ========== -->
+    <section id="problem" class="space-y-6 md:space-y-8">
+      <h2 class="font-heading font-extrabold text-3xl text-brand-dark text-center tracking-[-0.02em] leading-[1.08] md:text-4xl xl:text-5xl">you know the <span class="font-accent italic font-normal text-[1.08em] tracking-[-0.01em] whitespace-nowrap">fight</span>.</h2>
+      <div class="space-y-4 max-w-sm mx-auto md:max-w-none md:space-y-0 md:grid md:grid-cols-3 md:gap-6 xl:gap-10 xl:px-10">
+        <figure class="polaroid-frame bg-white p-2 rounded-xl rotate-[-1.5deg] flex items-center gap-3 md:block md:rotate-[-2deg]">
+          <div class="w-28 shrink-0 overflow-hidden rounded-lg aspect-square border border-stone-200 md:w-full">
+            <img loading="lazy" src="assets/apartment.jpg" alt="couple sitting on a kerb at night, one holding a red rose" width="604" height="810" class="w-full h-full object-cover">
+          </div>
+          <figcaption class="font-hand text-lg leading-tight text-brand-dark font-medium md:pt-2 md:pb-1 md:text-center md:text-xl">the call they forgot. again.</figcaption>
+        </figure>
+        <figure class="polaroid-frame bg-white p-2 rounded-xl rotate-[1.5deg] flex items-center gap-3 md:block md:rotate-[1deg] md:translate-y-4">
+          <div class="w-28 shrink-0 overflow-hidden rounded-lg aspect-square border border-stone-200 md:w-full">
+            <img loading="lazy" src="assets/diner.jpg" alt="couple hugging in a mirror selfie in a bedroom" width="541" height="810" class="w-full h-full object-cover">
+          </div>
+          <figcaption class="font-hand text-lg leading-tight text-brand-dark font-medium md:pt-2 md:pb-1 md:text-center md:text-xl">the thing you can't say to their face.</figcaption>
+        </figure>
+        <figure class="polaroid-frame bg-white p-2 rounded-xl rotate-[-1deg] flex items-center gap-3 md:block md:rotate-[-1.5deg]">
+          <div class="w-28 shrink-0 overflow-hidden rounded-lg aspect-square border border-stone-200 md:w-full">
+            <img loading="lazy" src="assets/morning.jpg" alt="couple pulling silly faces by a fence at night" width="810" height="452" class="w-full h-full object-cover">
+          </div>
+          <figcaption class="font-hand text-lg leading-tight text-brand-dark font-medium md:pt-2 md:pb-1 md:text-center md:text-xl">the "k." that started a three-day war.</figcaption>
+        </figure>
+      </div>
+      <div class="text-center space-y-1 md:pt-4">
+        <p class="font-heading font-bold text-base text-brand-dark md:text-lg">that's what Oliver is for.</p>
+        <p class="text-sm text-stone-600 md:text-base">a fight shouldn't cost you the whole week. you've got stuff on.</p>
+      </div>
+    </section>
+
+    <!-- ========== 2b. WHY NOT A CHATBOT ========== -->
+    <section id="why-not-chatbot" class="space-y-6 md:space-y-8">
+      <div class="space-y-2">
+        <h2 class="font-heading font-extrabold text-3xl text-brand-dark text-center tracking-[-0.02em] leading-[1.08] md:text-4xl xl:text-5xl">your AI only heard <span class="font-accent italic font-normal text-[1.08em] tracking-[-0.01em] whitespace-nowrap">your side</span>.</h2>
+        <p class="text-base text-stone-600 leading-[1.6] xl:text-[17px] text-center max-w-[60ch] mx-auto">ask a chatbot who's right and it only ever hears one version, yours, so it mostly agrees with you. your person's chatbot is doing the same thing for them. that's two people being told they're right, which is roughly how you got here. Oliver has heard both of you before a single word gets said.</p>
+      </div>
+      <div class="space-y-3 max-w-sm mx-auto md:max-w-3xl md:space-y-0 md:grid md:grid-cols-2 md:gap-4 xl:gap-6">
+        <div class="bg-white border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm md:p-4 xl:p-5">
+          <div class="font-heading font-bold text-[17px] text-brand-dark xl:text-lg">a chatbot.</div>
+          <p class="text-sm text-stone-600 leading-[1.6] mt-1 md:text-[15px]">hears whoever is typing. tells them what they want to hear.</p>
+        </div>
+        <div class="bg-brand-butter border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm md:p-4 xl:p-5">
+          <div class="flex items-center gap-2 font-heading font-bold text-[17px] text-brand-dark xl:text-lg"><svg class="ic" aria-hidden="true"><use href="#i-friend"/></svg><span>Oliver.</span></div>
+          <p class="text-sm text-stone-600 leading-[1.6] mt-1 md:text-[15px]">has heard both of you. says what's fair, even when it's not what you wanted.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 3. HOW IT WORKS ========== -->
+    <section id="panel-how-it-works" class="space-y-6 md:space-y-8">
+      <h2 class="font-heading font-extrabold text-3xl text-brand-dark text-center tracking-[-0.02em] leading-[1.08] md:text-4xl xl:text-5xl">three steps, <span class="font-accent italic font-normal text-[1.08em] tracking-[-0.01em] whitespace-nowrap">both of you</span>.</h2>
+      <div class="space-y-3 md:space-y-0 md:grid md:grid-cols-3 md:gap-4 xl:gap-6">
+        <div class="bg-white p-4 rounded-2xl border-2 border-brand-dark shadow-pop space-y-2 xl:p-6">
+          <div class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-full bg-brand-lemon border border-brand-dark font-heading font-extrabold text-sm flex items-center justify-center">1</span>
+            <svg class="ic ic-lg" aria-hidden="true"><use href="#i-your-side"/></svg>
+          </div>
+          <div class="font-heading font-bold text-[17px] text-brand-dark xl:text-lg">tell Oliver your side. privately.</div>
+          <p class="text-sm text-stone-600 leading-[1.6] md:text-[15px]">say the unfair version. that's what private is for.</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border-2 border-brand-dark shadow-pop space-y-2 xl:p-6">
+          <div class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-full bg-brand-peach border border-brand-dark font-heading font-extrabold text-sm flex items-center justify-center">2</span>
+            <svg class="ic ic-lg" aria-hidden="true"><use href="#i-their-side"/></svg>
+          </div>
+          <div class="font-heading font-bold text-[17px] text-brand-dark xl:text-lg">hear theirs, without the heat.</div>
+          <p class="text-sm text-stone-600 leading-[1.6] md:text-[15px]">Oliver says it back the way a fair friend would, minus the tone.</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border-2 border-brand-dark shadow-pop space-y-2 xl:p-6">
+          <div class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-full bg-brand-lavender border border-brand-dark font-heading font-extrabold text-sm flex items-center justify-center">3</span>
+            <svg class="ic ic-lg" aria-hidden="true"><use href="#i-both-sides"/></svg>
+          </div>
+          <div class="font-heading font-bold text-[17px] text-brand-dark xl:text-lg">end on one thing you both said yes to.</div>
+          <p class="text-sm text-stone-600 leading-[1.6] md:text-[15px]">small and specific. 11pm goes in the calendar. Oliver checks in so it actually happens.</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-2 text-xs md:text-sm">
+        <span class="font-mono text-[11px] tracking-[0.06em] text-stone-500 md:text-xs">between fights (there will be more):</span>
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-white rounded-full border border-brand-dark"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg>talk it out,</span>
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-white rounded-full border border-brand-dark"><svg class="ic" aria-hidden="true"><use href="#i-journal"/></svg>journal,</span>
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-white rounded-full border border-brand-dark"><svg class="ic" aria-hidden="true"><use href="#i-games"/></svg>games,</span>
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-white rounded-full border border-brand-dark"><svg class="ic" aria-hidden="true"><use href="#i-stories"/></svg>stories.</span>
+      </div>
+      <p class="text-center text-sm text-stone-600 leading-[1.6] -mt-2 md:-mt-4 md:text-[15px]">there's nothing to keep up. open it when there's a fight and forget it when there isn't.</p>
+    </section>
+
+    <!-- ========== 4. THE MOMENT: Let's Fight ========== -->
+    <section id="panel-lets-fight" class="space-y-6 md:space-y-8 xl:space-y-0 xl:grid xl:grid-cols-12 xl:gap-12 xl:items-center">
+      <div class="space-y-5 xl:col-span-5">
+        <div class="text-center space-y-2 md:text-left">
+          <h2 class="font-heading font-extrabold text-3xl text-brand-dark tracking-[-0.02em] leading-[1.08] md:text-4xl xl:text-5xl">mid-argument? <span class="font-accent italic font-normal text-[1.08em] tracking-[-0.01em] whitespace-nowrap">tap once</span>.</h2>
+          <p class="text-base text-stone-600 leading-[1.6] xl:text-[17px] max-w-[60ch] mx-auto md:mx-0">
+            Let's Fight puts Oliver in the room, or on the call, mostly quiet. when it starts to spiral, Oliver says the thing a friend would say if they had the nerve.
+          </p>
+        </div>
+        <ul class="space-y-2 text-xs text-stone-700 md:space-y-0 md:grid md:grid-cols-3 md:gap-3 md:text-sm xl:block xl:space-y-2">
+          <li class="flex items-center gap-2 p-2.5 rounded-xl bg-white border border-brand-dark"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>you both say yes first</span></li>
+          <li class="flex items-center gap-2 p-2.5 rounded-xl bg-white border border-brand-dark"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>the audio gets deleted once it's written down</span></li>
+          <li class="flex items-center gap-2 p-2.5 rounded-xl bg-white border border-brand-dark"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>nobody gets diagnosed</span></li>
+        </ul>
+      </div>
+
+      <div class="bg-stone-950 text-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop space-y-4 md:p-5 xl:col-span-7 xl:p-6">
+        <div class="flex items-center justify-between border-b border-stone-800 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+            <span class="font-mono text-xs font-bold text-red-400">Let's Fight</span><span class="font-mono text-[10px] font-bold text-stone-950 bg-red-400 rounded px-1.5 py-0.5">live</span>
+          </div>
+          <div class="flex items-center gap-1 h-7">
+            <span class="wave-bar w-1 bg-brand-lemon rounded-full"></span>
+            <span class="wave-bar w-1 bg-brand-lemon rounded-full"></span>
+            <span class="wave-bar w-1 bg-amber-400 rounded-full"></span>
+            <span class="wave-bar w-1 bg-amber-400 rounded-full"></span>
+            <span class="wave-bar w-1 bg-brand-rose rounded-full"></span>
+            <span class="wave-bar w-1 bg-brand-lemon rounded-full"></span>
           </div>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-2 reveal" data-delay="2">
-          <span class="sticker inline-block px-3 py-1 bg-white border-2 border-ink rounded-full text-xs font-bold shadow-pop-sm" style="--tilt:-1.5deg">you both say yes first</span>
-          <span class="sticker inline-block px-3 py-1 bg-lavender border-2 border-ink rounded-full text-xs font-bold shadow-pop-sm" style="--tilt:1deg">audio deleted once written down</span>
-          <span class="sticker inline-block px-3 py-1 bg-peach border-2 border-ink rounded-full text-xs font-bold shadow-pop-sm" style="--tilt:-1deg">nobody gets diagnosed</span>
+        <div class="space-y-2 font-mono text-xs">
+          <div class="text-stone-400"><span class="text-brand-rose font-bold">maya:</span> you said seven.</div>
+          <div class="text-stone-400"><span class="text-indigo-300 font-bold">jonah:</span> i said i'd TRY.</div>
+          <div class="bg-brand-primary/20 border border-brand-primary/50 p-2.5 rounded-lg text-[11px] text-indigo-100">
+            <span class="font-bold text-brand-lemon">Oliver:</span>
+            he said he'd try. maya heard a promise. take ten?
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button onclick="triggerRefereeAlert('spike')" class="py-2 px-2.5 bg-stone-800 hover:bg-stone-700 text-stone-200 text-[11px] font-mono font-bold rounded-lg border border-stone-700 flex items-center justify-center gap-1 transition-colors"><span>it's getting loud</span></button>
+          <button onclick="triggerRefereeAlert('cuddle_pop')" class="py-2 px-2.5 bg-brand-primary hover:bg-brand-primaryHover text-white text-[11px] font-mono font-bold rounded-lg border border-brand-primary flex items-center justify-center gap-1 transition-colors"><span>hey Oliver</span></button>
+        </div>
+        <div id="referee-toast" class="hidden text-center text-[10px] font-mono text-brand-lemon bg-stone-900 py-1 rounded"></div>
+      </div>
+    </section>
+
+    <!-- ========== 5. TRUST: privacy ========== -->
+    <section id="panel-privacy" class="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-8 md:items-center xl:grid-cols-[5fr_7fr] xl:gap-12">
+      <div class="space-y-5">
+        <div class="text-center space-y-2 md:text-left">
+          <h2 class="font-heading font-extrabold text-3xl text-brand-dark tracking-[-0.02em] leading-[1.08] md:text-4xl xl:text-5xl">a good friend <span class="font-accent italic font-normal text-[1.08em] tracking-[-0.01em]">keeps what you told them</span>.</h2>
+          <p class="text-base text-stone-600 leading-[1.6] xl:text-[17px] max-w-[60ch] mx-auto md:mx-0">a friend who repeats things stops getting told things. so Oliver is built to never repeat a thing.</p>
+        </div>
+        <div class="polaroid-frame bg-white p-2 rounded-2xl max-w-xs mx-auto rotate-[-1.5deg] md:max-w-none md:mx-0">
+          <div class="relative overflow-hidden rounded-xl aspect-[4/3]">
+            <img loading="lazy" src="assets/piggyback.jpg" alt="couple laughing in a piggyback hug in a park" width="810" height="605" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-3 xl:space-y-4">
+        <div class="bg-white border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm md:p-4 xl:p-5">
+          <div class="font-heading font-bold text-[17px] text-brand-dark xl:text-lg">Oliver can't quote you</div>
+          <p class="text-sm text-stone-600 leading-[1.6] mt-1 md:text-[15px]">the shared chat can't open your private chats or journal.</p>
+        </div>
+        <div class="bg-white border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm md:p-4 xl:p-5">
+          <div class="font-heading font-bold text-[17px] text-brand-dark xl:text-lg">or hint at it</div>
+          <p class="text-sm text-stone-600 leading-[1.6] mt-1 md:text-[15px]">the shared chat can't see any of it, so there's nothing to hint at.</p>
+        </div>
+        <div class="bg-white border-2 border-brand-dark rounded-xl p-3.5 shadow-pop-sm md:p-4 xl:p-5">
+          <div class="font-heading font-bold text-[17px] text-brand-dark xl:text-lg">nothing gets shared unless you say so</div>
+          <p class="text-sm text-stone-600 leading-[1.6] mt-1 md:text-[15px]">Oliver checks every shared message for leaks and rewrites anything that slips.</p>
+        </div>
+        <div class="bg-brand-butter border-2 border-brand-dark rounded-2xl p-4 shadow-pop text-center space-y-2 md:text-left xl:p-5">
+          <h3 class="font-heading font-bold text-[17px] text-brand-dark xl:text-lg">your person isn't in yet? start solo.</h3>
+          <p class="text-sm text-stone-600 leading-[1.6] md:text-[15px]">tell Oliver your side first. when you're ready, Oliver sends the invite, and nothing you said goes with it.</p>
+          <div class="flex items-start gap-2 max-w-xs mx-auto text-left md:mx-0">
+            <svg class="ic ic-lg" aria-hidden="true"><use href="#i-friend"/></svg>
+            <div class="bg-white p-2.5 rounded-lg rounded-tl-none text-xs text-stone-800 border border-stone-200">Oliver wants to hear your side.</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- privacy -->
-    <section id="panel-privacy" class="py-14 px-4 sm:px-6 max-w-[1100px] mx-auto border-t-2 border-ink">
-      <div class="paper max-w-2xl mx-auto border-2 border-ink rounded-3xl p-6 sm:p-10 shadow-pop-lg reveal">
-        <h2 class="font-heading font-black text-3xl sm:text-4xl text-center mb-8">a good friend keeps what you told them.</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
-          <button type="button" onclick="shakeLock()" class="flex justify-center focus:outline-none" aria-label="try to open the lock">
-            <svg class="w-44 h-44" viewBox="0 0 120 130" fill="none" aria-hidden="true">
-              <ellipse cx="60" cy="104" rx="30" ry="22" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
-              <circle cx="32" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
-              <circle cx="32" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/>
-              <circle cx="88" cy="40" r="15" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
-              <circle cx="88" cy="40" r="7" fill="#F39A85" stroke="#1C1917" stroke-width="2.5"/>
-              <circle cx="60" cy="66" r="36" fill="#F4B860" stroke="#1C1917" stroke-width="3.5"/>
-              <path d="M40 60 Q46 65 52 60" stroke="#1C1917" stroke-width="3.5" stroke-linecap="round"/>
-              <circle cx="74" cy="61" r="4" fill="#1C1917"/>
-              <ellipse cx="60" cy="76" rx="15" ry="11" fill="#FFF9ED" stroke="#1C1917" stroke-width="3"/>
-              <path d="M55 72C55 70 57.3 68.5 60 68.5C62.7 68.5 65 70 65 72C65 74.5 60 77 60 77C60 77 55 74.5 55 72Z" fill="#1C1917"/>
-              <path d="M54 81C57 83.5 63 83.5 66 81" stroke="#1C1917" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="38" cy="72" r="4" fill="#F39A85"/>
-              <circle cx="82" cy="72" r="4" fill="#F39A85"/>
-              <g id="lock">
-                <rect x="44" y="96" width="32" height="26" rx="5" fill="#EDE9FE" stroke="#1C1917" stroke-width="3"/>
-                <path d="M50 96V88C50 82.5 54.5 78 60 78C65.5 78 70 82.5 70 88V96" stroke="#1C1917" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="60" cy="108" r="3.5" fill="#1C1917"/>
-                <path d="M60 108V114" stroke="#1C1917" stroke-width="3" stroke-linecap="round"/>
-              </g>
-              <ellipse cx="40" cy="106" rx="9" ry="7" fill="#F4B860" stroke="#1C1917" stroke-width="3"/>
-              <ellipse cx="80" cy="106" rx="9" ry="7" fill="#F4B860" stroke="#1C1917" stroke-width="3"/>
-            </svg>
-          </button>
-          <ul class="space-y-4">
-            <li class="flex items-center gap-3 reveal" data-delay="1"><span class="w-7 h-7 rounded-full bg-lemon border-2 border-ink flex items-center justify-center shrink-0 shadow-pop-sm"><svg class="w-4 h-4" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7L6 10L11 4" stroke="#1C1917" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="text-base font-extrabold">can't quote you.</span></li>
-            <li class="flex items-center gap-3 reveal" data-delay="2"><span class="w-7 h-7 rounded-full bg-peach border-2 border-ink flex items-center justify-center shrink-0 shadow-pop-sm"><svg class="w-4 h-4" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7L6 10L11 4" stroke="#1C1917" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="text-base font-extrabold">can't hint at it.</span></li>
-            <li class="flex items-center gap-3 reveal" data-delay="3"><span class="w-7 h-7 rounded-full bg-lavender border-2 border-ink flex items-center justify-center shrink-0 shadow-pop-sm"><svg class="w-4 h-4" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7L6 10L11 4" stroke="#1C1917" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="text-base font-extrabold">nothing shared unless you say so.</span></li>
-          </ul>
+    <!-- ========== 6. PRICING ========== -->
+    <section id="panel-pricing" class="space-y-6 md:space-y-8 xl:space-y-0 xl:grid xl:grid-cols-12 xl:gap-12 xl:items-center">
+      <div class="flex flex-col items-center gap-5 text-center md:flex-row md:text-left md:justify-between xl:col-span-5 xl:flex-col xl:items-start">
+        <div class="space-y-2">
+          <h2 class="font-heading font-extrabold text-3xl text-brand-dark tracking-[-0.02em] leading-[1.08] md:text-4xl xl:text-5xl">one friend. <span class="font-accent italic font-normal text-[1.08em] tracking-[-0.01em]">one sub covers both of you</span>.</h2>
+          <p class="text-base text-stone-600 leading-[1.6] xl:text-[17px] max-w-[60ch]">whoever pays, the other gets everything. the one thing you won't fight about.</p>
+        </div>
+        <div class="polaroid-frame bg-white p-2 rounded-xl rotate-[2deg] w-40 shrink-0 xl:w-48">
+          <div class="overflow-hidden rounded-lg aspect-square">
+            <img loading="lazy" src="assets/cocoa.jpg" alt="couple laughing over chai and snacks at a night street stall" width="660" height="810" class="w-full h-full object-cover">
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- pricing -->
-    <section id="panel-pricing" class="py-14 px-4 sm:px-6 max-w-[1100px] mx-auto border-t-2 border-ink">
-      <div class="max-w-2xl mx-auto">
-        <h2 class="font-heading font-black text-3xl sm:text-4xl text-center mb-8 reveal">one sub covers both of you.</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div class="bg-white border-2 border-ink rounded-3xl p-6 shadow-pop reveal" data-delay="1">
-            <h3 class="font-heading font-black text-2xl mb-4">free</h3>
-            <ul class="space-y-3 font-bold text-sm">
-              <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-ink"></span>chat, with a daily cap</li>
-              <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-ink"></span>fights, journal, games</li>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 xl:col-span-7 xl:gap-6">
+        <div class="bg-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop flex flex-col justify-between md:p-5 xl:p-6">
+          <div class="space-y-2">
+            <div class="font-heading font-extrabold text-xl">free</div>
+            <div class="text-3xl font-heading font-extrabold tracking-[-0.02em]">$0</div>
+            <ul class="space-y-1.5 text-sm text-stone-600 pt-2 md:text-[15px]">
+              <li class="flex items-center gap-1.5"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>chat, with a daily cap</li>
+              <li class="flex items-center gap-1.5"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>fights, journal, games</li>
             </ul>
           </div>
-          <div class="bg-lemon border-2 border-ink rounded-3xl p-6 shadow-pop reveal" data-delay="2">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="font-heading font-black text-2xl">plus</h3>
-              <span class="px-3 py-1 bg-peach border-2 border-ink rounded-full text-xs font-black shadow-pop-sm">price at launch</span>
-            </div>
-            <ul class="space-y-3 font-bold text-sm">
-              <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-ink"></span>no daily cap</li>
-              <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-ink"></span>Let's Fight, live</li>
-              <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-ink"></span>every game</li>
+        </div>
+        <div class="bg-brand-butter border-2 border-brand-dark rounded-2xl p-4 shadow-pop relative flex flex-col justify-between md:p-5 xl:p-6">
+          <div class="space-y-2">
+            <div class="font-heading font-extrabold text-xl">plus</div>
+            <div class="text-base font-heading font-extrabold text-brand-primary">price at launch</div>
+            <ul class="space-y-1.5 text-sm text-brand-dark pt-2 font-medium md:text-[15px]">
+              <li class="flex items-center gap-1.5"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>no daily cap</li>
+              <li class="flex items-center gap-1.5"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Let's Fight, live</li>
+              <li class="flex items-center gap-1.5"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>every game, including the ones that start fights</li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- faq -->
-    <section id="faq" class="py-14 px-4 sm:px-6 max-w-[1100px] mx-auto border-t-2 border-ink">
-      <div class="max-w-xl mx-auto">
-        <h2 class="font-heading font-black text-3xl sm:text-4xl text-center mb-8 reveal">stuff couples ask first.</h2>
-        <div id="faq-list" class="space-y-3 reveal" data-delay="1">
-          <div class="border-2 border-ink rounded-2xl bg-white shadow-pop-sm overflow-hidden">
-            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full text-left px-5 py-3.5 flex items-center justify-between font-extrabold text-sm sm:text-base"><span>can my partner see my private chats?</span><span class="faq-ic font-heading text-lg font-black ml-2" aria-hidden="true">+</span></button>
-            <div class="faq-a hidden px-5 pb-3.5 pt-1 text-sm font-bold text-ink/80 bg-canvas">no.</div>
+    <!-- ========== 6b. A NOTE FROM US ========== -->
+    <section id="note" class="space-y-5">
+      <h2 class="font-heading font-extrabold text-3xl text-brand-dark text-center tracking-[-0.02em] leading-[1.08] md:text-4xl xl:text-5xl">a note <span class="font-accent italic font-normal text-[1.08em] tracking-[-0.01em] whitespace-nowrap">from us</span></h2>
+      <div class="bg-white border-2 border-brand-dark rounded-2xl p-5 shadow-pop md:p-6 xl:p-8 max-w-2xl mx-auto space-y-4">
+        <p class="text-base text-stone-700 leading-[1.65] xl:text-[17px]">most of us have had the fight that ran for a week over a text that said "fine." nobody was wrong, exactly. there was just no one to tell who wasn't already on a side.</p>
+        <p class="text-base text-stone-700 leading-[1.65] xl:text-[17px]">every couple has that one friend who knows both of them well enough to say "okay, but you did say you'd call." most couples don't have that friend at 1am on a tuesday. so we made one.</p>
+        <p class="text-base text-stone-700 leading-[1.65] xl:text-[17px]">Oliver is a bear, and an AI, and is never going to be as good as a real friend who has known you both for years. Oliver is just awake when they're asleep.</p>
+        <p class="font-hand font-medium text-2xl text-stone-600 pt-1">nihal, cuddle pop</p>
+      </div>
+    </section>
+
+    <!-- ========== 7. FAQ ========== -->
+    <section id="faq" class="space-y-5">
+      <h2 class="font-heading font-extrabold text-3xl text-brand-dark text-center tracking-[-0.02em] leading-[1.08] md:text-4xl xl:text-5xl">stuff couples ask first.</h2>
+      <div class="bg-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop md:p-5 xl:p-6">
+        <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 md:gap-3 md:items-start">
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>can my partner see my private chats?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. only your effort trend, if you both opt in.</div>
           </div>
-          <div class="border-2 border-ink rounded-2xl bg-white shadow-pop-sm overflow-hidden">
-            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full text-left px-5 py-3.5 flex items-center justify-between font-extrabold text-sm sm:text-base"><span>is Oliver a real person?</span><span class="faq-ic font-heading text-lg font-black ml-2" aria-hidden="true">+</span></button>
-            <div class="faq-a hidden px-5 pb-3.5 pt-1 text-sm font-bold text-ink/80 bg-canvas">no. an AI, and a bear.</div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>why not just ask ChatGPT?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">a chatbot hears one side: whoever's typing. so it tends to agree with you, and your person's chatbot agrees with them. Oliver hears both of you privately before saying anything, then helps you land on something you'd both actually do.</div>
           </div>
-          <div class="border-2 border-ink rounded-2xl bg-white shadow-pop-sm overflow-hidden">
-            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full text-left px-5 py-3.5 flex items-center justify-between font-extrabold text-sm sm:text-base"><span>is this therapy?</span><span class="faq-ic font-heading text-lg font-black ml-2" aria-hidden="true">+</span></button>
-            <div class="faq-a hidden px-5 pb-3.5 pt-1 text-sm font-bold text-ink/80 bg-canvas">no. if it spots crisis or abuse, it points you to real help.</div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>what if Oliver sides with my partner?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no side gets picked. Oliver only says what you've both agreed is fair.</div>
           </div>
-          <div class="border-2 border-ink rounded-2xl bg-white shadow-pop-sm overflow-hidden">
-            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full text-left px-5 py-3.5 flex items-center justify-between font-extrabold text-sm sm:text-base"><span>is what i tell Oliver used to train AI?</span><span class="faq-ic font-heading text-lg font-black ml-2" aria-hidden="true">+</span></button>
-            <div class="faq-a hidden px-5 pb-3.5 pt-1 text-sm font-bold text-ink/80 bg-canvas">no.</div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is Oliver a real person?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. Oliver is an AI, built to be fair to both of you and to keep what each of you shares private. also, a bear. that should have been a clue.</div>
           </div>
-          <div class="border-2 border-ink rounded-2xl bg-white shadow-pop-sm overflow-hidden">
-            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full text-left px-5 py-3.5 flex items-center justify-between font-extrabold text-sm sm:text-base"><span>what if we break up?</span><span class="faq-ic font-heading text-lg font-black ml-2" aria-hidden="true">+</span></button>
-            <div class="faq-a hidden px-5 pb-3.5 pt-1 text-sm font-bold text-ink/80 bg-canvas">either of you can lock it for both. we wipe it on request.</div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is this therapy?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. if it spots crisis or abuse, it stops and points you to real help.</div>
+          </div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>do we both need Cuddle Pop?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">to sort out a fight together, yes. but you can start solo: tell Oliver your side, and invite your person when you're ready. you won't pay twice either.</div>
+          </div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>what does my person see when i invite them?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">a link and one line: "Oliver wants to hear your side." the link works in any messaging app. it installs the app and connects the two of you automatically. nothing you told Oliver goes with it.</div>
+          </div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>do i have to use it every day?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. open it when there's a fight and ignore it when things are fine. the journal and games are there if you want them, and nobody will nag you about a streak.</div>
+          </div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is Let's Fight always recording?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. you both opt in each time, and audio is deleted once transcribed.</div>
+          </div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is what i tell Oliver used to train AI?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. what you tell Oliver stays between you and Oliver. none of it is used to train AI.</div>
+          </div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>how much will plus cost?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">we haven't set it yet. it'll be one price for the two of you, and the first couples in get it free.</div>
+          </div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>does it work long distance?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">yes. Let's Fight works on video calls too. the time zones are still your problem.</div>
+          </div>
+          <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
+            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>what if we break up?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">either of you can lock it for both. we wipe the data on request. Oliver won't take it personally.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- early access -->
-    <section id="early-access" class="py-14 px-4 sm:px-6 max-w-[1100px] mx-auto border-t-2 border-ink">
-      <div class="max-w-xl mx-auto bg-lemon border-2 border-ink rounded-3xl p-6 sm:p-10 shadow-pop-lg text-center reveal">
-        <svg class="w-16 h-16 mx-auto mb-3" aria-hidden="true"><use href="#oliver-face"/></svg>
-        <h2 class="font-heading font-black text-2xl sm:text-3xl mb-6">be one of the first couples to meet Oliver.</h2>
-        <form onsubmit="handleWaitlist(event)" class="max-w-md mx-auto space-y-3 mb-3">
-          <input type="hidden" name="ref" id="waitlist-ref" value="">
-          <div class="flex flex-col sm:flex-row gap-2">
-            <input type="email" id="waitlist-email" required placeholder="your email" autocomplete="email" class="w-full min-w-0 px-4 py-3 bg-white border-2 border-ink rounded-full text-sm font-bold placeholder:text-ink/50 focus:outline-none focus:ring-2 focus:ring-violet shadow-pop-sm">
-            <button type="submit" id="waitlist-submit" class="pop-btn px-6 py-3 bg-violet text-white font-extrabold text-sm border-2 border-ink rounded-full shadow-pop whitespace-nowrap"><span>count us in</span></button>
-          </div>
-          <div id="waitlist-success" class="hidden text-sm font-bold bg-white border-2 border-ink rounded-full py-2 px-4">you're in. now send this to your person.</div>
-          <div id="share-wrap" class="hidden justify-center">
-            <button type="button" id="share-btn" onclick="shareInvite()" class="pop-btn px-6 py-3 bg-violet text-white font-extrabold text-sm border-2 border-ink rounded-full shadow-pop"><span id="share-label">send to your person</span></button>
-          </div>
-        </form>
-        <p class="text-xs font-bold text-ink/80">no card. one email when it's your turn.</p>
-        <p class="text-xs font-bold mt-2"><button type="button" onclick="openGetApp('footer')" class="underline underline-offset-2 decoration-2 hover:text-violet">get the app</button></p>
+    <!-- ========== 8. FINAL CTA + note ========== -->
+    <section class="space-y-6 md:space-y-0 md:grid md:grid-cols-[1fr_auto] md:gap-10 md:items-center xl:px-16">
+      <div class="space-y-5">
+        <div id="early-access" class="bg-brand-lemon border-2 border-brand-dark rounded-2xl p-5 shadow-pop text-center space-y-3 xl:p-8">
+          <h2 class="font-heading font-extrabold text-2xl text-brand-dark tracking-[-0.02em] leading-[1.08] md:text-3xl xl:text-4xl">be one of the first couples to <span class="font-accent italic font-normal text-[1.08em] tracking-[-0.01em] whitespace-nowrap">meet&nbsp;Oliver</span>.</h2>
+          <p class="text-sm text-brand-dark/80 max-w-sm mx-auto leading-[1.6] md:text-[15px]">drop an email. one message when it's your turn. no newsletter about love, promise.</p>
+
+          <form onsubmit="handleWaitlist(event)" class="space-y-2 pt-1 max-w-md mx-auto">
+            <input type="hidden" name="ref" id="waitlist-ref" value="">
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input
+                type="email"
+                id="waitlist-email"
+                required
+                placeholder="you@bothloved.com"
+                class="min-w-0 flex-1 px-3.5 py-2.5 rounded-xl border-2 border-brand-dark text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary placeholder:text-stone-400 font-mono"
+              >
+              <button
+                type="submit"
+                id="waitlist-submit"
+                class="shrink-0 whitespace-nowrap px-5 py-2.5 bg-brand-primary text-white font-heading font-bold tracking-[-0.01em] text-sm rounded-xl border-2 border-brand-dark shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-1.5"
+              >
+                <span>count us in</span>
+                <svg class="ic" aria-hidden="true"><use href="#i-envelope"/></svg>
+              </button>
+            </div>
+            <div id="waitlist-success" class="hidden text-xs font-mono font-bold text-emerald-800 bg-emerald-100 py-1.5 px-3 rounded-lg border border-emerald-600">
+              you're in. now send this to your person.
+            </div>
+            <div id="share-wrap" class="hidden justify-center pt-1">
+              <button type="button" id="share-btn" onclick="shareInvite()" class="inline-flex items-center gap-1.5 px-5 py-2.5 bg-brand-primary text-white font-heading font-bold tracking-[-0.01em] text-sm rounded-xl border-2 border-brand-dark shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+                <span id="share-label">send to your person</span>
+                <svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>
+              </button>
+            </div>
+          </form>
+
+          <p class="text-xs text-brand-dark/80">
+            <button type="button" onclick="openGetApp('footer')" class="font-heading font-bold underline underline-offset-2 decoration-2 hover:text-brand-primary">get the app</button>
+          </p>
+
+          <p class="text-[10px] text-stone-600 leading-tight pt-1">
+            Cuddle Pop is an AI friend for two. not therapy, not for emergencies.
+          </p>
+        </div>
+        <p class="flex items-start gap-2 max-w-md mx-auto text-sm text-stone-600 leading-[1.6] md:mx-0 md:text-[15px]">
+          <svg class="ic mt-1" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span>we're in beta (bear with us), which means the first couples in get it free and get to boss us around about what Oliver becomes.</span>
+        </p>
+      </div>
+      <div class="hidden md:block polaroid-frame bg-white p-2 rounded-xl rotate-[-3deg] w-48 xl:w-60">
+        <div class="relative overflow-hidden rounded-lg aspect-square">
+          <img loading="lazy" src="assets/kitchen.jpg" alt="couple laughing, one on the other's back, in a messy kitchen" width="652" height="810" class="w-full h-full object-cover">
+        </div>
       </div>
     </section>
+
+    <footer class="pt-8 pb-4 text-center space-y-2 border-t border-stone-300 md:flex md:items-center md:justify-between md:gap-8 md:text-left md:space-y-0">
+     <div class="space-y-2 md:space-y-1">
+      <div class="flex items-center justify-center gap-2 md:justify-start">
+        <span class="text-xl"><svg class="ic" aria-hidden="true"><use href="#i-friend"/></svg></span>
+        <span class="font-heading font-bold text-sm">Cuddle Pop</span>
+      </div>
+      <p class="text-xs text-stone-600">the friend who's heard both sides.</p>
+      <p class="text-xs text-stone-600">made by people who have also lost a fight.</p>
+     </div>
+      <div class="text-[10px] text-stone-500 font-mono md:text-right md:shrink-0">
+        © 2026 Cuddle Pop
+      </div>
+    </footer>
+
   </main>
 
-  <footer class="py-10 px-4 sm:px-6 max-w-[1100px] mx-auto border-t-2 border-ink">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-      <div>
-        <div class="font-heading font-black text-xl">Cuddle Pop</div>
-        <div class="text-xs font-bold text-ink/80">the friend who's heard both sides.</div>
-        <div class="text-xs font-bold text-ink/60 mt-1">an AI friend for two. not therapy, not for emergencies.</div>
-      </div>
-      <div class="text-xs font-bold text-ink/70">&copy; 2026 Cuddle Pop</div>
-    </div>
-  </footer>
-
   <!-- get the app: platform picker. switches itself on when APP_LINKS are filled in -->
-  <div id="get-app" class="hidden fixed inset-0 z-[60] bg-ink/40 flex items-center justify-center" onclick="if (event.target === this) closeGetApp()">
-    <div role="dialog" aria-modal="true" aria-labelledby="get-app-title" class="relative bg-white border-2 border-ink rounded-3xl shadow-pop-lg p-6 max-w-sm w-[calc(100%-2rem)] space-y-4">
-      <button type="button" onclick="closeGetApp()" aria-label="close" class="absolute top-3 right-3 w-8 h-8 inline-flex items-center justify-center rounded-full border-2 border-ink bg-white font-heading font-bold hover:bg-canvas"><span aria-hidden="true" class="text-lg leading-none">&times;</span></button>
-      <div class="pr-10">
-        <h2 id="get-app-title" tabindex="-1" class="font-heading font-black text-2xl focus:outline-none">get the app.</h2>
+  <div id="get-app" class="hidden fixed inset-0 z-[60] bg-brand-dark/40 flex items-center justify-center" onclick="if (event.target === this) closeGetApp()">
+    <div role="dialog" aria-modal="true" aria-labelledby="get-app-title" class="relative bg-white border-2 border-brand-dark rounded-2xl shadow-pop p-5 max-w-sm w-[calc(100%-2rem)] space-y-4">
+      <button type="button" onclick="closeGetApp()" aria-label="close" class="absolute top-3 right-3 w-8 h-8 inline-flex items-center justify-center rounded-full border-2 border-brand-dark bg-white font-heading font-bold text-brand-dark hover:bg-brand-cream">
+        <span aria-hidden="true" class="text-lg leading-none">&times;</span>
+      </button>
+      <div class="space-y-1 pr-10">
+        <h2 id="get-app-title" tabindex="-1" class="font-heading font-extrabold text-xl text-brand-dark focus:outline-none">get the app.</h2>
+        <p class="text-sm text-stone-600">which phone?</p>
       </div>
       <div class="grid grid-cols-2 gap-3">
-        <button type="button" id="get-app-android" onclick="pickPlatform('android')" class="pop-btn font-extrabold border-2 border-ink rounded-full py-3 bg-lemon shadow-pop-sm">android</button>
-        <button type="button" id="get-app-ios" onclick="pickPlatform('ios')" class="pop-btn font-extrabold border-2 border-ink rounded-full py-3 bg-lavender shadow-pop-sm">iOS</button>
+        <button type="button" id="get-app-android" onclick="pickPlatform('android')" class="font-heading font-bold tracking-[-0.01em] text-brand-dark border-2 border-brand-dark rounded-xl py-3 bg-brand-lemon shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">android</button>
+        <button type="button" id="get-app-ios" onclick="pickPlatform('ios')" class="font-heading font-bold tracking-[-0.01em] text-brand-dark border-2 border-brand-dark rounded-xl py-3 bg-brand-lavender shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">iOS</button>
       </div>
       <div id="get-app-ready-android" class="hidden space-y-2 text-center">
-        <a id="get-app-dl-android" download href="#" onclick="window.track && track('get_app_download', { platform: 'android' })" class="pop-btn inline-flex w-full items-center justify-center bg-violet text-white font-extrabold text-sm px-5 py-3 rounded-full border-2 border-ink shadow-pop">download for android</a>
-        <p class="text-xs font-bold text-ink/70">your phone will ask to allow installs from the browser. that's normal.</p>
+        <a id="get-app-dl-android" download href="#" onclick="window.track && track('get_app_download', { platform: 'android' })" class="inline-flex w-full items-center justify-center gap-2 bg-brand-primary text-white font-heading font-bold tracking-[-0.01em] text-sm px-5 py-3 rounded-xl border-2 border-brand-dark shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+          <span>download for android</span>
+          <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+        <p class="text-xs text-stone-600">your phone will ask you to allow installs from the browser. that's normal.</p>
       </div>
       <div id="get-app-ready-ios" class="hidden text-center">
-        <a id="get-app-dl-ios" href="#" onclick="window.track && track('get_app_download', { platform: 'ios' })" class="pop-btn inline-flex w-full items-center justify-center bg-violet text-white font-extrabold text-sm px-5 py-3 rounded-full border-2 border-ink shadow-pop">get it on iOS</a>
+        <a id="get-app-dl-ios" href="#" onclick="window.track && track('get_app_download', { platform: 'ios' })" class="inline-flex w-full items-center justify-center gap-2 bg-brand-primary text-white font-heading font-bold tracking-[-0.01em] text-sm px-5 py-3 rounded-xl border-2 border-brand-dark shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+          <span>get it on iOS</span>
+          <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
       </div>
       <div id="get-app-not-ready" class="hidden space-y-3 text-center">
-        <p class="text-sm font-bold">not out yet. leave your email, we'll send the link the day it's ready.</p>
-        <button type="button" onclick="closeGetApp(); goToWaitlist();" class="pop-btn inline-flex w-full items-center justify-center bg-violet text-white font-extrabold text-sm px-5 py-3 rounded-full border-2 border-ink shadow-pop">count us in</button>
+        <p class="text-sm text-brand-dark">not out yet. leave your email and we'll send you the link the day it's ready, then leave you alone.</p>
+        <button type="button" onclick="closeGetApp(); goToWaitlist();" class="inline-flex w-full items-center justify-center gap-2 bg-brand-primary text-white font-heading font-bold tracking-[-0.01em] text-sm px-5 py-3 rounded-xl border-2 border-brand-dark shadow-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+          <span>count us in</span>
+          <svg class="ic" aria-hidden="true"><use href="#i-envelope"/></svg>
+        </button>
       </div>
     </div>
   </div>
 
   <script>
     const APP_LINKS = { android: '', ios: '' }; // TODO(ready): set the APK URL (e.g. 'assets/cuddlepop.apk') and the iOS link when the builds are ready
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Old hashes (and a few aliases) still land on the right section
+    // Sections the header pills point at, in page order
+    const NAV_SECTIONS = ['panel-home', 'panel-how-it-works', 'panel-lets-fight', 'panel-privacy', 'panel-pricing'];
+    // Old tab hashes (and a few aliases) mapped to section ids
     const HASH_MAP = {
-      'home': 'panel-home', 'hero': 'panel-home', 'how-it-works': 'panel-how-it-works', 'lets-fight': 'panel-lets-fight',
-      'privacy': 'panel-privacy', 'pricing': 'panel-pricing', 'cta': 'early-access'
+      'home': 'panel-home', 'how-it-works': 'panel-how-it-works', 'lets-fight': 'panel-lets-fight',
+      'privacy': 'panel-privacy', 'pricing': 'panel-pricing', 'problem': 'problem', 'faq': 'faq',
+      'early-access': 'early-access'
     };
+
     function resolveTarget(hash) {
       hash = (hash || '').replace('#', '').toLowerCase();
       if (!hash) return null;
-      return document.getElementById(HASH_MAP[hash] || hash);
+      const id = HASH_MAP[hash] || hash;
+      return document.getElementById(id);
     }
 
-    // Scroll reveal; the step cards light up in order once they are on screen
-    if (!('IntersectionObserver' in window)) {
-      document.querySelectorAll('.reveal, #step-line').forEach(el => el.classList.add('in'));
-      document.querySelectorAll('#steps .step').forEach(el => el.classList.add('lit'));
-    }
-    const io = ('IntersectionObserver' in window) ? new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-        if (entry.target.id === 'steps') lightSteps();
-        if (entry.target.id === 'listener-box') autoFlipListener();
-      });
-    }, { threshold: 0.2 }) : null;
-    if (io) document.querySelectorAll('.reveal, #steps, #listener-box').forEach(el => io.observe(el));
-
-
-    function lightSteps() {
-      const line = document.getElementById('step-line');
-      if (line) line.classList.add('in');
-      document.querySelectorAll('#steps .step').forEach((card, i) => {
-        setTimeout(() => card.classList.add('lit'), reducedMotion ? 0 : 500 + i * 450);
+    function setActivePill(id) {
+      document.querySelectorAll('#dock .tab-btn').forEach(btn => {
+        if (btn.dataset.section === id) btn.setAttribute('aria-current', 'true'); else btn.removeAttribute('aria-current');
       });
     }
 
-    // Hero card leans toward the pointer
-    (function heroTilt() {
-      const card = document.getElementById('hero-card');
-      if (!card || reducedMotion || !window.matchMedia('(hover: hover)').matches) return;
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg');
-        card.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg');
+    // The active pill is the last nav section whose top has passed a line just below the dock (top dock on md+)
+    let currentActive = null;
+    function updateActiveFromScroll() {
+      const dr = document.getElementById('dock').getBoundingClientRect();
+      const cover = dr.top < window.innerHeight / 2 ? dr.bottom : 0;
+      const line = cover + window.innerHeight * 0.3;
+      let id = NAV_SECTIONS[0];
+      NAV_SECTIONS.forEach(s => {
+        const el = document.getElementById(s);
+        if (el && el.getBoundingClientRect().top <= line) id = s;
       });
-      card.addEventListener('mouseleave', () => { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); });
-    })();
-
-    // "you know the fight": tap a chip, Oliver types a reply
-    const CHIP_REPLIES = ['that would get to me too.', 'ok. two sides to that one.', 'say it here. only Oliver hears it.'];
-    let typeTimer = null;
-    function pickChip(i, btn) {
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('ring-4', 'ring-violet/40'));
-      btn.classList.add('ring-4', 'ring-violet/40');
-      typeInto(document.getElementById('chip-reply'), CHIP_REPLIES[i]);
-      window.track && track('chip_tap', { chip: i });
-    }
-    function typeInto(el, text) {
-      clearTimeout(typeTimer);
-      if (reducedMotion) { el.textContent = text; return; }
-      el.textContent = '';
-      el.classList.add('typing');
-      let n = 0;
-      (function step() {
-        el.textContent = text.slice(0, ++n);
-        if (n < text.length) typeTimer = setTimeout(step, 28);
-        else typeTimer = setTimeout(() => el.classList.remove('typing'), 900);
-      })();
+      if (id !== currentActive) { currentActive = id; setActivePill(id); }
     }
 
-    // chatbot vs Oliver
-    let listenerTouched = false;
-    function setListener(which, auto) {
-      if (!auto) listenerTouched = true;
-      const isOliver = which === 'oliver';
-      document.getElementById('state-oliver').classList.toggle('out', !isOliver);
-      document.getElementById('state-chatbot').classList.toggle('out', isOliver);
-      [['tab-chatbot', !isOliver], ['tab-oliver', isOliver]].forEach(([id, on]) => {
-        const b = document.getElementById(id);
-        b.setAttribute('aria-selected', String(on));
-        b.classList.toggle('bg-ink', on);
-        b.classList.toggle('text-white', on);
+    function scrollToSection(el, smooth) {
+      if (!el) return;
+      el.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'start' });
+    }
+
+    document.querySelectorAll('#dock .tab-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const el = document.getElementById(btn.dataset.section);
+        scrollToSection(el, true);
+        history.replaceState(null, '', '#' + btn.dataset.section);
       });
-      if (!auto) window.track && track('listener_toggle', { which: which });
-    }
-    function autoFlipListener() {
-      setTimeout(() => { if (!listenerTouched) setListener('oliver', true); }, reducedMotion ? 0 : 1800);
-    }
+    });
 
-    // Let's Fight: the meter spikes, Oliver steps in
-    let toastTimer = null;
-    function getLoud() {
-      const meter = document.getElementById('meter');
-      const toast = document.getElementById('fight-toast');
-      const ring = document.getElementById('loud-ring');
-      meter.classList.remove('loud'); void meter.offsetWidth; meter.classList.add('loud');
-      ring.classList.add('off');
-      clearTimeout(toastTimer);
-      toast.classList.remove('show'); void toast.offsetWidth;
-      setTimeout(() => toast.classList.add('show'), reducedMotion ? 0 : 900);
-      toastTimer = setTimeout(() => { toast.classList.remove('show'); ring.classList.remove('off'); }, 4500);
-      window.track && track('lets_fight_demo', {});
+    if ('IntersectionObserver' in window) {
+      const thresholds = [0, 0.1, 0.25, 0.5, 0.75, 1];
+      const io = new IntersectionObserver(updateActiveFromScroll, { threshold: thresholds });
+      ['panel-home', 'problem', 'panel-how-it-works', 'panel-lets-fight', 'panel-privacy', 'panel-pricing', 'note', 'faq', 'early-access']
+        .forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
     }
+    window.addEventListener('scroll', () => window.requestAnimationFrame(updateActiveFromScroll), { passive: true });
 
-    // privacy: the lock does not open
-    function shakeLock() {
-      const lock = document.getElementById('lock');
-      lock.classList.remove('nope'); void lock.getBBox(); lock.classList.add('nope');
-    }
-
-    // FAQ accordion, one open at a time
-    function toggleFaq(btn) {
-      const answer = btn.nextElementSibling;
-      const open = answer.classList.contains('hidden');
-      document.querySelectorAll('#faq-list .faq-a').forEach(a => a.classList.add('hidden'));
-      document.querySelectorAll('#faq-list .faq-ic').forEach(i => i.textContent = '+');
-      document.querySelectorAll('#faq-list button').forEach(b => b.setAttribute('aria-expanded', 'false'));
-      if (open) {
-        answer.classList.remove('hidden');
-        btn.querySelector('.faq-ic').textContent = '−';
-        btn.setAttribute('aria-expanded', 'true');
-        const q = btn.querySelector('span');
-        window.track && track('faq_open', { question: q ? q.textContent.trim() : '' });
+    // Jump to the waitlist form
+    function goToWaitlist() {
+      const el = document.getElementById('early-access');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const input = document.getElementById('waitlist-email');
+        if (input) setTimeout(() => input.focus({ preventScroll: true }), 500);
       }
     }
 
-    // Early access
-    function goToWaitlist() {
-      const el = document.getElementById('early-access');
-      if (!el) return;
-      el.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'center' });
-      const input = document.getElementById('waitlist-email');
-      if (input) setTimeout(() => input.focus({ preventScroll: true }), 500);
-    }
     function scrollToEarlyAccess(e, location) {
       if (e) e.preventDefault();
       if (location) window.track && track('cta_click', { location: location });
       goToWaitlist();
-    }
-    function handleWaitlist(e) {
-      e.preventDefault();
-      const input = document.getElementById('waitlist-email');
-      const submitBtn = document.getElementById('waitlist-submit');
-      const successMsg = document.getElementById('waitlist-success');
-      if (!input || !input.value) return;
-      window.track && track('cta_click', { location: 'footer' });
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>one sec...</span>';
-      setTimeout(() => {
-        submitBtn.classList.add('hidden');
-        input.disabled = true;
-        successMsg.classList.remove('hidden');
-        const refInput = document.getElementById('waitlist-ref');
-        window.track && track('waitlist_signup', { ref: refInput ? refInput.value : '' });
-        showShare();
-      }, 600);
-    }
-    (function fillRef() {
-      try {
-        const ref = new URLSearchParams(window.location.search).get('ref');
-        const el = document.getElementById('waitlist-ref');
-        if (ref && el) el.value = ref.replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
-      } catch (err) { /* old browser: leave ref empty */ }
-    })();
-
-    // Share step after sign-up: native share sheet when available, else copy the link
-    const INVITE_URL = 'https://cuddlepop.com/?ref=invite';
-    const INVITE_TEXT = 'Oliver wants to hear your side.';
-    const canShare = typeof navigator.share === 'function';
-    function showShare() {
-      const wrap = document.getElementById('share-wrap');
-      const label = document.getElementById('share-label');
-      if (!wrap) return;
-      if (!canShare && label) label.textContent = 'copy link';
-      wrap.classList.remove('hidden');
-      wrap.classList.add('flex');
-    }
-    function copyText(text) {
-      if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
-      return new Promise((resolve, reject) => {
-        const ta = document.createElement('textarea');
-        ta.value = text; ta.setAttribute('readonly', '');
-        ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta); ta.select();
-        const ok = document.execCommand('copy');
-        document.body.removeChild(ta);
-        ok ? resolve() : reject(new Error('copy failed'));
-      });
-    }
-    let copyTimer = null;
-    function copyInvite() {
-      const label = document.getElementById('share-label');
-      copyText(INVITE_TEXT + ' ' + INVITE_URL).then(() => {
-        if (!label) return;
-        label.textContent = 'copied.';
-        clearTimeout(copyTimer);
-        copyTimer = setTimeout(() => { label.textContent = 'copy link'; }, 2000);
-      }).catch(() => {});
-    }
-    function shareInvite() {
-      if (canShare) {
-        window.track && track('invite_share', { method: 'share' });
-        navigator.share({ title: 'Cuddle Pop', text: INVITE_TEXT, url: INVITE_URL }).catch(() => {});
-      } else {
-        window.track && track('invite_share', { method: 'copy' });
-        copyInvite();
-      }
     }
 
     // Get the app: platform picker modal
@@ -782,8 +854,8 @@
       const guess = detectPlatform();
       ['android', 'ios'].forEach(p => {
         const b = document.getElementById('get-app-' + p);
-        b.classList.toggle('ring-4', p === guess);
-        b.classList.toggle('ring-violet/40', p === guess);
+        b.classList.toggle('ring-2', p === guess);
+        b.classList.toggle('ring-brand-primary', p === guess);
         b.setAttribute('aria-pressed', 'false');
       });
       modal.classList.remove('hidden');
@@ -814,20 +886,167 @@
     }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGetApp(); });
 
-    // On load: land on the hashed section, open the app picker from ?getapp=1
+    // Toggle the chat demo between both / private / shared
+    function toggleChatView(mode) {
+      const privateBox = document.getElementById('view-chat-private');
+      const sharedBox = document.getElementById('view-chat-shared');
+      const tabSplit = document.getElementById('chat-tab-split');
+      const tabPrivate = document.getElementById('chat-tab-private');
+      const tabShared = document.getElementById('chat-tab-shared');
+
+      [tabSplit, tabPrivate, tabShared].forEach(t => {
+        t.className = "flex-1 py-1.5 text-[11px] font-mono font-bold rounded-lg text-brand-dark hover:bg-stone-200 transition-all";
+      });
+
+      if (mode === 'split') {
+        privateBox.classList.remove('hidden');
+        sharedBox.classList.remove('hidden');
+        tabSplit.className = "flex-1 py-1.5 text-[11px] font-mono font-bold rounded-lg bg-brand-primary text-white border border-brand-dark transition-all";
+      } else if (mode === 'private') {
+        privateBox.classList.remove('hidden');
+        sharedBox.classList.add('hidden');
+        tabPrivate.className = "flex-1 py-1.5 text-[11px] font-mono font-bold rounded-lg bg-brand-lemon text-brand-dark border border-brand-dark transition-all";
+      } else if (mode === 'shared') {
+        privateBox.classList.add('hidden');
+        sharedBox.classList.remove('hidden');
+        tabShared.className = "flex-1 py-1.5 text-[11px] font-mono font-bold rounded-lg bg-indigo-500 text-white border border-brand-dark transition-all";
+      }
+    }
+
+    // Let's Fight demo toast
+    function triggerRefereeAlert(type) {
+      const toast = document.getElementById('referee-toast');
+      if (toast) {
+        toast.classList.remove('hidden');
+        if (type === 'spike') {
+          toast.textContent = "Oliver: it's getting loud. want a 5 min pause?";
+        } else {
+          toast.textContent = "Oliver: jonah said sorry. maya wanted it heard, not fixed.";
+        }
+        setTimeout(() => toast.classList.add('hidden'), 4000);
+      }
+    }
+
+    // FAQ accordion, one open at a time
+    function toggleFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-ic');
+      const isHidden = answer.classList.contains('hidden');
+
+      document.querySelectorAll('#faq .faq-a').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('#faq .faq-ic').forEach(i => i.classList.remove('rotate-180'));
+
+      if (isHidden) {
+        answer.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+        const q = btn.querySelector('span');
+        window.track && track('faq_open', { question: q ? q.textContent.trim() : '' });
+      }
+    }
+
+    // Waitlist form handler
+    function handleWaitlist(e) {
+      e.preventDefault();
+      const input = document.getElementById('waitlist-email');
+      const submitBtn = document.getElementById('waitlist-submit');
+      const successMsg = document.getElementById('waitlist-success');
+
+      if (input && input.value) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span>one sec...</span>`;
+        setTimeout(() => {
+          submitBtn.classList.add('hidden');
+          input.disabled = true;
+          successMsg.classList.remove('hidden');
+          const refInput = document.getElementById('waitlist-ref');
+          window.track && track('waitlist_signup', { ref: refInput ? refInput.value : '' });
+          showShare();
+        }, 600);
+      }
+    }
+
+    // Sign-up card submit click counts as the footer CTA
+    const waitlistSubmit = document.getElementById('waitlist-submit');
+    if (waitlistSubmit) waitlistSubmit.addEventListener('click', () => {
+      window.track && track('cta_click', { location: 'footer' });
+    });
+
+    // Invite attribution: carry ?ref= (e.g. ref=invite) into the sign-up payload
+    (function fillRef() {
+      try {
+        const ref = new URLSearchParams(window.location.search).get('ref');
+        const el = document.getElementById('waitlist-ref');
+        if (ref && el) el.value = ref.replace(/[^a-z0-9_-]/gi, '').slice(0, 64);
+      } catch (e) { /* old browser: leave ref empty */ }
+    })();
+
+    // Share step after sign-up: native share sheet when available, else copy the link
+    const INVITE_URL = 'https://cuddlepop.com/?ref=invite';
+    const INVITE_TEXT = 'Oliver wants to hear your side.';
+    const canShare = typeof navigator.share === 'function';
+
+    function showShare() {
+      const wrap = document.getElementById('share-wrap');
+      const label = document.getElementById('share-label');
+      if (!wrap) return;
+      if (!canShare && label) label.textContent = 'copy link';
+      wrap.classList.remove('hidden');
+      wrap.classList.add('flex');
+    }
+
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+      return new Promise((resolve, reject) => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        ok ? resolve() : reject(new Error('copy failed'));
+      });
+    }
+
+    let copyTimer = null;
+    function copyInvite() {
+      const label = document.getElementById('share-label');
+      copyText(INVITE_TEXT + ' ' + INVITE_URL).then(() => {
+        if (!label) return;
+        label.textContent = 'copied.';
+        clearTimeout(copyTimer);
+        copyTimer = setTimeout(() => { label.textContent = 'copy link'; }, 2000);
+      }).catch(() => {});
+    }
+
+    function shareInvite() {
+      if (canShare) {
+        window.track && track('invite_share', { method: 'share' });
+        navigator.share({ title: 'Cuddle Pop', text: INVITE_TEXT, url: INVITE_URL }).catch(() => {});
+      } else {
+        window.track && track('invite_share', { method: 'copy' });
+        copyInvite();
+      }
+    }
+
+    // On load: if the hash names a section (old tab hashes included), go there
     function jumpToHash() {
       const el = resolveTarget(window.location.hash);
-      if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+      if (el) scrollToSection(el, false);
+      updateActiveFromScroll();
     }
     window.addEventListener('DOMContentLoaded', () => {
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       jumpToHash();
       if (/[?&]getapp=1(&|$)/.test(window.location.search)) openGetApp('url');
     });
+    // Re-run after images/fonts and Tailwind styles settle so the landing is exact
     window.addEventListener('load', () => { jumpToHash(); setTimeout(jumpToHash, 400); });
     window.addEventListener('hashchange', () => {
       const el = resolveTarget(window.location.hash);
-      if (el) el.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
+      if (el) scrollToSection(el, true);
     });
   </script>
 </body>
