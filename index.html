@@ -89,6 +89,11 @@
       #dock .tab-btn[aria-current]::after{display:none}
     }
     .ic{width:1.15em;height:1.15em;display:inline-block;vertical-align:-0.22em;flex-shrink:0}
+    /* the ADHD Mode tab: tilted like a sticker, wiggles every few seconds */
+    @keyframes adhd-wiggle{0%,86%,100%{transform:rotate(-2deg)}89%{transform:rotate(3deg) scale(1.06)}92%{transform:rotate(-4deg) scale(1.06)}95%{transform:rotate(2deg)}}
+    #adhd-tab{transform:rotate(-2deg);animation:adhd-wiggle 6s ease-in-out infinite}
+    #adhd-tab:hover{animation-play-state:paused}
+    @media (prefers-reduced-motion:reduce){#adhd-tab{animation:none}}
     .ic-lg{width:2rem;height:2rem}
     .ic-xl{width:2.75rem;height:2.75rem}
   </style>
@@ -244,8 +249,9 @@
         </div>
       </a>
       <div class="flex items-center gap-2">
-        <a href="/adhd/" onclick="window.track && track('mode_switch', { to: 'adhd' })" class="inline-flex items-center gap-1.5 bg-brand-lemon text-brand-dark text-xs font-heading font-bold px-3 py-1.5 rounded-full border-2 border-brand-dark shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all xl:text-sm xl:px-4 xl:py-2">
-          <span>adhd Mode</span>
+        <a href="/adhd/" onclick="window.track && track('mode_switch', { to: 'adhd' })" id="adhd-tab" class="inline-flex items-center gap-1.5 bg-brand-primary text-white text-xs font-heading font-extrabold tracking-wide px-3.5 py-2 rounded-full border-2 border-brand-dark shadow-pop hover:shadow-pop-lg hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all xl:text-sm xl:px-5 xl:py-2.5">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" fill="#FEF08A" stroke="#1C1917"/></svg>
+          <span>ADHD Mode</span>
         </a>
         <a href="#early-access" onclick="scrollToEarlyAccess(event, 'nav')" class="xl:text-sm xl:px-4 xl:py-2 hidden items-center gap-1.5 bg-brand-primary text-white text-xs font-bold px-3 py-1.5 rounded-full border-2 border-brand-dark shadow-pop-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
           <span>meet Oliver</span>
