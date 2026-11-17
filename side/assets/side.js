@@ -21,7 +21,7 @@
     'Nothing you tell me gets shared unless you say yes.',
     "And you can delete the whole thing, any time. I'll drop it like it never happened.",
   ];
-  var HALF_HEARD = 'Cuddle Pop has only heard one side of this.';
+  var HALF_HEARD = 'Oliver has only heard one side of this.';
   var MAX_SIDE = 4000; // fights.sides.SIDE_MAX on the server
   // Screens that offer the app: the guest gets a claim code there to prove the side is theirs.
   var CLAIM_SCREENS = { done: true, notyet: true, sealed: true, reveal: true };
@@ -131,7 +131,7 @@
       return { title: "That's a lot for one go.", body: 'Keep it under ' + MAX_SIDE + ' characters and it will save.', retry: false };
     }
     if (code === 'side_empty') {
-      return { title: 'Say a little first.', body: 'Even a sentence is enough. Cuddle Pop is listening.', retry: false };
+      return { title: 'Say a little first.', body: 'Even a sentence is enough. Oliver is listening.', retry: false };
     }
     return { title: 'Something went sideways.', body: 'Give it a moment and try again.', retry: true };
   }
@@ -441,7 +441,7 @@
 
     function finishSide() {
       if (!s.sideText.trim()) {
-        set({ notice: { title: 'Say a little first.', body: 'Even a sentence is enough. Cuddle Pop is listening.' } });
+        set({ notice: { title: 'Say a little first.', body: 'Even a sentence is enough. Oliver is listening.' } });
         return Promise.resolve();
       }
       stopTimers();
@@ -505,7 +505,7 @@
       if (game.guest_completed || firstOpen(game) >= qs.length) {
         return game.both_answered ? 'reveal' : 'sealed';
       }
-      // Before they type anything, Cuddle Pop says hello and how the reveal works (founder change #3).
+      // Before they type anything, Oliver says hello and how the reveal works (founder change #3).
       if (!s.gameIntroSeen && !(game.my_answers || []).length) return 'gameintro';
       return 'game';
     }
@@ -729,7 +729,7 @@
     }
     return el('div.card.peach', { role: 'group', 'aria-label': 'Confirm delete' },
       el('p.promise-intro', { text: 'Delete it for both of you?' }),
-      el('p.lede', { text: 'Your side, the fight, all of it. Cuddle Pop drops it like it never happened, and ' + (st.name || 'they') + ' only hears that you asked for that.' }),
+      el('p.lede', { text: 'Your side, the fight, all of it. Oliver drops it like it never happened, and ' + (st.name || 'they') + ' only hears that you asked for that.' }),
       el('div.btns.row',
         el('button.btn.danger', { type: 'button', text: 'Yes, delete it', disabled: st.busy, on: { click: app.confirmDelete } }),
         el('button.btn', { type: 'button', text: 'Keep it', disabled: st.busy, on: { click: app.cancelDelete } })
@@ -746,9 +746,9 @@
     return st.you ? 'Thanks, ' + st.you + '. ' : '';
   }
 
-  // One lemon word per screen title (docs/08 highlighter rule); the text reads "Hey, I'm Cuddle Pop."
-  function cuddlePopTitle() {
-    return el('h1.title', null, "Hey, I'm ", el('span.hl', { text: 'Cuddle Pop' }), '.');
+  // One lemon word per screen title (docs/08 highlighter rule); the text reads "Hey, I'm Oliver."
+  function oliverTitle() {
+    return el('h1.title', null, "Hey, I'm ", el('span.hl', { text: 'Oliver' }), '.');
   }
 
   var textarea = null; // kept across renders so typing never loses focus or the caret
@@ -783,8 +783,8 @@
     promises: function (st) {
       var f = st.fight;
       return [
-        el('p.eyebrow', { text: hey(st) || (st.name || 'Someone') + ' asked Cuddle Pop to hear you out' }),
-        cuddlePopTitle(),
+        el('p.eyebrow', { text: hey(st) || (st.name || 'Someone') + ' asked Oliver to hear you out' }),
+        oliverTitle(),
         el('p.lede', { text: "I'm the friend you two have in common. " + (st.name || 'They') + ' told me a bit about you, and about “' + f.title + '”. Now it’s your turn, and only on your terms.' }),
         f.heard === 'one_side' ? el('p.chip', null, el('span', { 'aria-hidden': 'true', text: '🧸 ' }), HALF_HEARD) : null,
         promisesCard(st),
@@ -809,7 +809,7 @@
       };
       return [
         el('p.eyebrow', { text: 'Your side' }),
-        el('h1.title', null, 'Cuddle Pop is ', el('span.hl', { text: 'listening' }), '. Take your time.'),
+        el('h1.title', null, 'Oliver is ', el('span.hl', { text: 'listening' }), '. Take your time.'),
         textarea,
         el('div.save-row', null, sideView.label, sideView.count),
         sideView.slot,
@@ -821,8 +821,8 @@
     yes: function (st) {
       return [
         el('p.eyebrow', { text: 'Your call' }),
-        el('h1.title', { text: 'Share this with Cuddle Pop so both sides get heard?' }),
-        el('p.lede', { text: 'Until you say yes it stays sealed. Cuddle Pop hasn’t read it, and ' + (st.name || 'they') + ' only see that you wrote something, never the words.' }),
+        el('h1.title', { text: 'Share this with Oliver so both sides get heard?' }),
+        el('p.lede', { text: 'Until you say yes it stays sealed. Oliver hasn’t read it, and ' + (st.name || 'they') + ' only see that you wrote something, never the words.' }),
         notice(st),
         el('div.btns.row',
           el('button.btn.primary', { type: 'button', text: 'Yes', disabled: st.busy, on: { click: app.consent } }),
@@ -842,7 +842,7 @@
       return [
         el('p.eyebrow', { text: 'Sealed' }),
         el('h1.title', { text: 'No rush.' }),
-        el('p.lede', { text: 'Your side stays sealed and Cuddle Pop won’t read it. Open this link again on this phone whenever you’re ready.' + until }),
+        el('p.lede', { text: 'Your side stays sealed and Oliver won’t read it. Open this link again on this phone whenever you’re ready.' + until }),
         notice(st),
         el('div.btns',
           el('button.btn.primary', { type: 'button', text: 'Share it now', disabled: st.busy, on: { click: app.consent } }),
@@ -855,8 +855,8 @@
     done: function (st) {
       return [
         el('p.eyebrow', { text: 'Shared' }),
-        el('h1.title', { text: 'Cuddle Pop has both sides now.' }),
-        el('p.lede', { text: thanks(st) + 'Want to see what Cuddle Pop said? Get the app, your side is already in it.' }),
+        el('h1.title', { text: 'Oliver has both sides now.' }),
+        el('p.lede', { text: thanks(st) + 'Want to see what Oliver said? Get the app, your side is already in it.' }),
       ].concat(installBlock(st));
     },
 
@@ -866,7 +866,7 @@
       return [
         el('p.eyebrow', { text: 'Wrapped up' }),
         el('h1.title', { text: 'They already wrapped this one up.' }),
-        el('p.lede', { text: (st.name || 'They') + ' closed this one, so there’s nothing to add here now.' + (wrote ? ' Your side stayed sealed: Cuddle Pop never read it.' : '') }),
+        el('p.lede', { text: (st.name || 'They') + ' closed this one, so there’s nothing to add here now.' + (wrote ? ' Your side stayed sealed: Oliver never read it.' : '') }),
         notice(st),
         wrote ? deleteBlock(st) : null,
         el('a.link', { href: '/', text: 'What is Cuddle Pop?' }),
@@ -877,7 +877,7 @@
       return [
         el('p.eyebrow', { text: 'Dropped' }),
         el('h1.title', { text: 'Gone, like it never happened.' }),
-        el('p.lede', { text: (st.name || 'They') + ' only hear that you asked Cuddle Pop to drop it. Nothing you wrote, nothing else.' }),
+        el('p.lede', { text: (st.name || 'They') + ' only hear that you asked Oliver to drop it. Nothing you wrote, nothing else.' }),
         el('a.link', { href: '/', text: 'What is Cuddle Pop?' }),
       ];
     },
@@ -885,8 +885,8 @@
     code: function (st) {
       return [
         el('p.eyebrow', { text: hey(st) || 'An invite from ' + (st.name || 'your person') }),
-        el('h1.title', { text: (st.name || 'Someone') + ' wants you to meet Cuddle Pop.' }),
-        el('p.lede', { text: "I'm Cuddle Pop, the friend you two have in common. " + (st.name || 'They') + ' told me a bit about you. Now it’s your turn, and only on your terms. Get the app and you’re in.' }),
+        el('h1.title', { text: (st.name || 'Someone') + ' wants you to meet Oliver.' }),
+        el('p.lede', { text: "I'm Oliver, the friend you two have in common. " + (st.name || 'They') + ' told me a bit about you. Now it’s your turn, and only on your terms. Get the app and you’re in.' }),
         promisesCard(st),
       ].concat(installBlock(st));
     },
@@ -897,7 +897,7 @@
       // No delete promise here: a guest cannot delete game answers, so none is implied.
       return [
         el('p.eyebrow', { text: hey(st) || 'A 2-minute game from ' + who }),
-        cuddlePopTitle(),
+        oliverTitle(),
         el('p.lede', { text: "I'm the friend you two have in common. " + who + ' told me a bit about you and picked a 2-minute game for you both. Now it’s your turn, and only on your terms.' }),
         el('div.card.butter',
           el('p.promise-intro', { text: 'How this works.' }),
@@ -975,7 +975,7 @@
         el('p.eyebrow', { text: g.game.title }),
         el('h1.title', { text: "Here's how you both answered." }),
         st.you ? el('p.lede', { text: 'Thanks for playing, ' + st.you + '.' }) : null,
-        items.length ? el('ul.reveal', null, items) : el('p.lede', { text: 'These ones stay between each of you and Cuddle Pop.' }),
+        items.length ? el('ul.reveal', null, items) : el('p.lede', { text: 'These ones stay between each of you and Oliver.' }),
         el('p.promise-intro', { text: 'You two are in. Get the app to keep going.' }),
       ].concat(installBlock(st));
     },

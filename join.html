@@ -13,7 +13,9 @@
      side/index.html and renders the promises directly. No auto-redirect into the app. -->
 <script>
 (function () {
-  var m = location.pathname.match(/\/join\/([A-Za-z0-9]{4,12})\/?$/) ||
+  // /join/CODE and /side/CODE both land here on GitHub Pages (404.html has no rewrites):
+  // the app's share text links to /side/CODE, so that path must forward with its code too.
+  var m = location.pathname.match(/\/(?:join|side)\/([A-Za-z0-9]{4,12})\/?$/) ||
           location.search.match(/[?&]code=([A-Za-z0-9]{4,12})(?:&|$)/);
   location.replace(m ? '/side/' + m[1].toUpperCase() : '/side/');
 })();
