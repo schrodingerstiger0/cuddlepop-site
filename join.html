@@ -17,7 +17,9 @@
   // the app's share text links to /side/CODE, so that path must forward with its code too.
   var m = location.pathname.match(/\/(?:join|side)\/([A-Za-z0-9]{4,12})\/?$/) ||
           location.search.match(/[?&]code=([A-Za-z0-9]{4,12})(?:&|$)/);
-  location.replace(m ? '/side/' + m[1].toUpperCase() : '/side/');
+  // Forward to the query form: Pages serves /side/ (index.html) with a 200, and the guest page
+  // reads ?code=. Forwarding to /side/CODE would land on this 404 page again, forever.
+  location.replace(m ? '/side/?code=' + m[1].toUpperCase() : '/side/');
 })();
 </script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
