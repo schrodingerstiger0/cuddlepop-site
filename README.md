@@ -51,15 +51,22 @@ No DNS change is needed when the domain and hosting are on the same Hostinger ac
 
 ## Source of the current design
 
-index.html is a short single-scroll landing page (2026-11-17) generated in Stitch from the "Retro Romance & Digital
-Intimacy" design system in the project "Retro Gen Z CuddlePop" (projects/18230474138243898393, screen 14cda6d2…),
-then wired to the site's scripts (sign-up form, share step, get-the-app modal, GA tracking) and the compiled Tailwind
-in assets/site.css (`npm run build:css` after any class change). Under 200 visible words: hero with Oliver between two
-phones (looping bubbles, ear wiggle, blink, pointer tilt), tappable fight chips with a typed reply, a chatbot-vs-Oliver
-toggle that flips itself once, three step cards that light up in order, the Let's Fight button with meter and toast,
-Oliver holding a lock, two plan cards, five FAQs (mirrored in the FAQPage JSON-LD), sign-up, footer. All
-illustrations are inline SVG so they animate; `prefers-reduced-motion` turns the motion off. Copy rules: lowercase
-except Oliver, Cuddle Pop, Let's Fight; no pronouns for Oliver; no testimonials, ratings, counts or prices.
-Old hashes (#home, #how-it-works, #lets-fight, #privacy, #pricing, #cta) still land on the right section.
+Two versions of the marketing page live side by side (founder decision, 2026-11-17):
+
+- `index.html` is the full page (2026-11-14 to 2026-11-16 design: hero with chat demo, problem, three steps, Let's
+  Fight, privacy, pricing, note, 13 FAQs, CTA; floating dock nav; three breakpoint layouts). It carries an "adhd Mode"
+  tab at the top right that opens `/adhd/`.
+- `adhd/index.html` is the short page generated in Stitch (project "Retro Gen Z CuddlePop", screen 14cda6d2…,
+  design system "Retro Romance & Digital Intimacy") and hand-wired to the same scripts (sign-up form, share step,
+  get-the-app modal, GA tracking). Under 200 visible words, inline SVG Oliver, looping bubbles, typed chip replies,
+  chatbot-vs-Oliver toggle, step cards that light up, Let's Fight meter and toast, five FAQs mirrored in its FAQPage
+  JSON-LD. Three layouts: phone (stacked), tablet md 768-1279 (two-column hero, FAQ and sign-up), desktop xl 1280+
+  (every section side by side, larger type). A "full site" tab in its header goes back to `/`. Asset paths are
+  absolute (`/assets/…`) because it is served from a subfolder.
+
+Both pages share `assets/site.css`, compiled by `npm run build:css` from the class names in index.html, adhd/index.html
+and join.html; run it after any class change before `make web-deploy`. Copy rules for both: lowercase except Oliver,
+Cuddle Pop, Let's Fight; no pronouns for Oliver; no testimonials, ratings, counts or prices. Old hashes (#home,
+#how-it-works, #lets-fight, #privacy, #pricing) work on both pages.
 Earlier versions: docs/web-archive/index-v1.html (hand-built), Stitch screens 5273d678… (long cozy edition),
-edcadf25… (tabbed mobile edition), 82470a3f… (icon sprite used by the 2026-11-14 page).
+edcadf25… (tabbed mobile edition), 82470a3f… (icon sprite used by the full page).
