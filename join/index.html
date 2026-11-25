@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your invite · Cuddle Pop</title>
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#FCF9F4">
+<!-- Link previews for invites (WhatsApp, iMessage): crawlers read these and run no script. -->
+<meta name="description" content="Oliver is the friend you two share. Say your side privately, no app and no account.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cuddle Pop">
+<!-- No og:url: crawlers that honour it (Facebook, Messenger) would key the card to /join/ and drop the invite code. -->
+<meta property="og:title" content="Oliver wants to hear your side.">
+<meta property="og:description" content="Oliver is the friend you two share. Say your side privately, no app and no account.">
+<meta property="og:image" content="https://cuddlepop.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Oliver the bear beside the words: the friend who's heard both sides.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Oliver wants to hear your side.">
+<meta name="twitter:description" content="Oliver is the friend you two share. Say your side privately, no app and no account.">
+<meta name="twitter:image" content="https://cuddlepop.com/assets/og.png">
+<!-- /join/{code} is the universal link in every invite. It opens the web page first, on every
+     device (docs/18 §3): this file only forwards to /side/{code}, the guest page with Cuddle Pop's
+     promises. On GitHub Pages 404.html is a copy of this file, so /join/{code} and /side/{code}
+     forward to /side/?code={code}. No auto-redirect into the app.
+     Every other missing URL on Pages (a typo, /pricing, /foo) also gets this file, so only invite
+     paths forward; anything else shows a one-line "page not found" (no API call, no redirect).
+     Check without a browser: node apps/web/tools/join-check.js -->
+<script>
+(function () {
+  // /join/CODE and /side/CODE both land here on GitHub Pages (404.html has no rewrites):
+  // the app's share text links to /side/CODE, so that path must forward with its code too.
+  var p = location.pathname;
+  var m = p.match(/^\/(?:join|side)\/([A-Za-z0-9]{4,12})\/?$/) ||
+          location.search.match(/[?&]code=([A-Za-z0-9]{4,12})(?:&|$)/);
+  // Forward to the query form: Pages serves /side/ (index.html) with a 200, and the guest page
+  // reads ?code=. Forwarding to /side/CODE would land on this 404 page again, forever.
+  if (m) { location.replace('/side/?code=' + m[1].toUpperCase()); return; }
+  // An invite path with no usable code (/join, /join/, /side/bad!) still goes to the guest page,
+  // which explains that the link is missing its code.
+  if (/^\/(?:join|side)(?:\.html)?(?:\/|$)/.test(p)) { location.replace('/side/'); return; }
+  // Anything else is a plain 404 (a typo, /pricing, /privacy): show "page not found" instead.
+  document.documentElement.setAttribute('data-notfound', '');
+  document.title = 'Page not found · Cuddle Pop';
+})();
+</script>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/side/assets/side.css?v=a3391f83d7">
+<style>
+  [data-notfound] .invite { display: none; }
+  html:not([data-notfound]) .notfound { display: none; }
+  .notfound a { color: var(--iris); font-weight: 700; text-underline-offset: 3px; }
+</style>
+</head>
+<body>
+<header class="top"><a class="wordmark" href="/">Cuddle Pop</a></header>
+<main class="wrap">
+  <section class="screen notfound">
+    <h1 class="title">Page not found</h1>
+    <p class="lede">Go <a href="/">home</a> or try <a href="/adhd/">ADHD Mode</a>.</p>
+  </section>
+  <section class="screen invite">
+    <p class="eyebrow">One sec</p>
+    <h1 class="title">Taking you to Cuddle Pop…</h1>
+    <noscript>
+      <p class="lede">This page needs JavaScript to open your invite. Turn it on and reload, or get the Cuddle Pop app and type the code from your link into Join.</p>
+    </noscript>
+  </section>
+</main>
+</body>
+</html>
