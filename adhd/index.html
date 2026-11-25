@@ -517,7 +517,7 @@
         <form onsubmit="handleWaitlist(event)" class="max-w-md mx-auto md:mx-0 xl:max-w-lg space-y-3 mb-3">
           <input type="hidden" name="ref" id="waitlist-ref" value="">
           <div class="flex flex-col sm:flex-row gap-2">
-            <input type="email" id="waitlist-email" required placeholder="your email" autocomplete="email" class="w-full min-w-0 px-4 py-3 bg-white border-2 border-ink rounded-full text-sm font-bold placeholder:text-ink/50 focus:outline-none focus:ring-2 focus:ring-violet shadow-pop-sm">
+            <input type="email" id="waitlist-email" aria-label="your email" required placeholder="your email" autocomplete="email" class="w-full min-w-0 px-4 py-3 bg-white border-2 border-ink rounded-full text-sm font-bold placeholder:text-ink/50 focus:outline-none focus:ring-2 focus:ring-violet shadow-pop-sm">
             <button type="submit" id="waitlist-submit" class="pop-btn px-6 py-3 bg-violet text-white font-extrabold text-sm border-2 border-ink rounded-full shadow-pop whitespace-nowrap"><span>count us in</span></button>
           </div>
           <div id="waitlist-success" class="hidden text-sm font-bold bg-white border-2 border-ink rounded-full py-2 px-4">you're in. now send this to your person.</div>
@@ -828,7 +828,18 @@
       }
       window.track && track('get_app_pick', { platform: platform, ready: ready });
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGetApp(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') return closeGetApp();
+      // Keep Tab inside the open get-the-app dialog (aria-modal)
+      const modal = document.getElementById('get-app');
+      if (e.key !== 'Tab' || !modal || modal.classList.contains('hidden')) return;
+      const f = [...modal.querySelectorAll('a[href], button:not([disabled])')].filter(el => el.offsetParent !== null);
+      if (!f.length) return;
+      const i = f.indexOf(document.activeElement);
+      if (!modal.contains(document.activeElement)) { e.preventDefault(); f[0].focus(); }
+      else if (e.shiftKey && i === 0) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+    });
 
     // On load: land on the hashed section, open the app picker from ?getapp=1
     function jumpToHash() {

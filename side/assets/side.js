@@ -729,7 +729,7 @@
     }
     return el('div.card.peach', { role: 'group', 'aria-label': 'Confirm delete' },
       el('p.promise-intro', { text: 'Delete it for both of you?' }),
-      el('p.lede', { text: 'Your side, the fight, all of it. Oliver drops it like it never happened, and ' + (st.name || 'they') + ' only hears that you asked for that.' }),
+      el('p.lede', { text: 'Your side, the fight, all of it. Oliver drops it like it never happened, and ' + (st.name ? st.name + ' only hears' : 'they only hear') + ' that you asked for that.' }),
       el('div.btns.row',
         el('button.btn.danger', { type: 'button', text: 'Yes, delete it', disabled: st.busy, on: { click: app.confirmDelete } }),
         el('button.btn', { type: 'button', text: 'Keep it', disabled: st.busy, on: { click: app.cancelDelete } })
@@ -822,7 +822,7 @@
       return [
         el('p.eyebrow', { text: 'Your call' }),
         el('h1.title', { text: 'Share this with Oliver so both sides get heard?' }),
-        el('p.lede', { text: 'Until you say yes it stays sealed. Oliver hasn’t read it, and ' + (st.name || 'they') + ' only see that you wrote something, never the words.' }),
+        el('p.lede', { text: 'Until you say yes it stays sealed. Oliver hasn’t read it, and ' + (st.name ? st.name + ' only sees' : 'they only see') + ' that you wrote something, never the words.' }),
         notice(st),
         el('div.btns.row',
           el('button.btn.primary', { type: 'button', text: 'Yes', disabled: st.busy, on: { click: app.consent } }),
@@ -877,7 +877,7 @@
       return [
         el('p.eyebrow', { text: 'Dropped' }),
         el('h1.title', { text: 'Gone, like it never happened.' }),
-        el('p.lede', { text: (st.name || 'They') + ' only hear that you asked Oliver to drop it. Nothing you wrote, nothing else.' }),
+        el('p.lede', { text: (st.name ? st.name + ' only hears' : 'They only hear') + ' that you asked Oliver to drop it. Nothing you wrote, nothing else.' }),
         el('a.link', { href: '/', text: 'What is Cuddle Pop?' }),
       ];
     },

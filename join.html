@@ -9,8 +9,8 @@
 <meta name="theme-color" content="#FCF9F4">
 <!-- /join/{code} is the universal link in every invite. It opens the web page first, on every
      device (docs/18 §3): this file only forwards to /side/{code}, the guest page with Cuddle Pop's
-     promises. On GitHub Pages /join/{code} never reaches this file: 404.html is a copy of
-     side/index.html and renders the promises directly. No auto-redirect into the app. -->
+     promises. On GitHub Pages 404.html is a copy of this file, so /join/{code} and /side/{code}
+     forward to /side/?code={code}. No auto-redirect into the app. -->
 <script>
 (function () {
   // /join/CODE and /side/CODE both land here on GitHub Pages (404.html has no rewrites):

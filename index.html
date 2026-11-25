@@ -93,7 +93,7 @@
     @keyframes adhd-wiggle{0%,86%,100%{transform:rotate(-2deg)}89%{transform:rotate(3deg) scale(1.06)}92%{transform:rotate(-4deg) scale(1.06)}95%{transform:rotate(2deg)}}
     #adhd-tab{transform:rotate(-2deg);animation:adhd-wiggle 6s ease-in-out infinite}
     #adhd-tab:hover{animation-play-state:paused}
-    @media (prefers-reduced-motion:reduce){#adhd-tab{animation:none}}
+    @media (prefers-reduced-motion:reduce){#adhd-tab,.wave-bar,.animate-ping{animation:none}html{scroll-behavior:auto}}
     .ic-lg{width:2rem;height:2rem}
     .ic-xl{width:2.75rem;height:2.75rem}
   </style>
@@ -601,55 +601,55 @@
       <div class="bg-white border-2 border-brand-dark rounded-2xl p-4 shadow-pop md:p-5 xl:p-6">
         <div class="space-y-2 md:space-y-0 md:grid md:grid-cols-2 md:gap-3 md:items-start">
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>can my partner see my private chats?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>can my partner see my private chats?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. only your effort trend, if you both opt in.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>why not just ask ChatGPT?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>why not just ask ChatGPT?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">a chatbot hears one side: whoever's typing. so it tends to agree with you, and your person's chatbot agrees with them. Oliver hears both of you privately before saying anything, then helps you land on something you'd both actually do.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>what if Oliver sides with my partner?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>what if Oliver sides with my partner?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no side gets picked. Oliver only says what you've both agreed is fair.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is Oliver a real person?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is Oliver a real person?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. Oliver is an AI, built to be fair to both of you and to keep what each of you shares private. also, a bear. that should have been a clue.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is this therapy?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is this therapy?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. if it spots crisis or abuse, it stops and points you to real help.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>do we both need Cuddle Pop?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>do we both need Cuddle Pop?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">to sort out a fight together, yes. but you can start solo: tell Oliver your side, and invite your person when you're ready. you won't pay twice either.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>what does my person see when i invite them?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>what does my person see when i invite them?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">a link and one line: "Oliver wants to hear your side." the link works in any messaging app. it installs the app and connects the two of you automatically. nothing you told Oliver goes with it.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>do i have to use it every day?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>do i have to use it every day?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. open it when there's a fight and ignore it when things are fine. the journal and games are there if you want them, and nobody will nag you about a streak.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is Let's Fight always recording?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is Let's Fight always recording?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. you both opt in each time, and audio is deleted once transcribed.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is what i tell Oliver used to train AI?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>is what i tell Oliver used to train AI?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">no. what you tell Oliver stays between you and Oliver. none of it is used to train AI.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>how much will plus cost?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>how much will plus cost?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">we haven't set it yet. it'll be one price for the two of you, and the first couples in get it free.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>does it work long distance?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>does it work long distance?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">yes. that's who it's built for. you each tell Oliver your side whenever your day allows, and Let's Fight works on video calls. the time zones are still your problem.</div>
           </div>
           <div class="border border-brand-dark rounded-xl overflow-hidden bg-brand-cream/40">
-            <button onclick="toggleFaq(this)" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>what if we break up?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
+            <button type="button" onclick="toggleFaq(this)" aria-expanded="false" class="w-full p-3 text-left font-heading font-semibold text-[15px] leading-snug text-brand-dark flex items-center justify-between gap-2"><span>what if we break up?</span><span class="faq-ic inline-flex transition-transform"><svg class="ic" aria-hidden="true"><use href="#i-chevron"/></svg></span></button>
             <div class="faq-a hidden p-3 pt-0 text-sm text-stone-600 leading-[1.6] border-t border-dashed border-stone-300 md:text-[15px]">either of you can lock it for both. we wipe the data on request. Oliver won't take it personally.</div>
           </div>
         </div>
@@ -669,6 +669,7 @@
               <input
                 type="email"
                 id="waitlist-email"
+                aria-label="your email"
                 required
                 placeholder="you@bothloved.com"
                 class="min-w-0 flex-1 px-3.5 py-2.5 rounded-xl border-2 border-brand-dark text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary placeholder:text-stone-400 font-mono"
@@ -775,7 +776,7 @@
     const HASH_MAP = {
       'home': 'panel-home', 'how-it-works': 'panel-how-it-works', 'lets-fight': 'panel-lets-fight',
       'privacy': 'panel-privacy', 'pricing': 'panel-pricing', 'problem': 'problem', 'faq': 'faq',
-      'early-access': 'early-access'
+      'early-access': 'early-access', 'cta': 'early-access'
     };
 
     function resolveTarget(hash) {
@@ -889,7 +890,18 @@
       }
       window.track && track('get_app_pick', { platform: platform, ready: ready });
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGetApp(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') return closeGetApp();
+      // Keep Tab inside the open get-the-app dialog (aria-modal)
+      const modal = document.getElementById('get-app');
+      if (e.key !== 'Tab' || !modal || modal.classList.contains('hidden')) return;
+      const f = [...modal.querySelectorAll('a[href], button:not([disabled])')].filter(el => el.offsetParent !== null);
+      if (!f.length) return;
+      const i = f.indexOf(document.activeElement);
+      if (!modal.contains(document.activeElement)) { e.preventDefault(); f[0].focus(); }
+      else if (e.shiftKey && i === 0) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+    });
 
     // Toggle the chat demo between both / private / shared
     function toggleChatView(mode) {
@@ -940,9 +952,11 @@
 
       document.querySelectorAll('#faq .faq-a').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('#faq .faq-ic').forEach(i => i.classList.remove('rotate-180'));
+      document.querySelectorAll('#faq [onclick^="toggleFaq"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
 
       if (isHidden) {
         answer.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
         icon.classList.add('rotate-180');
         const q = btn.querySelector('span');
         window.track && track('faq_open', { question: q ? q.textContent.trim() : '' });
