@@ -7,6 +7,7 @@
   <link rel="canonical" href="https://cuddlepop.com/">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#FCF9F4">
+  <meta name="api-base" content="https://api.cuddlepop.com/v1">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Cuddle Pop">
@@ -684,7 +685,8 @@
                 <svg class="ic" aria-hidden="true"><use href="#i-envelope"/></svg>
               </button>
             </div>
-            <div id="waitlist-success" class="hidden text-xs font-mono font-bold text-emerald-800 bg-emerald-100 py-1.5 px-3 rounded-lg border border-emerald-600">
+            <p id="waitlist-error" class="hidden text-xs font-bold text-red-700" role="alert"></p>
+          <div id="waitlist-success" class="hidden text-xs font-mono font-bold text-emerald-800 bg-emerald-100 py-1.5 px-3 rounded-lg border border-emerald-600">
               you're in. now send this to your person.
             </div>
             <div id="share-wrap" class="hidden justify-center pt-1">
@@ -965,24 +967,54 @@
     }
 
     // Waitlist form handler
+    function waitlistBase() {
+      var m = document.querySelector('meta[name="api-base"]');
+      var base = (m && m.getAttribute('content')) || '';
+      return (base || (window.location.origin + '/v1')).replace(/\/$/, '');
+    }
+    function setWaitlistError(msg) {
+      var el = document.getElementById('waitlist-error');
+      if (!el) return;
+      el.textContent = msg || '';
+      el.classList.toggle('hidden', !msg);
+    }
     function handleWaitlist(e) {
       e.preventDefault();
-      const input = document.getElementById('waitlist-email');
-      const submitBtn = document.getElementById('waitlist-submit');
-      const successMsg = document.getElementById('waitlist-success');
-
-      if (input && input.value) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<span>one sec...</span>`;
-        setTimeout(() => {
+      var input = document.getElementById('waitlist-email');
+      var submitBtn = document.getElementById('waitlist-submit');
+      var successMsg = document.getElementById('waitlist-success');
+      var refInput = document.getElementById('waitlist-ref');
+      if (!input || !input.value) return;
+      window.track && track('cta_click', { location: 'footer' });
+      setWaitlistError('');
+      submitBtn.disabled = true;
+      var label = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span>one sec...</span>';
+      var body = { email: input.value.trim(), ref: refInput && refInput.value ? refInput.value : null, source: 'web' };
+      var done = function (ok, msg) {
+        if (ok) {
           submitBtn.classList.add('hidden');
           input.disabled = true;
           successMsg.classList.remove('hidden');
-          const refInput = document.getElementById('waitlist-ref');
-          window.track && track('waitlist_signup', { ref: refInput ? refInput.value : '' });
+          window.track && track('waitlist_signup', { ref: body.ref || '' });
           showShare();
-        }, 600);
-      }
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = label;
+          setWaitlistError(msg);
+        }
+      };
+      fetch(waitlistBase() + '/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      }).then(function (r) {
+        if (r.status === 202 || r.status === 200) return done(true);
+        if (r.status === 422) return done(false, "that email doesn't look right.");
+        if (r.status === 429) return done(false, 'too many tries from here. give it an hour.');
+        if (r.status === 404) return done(false, "the list isn't open yet. check back soon.");
+        return done(false, "couldn't reach us. try again in a bit.");
+      }).catch(function () { done(false, "couldn't reach us. try again in a bit."); });
     }
 
     // Sign-up card submit click counts as the footer CTA

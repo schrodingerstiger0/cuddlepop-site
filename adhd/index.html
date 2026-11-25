@@ -7,6 +7,7 @@
   <link rel="canonical" href="https://cuddlepop.com/adhd/">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#FCF9F4">
+  <meta name="api-base" content="https://api.cuddlepop.com/v1">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Cuddle Pop">
@@ -521,6 +522,7 @@
             <input type="email" id="waitlist-email" aria-label="your email" required placeholder="your email" autocomplete="email" class="w-full min-w-0 px-4 py-3 bg-white border-2 border-ink rounded-full text-sm font-bold placeholder:text-ink/50 focus:outline-none focus:ring-2 focus:ring-violet shadow-pop-sm">
             <button type="submit" id="waitlist-submit" class="pop-btn px-6 py-3 bg-violet text-white font-extrabold text-sm border-2 border-ink rounded-full shadow-pop whitespace-nowrap"><span>count us in</span></button>
           </div>
+          <p id="waitlist-error" class="hidden text-xs font-bold text-red-700" role="alert"></p>
           <div id="waitlist-success" class="hidden text-sm font-bold bg-white border-2 border-ink rounded-full py-2 px-4">you're in. now send this to your person.</div>
           <div id="share-wrap" class="hidden justify-center md:justify-start">
             <button type="button" id="share-btn" onclick="shareInvite()" class="pop-btn px-6 py-3 bg-violet text-white font-extrabold text-sm border-2 border-ink rounded-full shadow-pop"><span id="share-label">send to your person</span></button>
@@ -713,23 +715,54 @@
       if (location) window.track && track('cta_click', { location: location });
       goToWaitlist();
     }
+    function waitlistBase() {
+      var m = document.querySelector('meta[name="api-base"]');
+      var base = (m && m.getAttribute('content')) || '';
+      return (base || (window.location.origin + '/v1')).replace(/\/$/, '');
+    }
+    function setWaitlistError(msg) {
+      var el = document.getElementById('waitlist-error');
+      if (!el) return;
+      el.textContent = msg || '';
+      el.classList.toggle('hidden', !msg);
+    }
     function handleWaitlist(e) {
       e.preventDefault();
-      const input = document.getElementById('waitlist-email');
-      const submitBtn = document.getElementById('waitlist-submit');
-      const successMsg = document.getElementById('waitlist-success');
+      var input = document.getElementById('waitlist-email');
+      var submitBtn = document.getElementById('waitlist-submit');
+      var successMsg = document.getElementById('waitlist-success');
+      var refInput = document.getElementById('waitlist-ref');
       if (!input || !input.value) return;
       window.track && track('cta_click', { location: 'footer' });
+      setWaitlistError('');
       submitBtn.disabled = true;
+      var label = submitBtn.innerHTML;
       submitBtn.innerHTML = '<span>one sec...</span>';
-      setTimeout(() => {
-        submitBtn.classList.add('hidden');
-        input.disabled = true;
-        successMsg.classList.remove('hidden');
-        const refInput = document.getElementById('waitlist-ref');
-        window.track && track('waitlist_signup', { ref: refInput ? refInput.value : '' });
-        showShare();
-      }, 600);
+      var body = { email: input.value.trim(), ref: refInput && refInput.value ? refInput.value : null, source: 'adhd' };
+      var done = function (ok, msg) {
+        if (ok) {
+          submitBtn.classList.add('hidden');
+          input.disabled = true;
+          successMsg.classList.remove('hidden');
+          window.track && track('waitlist_signup', { ref: body.ref || '' });
+          showShare();
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = label;
+          setWaitlistError(msg);
+        }
+      };
+      fetch(waitlistBase() + '/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      }).then(function (r) {
+        if (r.status === 202 || r.status === 200) return done(true);
+        if (r.status === 422) return done(false, "that email doesn't look right.");
+        if (r.status === 429) return done(false, 'too many tries from here. give it an hour.');
+        if (r.status === 404) return done(false, "the list isn't open yet. check back soon.");
+        return done(false, "couldn't reach us. try again in a bit.");
+      }).catch(function () { done(false, "couldn't reach us. try again in a bit."); });
     }
     (function fillRef() {
       try {
