@@ -23,8 +23,9 @@
   ];
   var HALF_HEARD = 'Oliver has only heard one side of this.';
   var MAX_SIDE = 4000; // fights.sides.SIDE_MAX on the server
-  // Screens that offer the app: the guest gets a claim code there to prove the side is theirs.
-  var CLAIM_SCREENS = { done: true, notyet: true, sealed: true, reveal: true };
+  // Screens that offer the app and show the claim code (installBlock): the guest gets the code
+  // there to prove the side is theirs. "Not yet" is not one: it pitches nothing (docs/18 §3 step 4).
+  var CLAIM_SCREENS = { done: true, sealed: true, reveal: true };
   var CLOSED_STATUSES = { resolved: true, archived: true };
   var RETRY_MAX_MS = 30000;
   var CODE_RE = /^[A-Za-z0-9]{4,12}$/;
@@ -48,8 +49,9 @@
     this.requestId = requestId || null;
   }
 
+  // invite_expired, guest_expired, and guest_session_revoked (the games service's 410).
   function isExpired(code) {
-    return /expired/.test(code || '');
+    return /expired|revoked/.test(code || '');
   }
 
   // Errors in the site voice. `name` is the initiator's first name when we know it.
@@ -77,7 +79,7 @@
         retry: false,
       };
     }
-    if (code === 'invite_claimed') {
+    if (code === 'invite_claimed' || code === 'guest_claimed') {
       return {
         title: "You're in. Open the app.",
         body: 'This link was used to join in the app, so everything you did here is waiting for you there.',
@@ -98,7 +100,7 @@
         retry: false,
       };
     }
-    if (code === 'relationship_full' || code === 'relationship_ended') {
+    if (code === 'relationship_full' || code === 'relationship_ended' || code === 'relationship_not_found') {
       return {
         title: 'This invite is closed.',
         body: 'There is no space waiting on the other end any more. If that seems wrong, ask ' + them + ' to send a new one.',
@@ -112,7 +114,20 @@
         retry: false,
       };
     }
-    if (code === 'invalid_token') {
+    if (code === 'session_not_active') {
+      return {
+        title: 'This game is over.',
+        body: "It finished or was called off, so there's nothing left to answer here.",
+        retry: false,
+      };
+    }
+    if (code === 'guest_unsupported_question') {
+      return { title: 'This one is played in the app.', body: 'Get Cuddle Pop to answer it. The answers you already gave are saved.', retry: false };
+    }
+    if (code === 'invalid_answer' || code === 'too_long' || code === 'question_not_found') {
+      return { title: "That answer didn't go through.", body: 'Keep it short or pick one of the options, then try again.', retry: false };
+    }
+    if (code === 'invalid_token' || code === 'unauthorized') {
       return {
         title: 'This page lost its place.',
         body: 'Open the link from their message again on this phone and you will pick up where you left off.',
@@ -140,9 +155,10 @@
   function isFatal(err) {
     var c = err && err.code;
     return (
-      c === 'invite_used' || c === 'invite_claimed' || c === 'invite_not_found' || isExpired(c) ||
-      c === 'fight_not_found' || c === 'session_not_found' || c === 'relationship_full' ||
-      c === 'relationship_ended' || c === 'invalid_token'
+      c === 'invite_used' || c === 'invite_claimed' || c === 'guest_claimed' || c === 'invite_not_found' ||
+      isExpired(c) || c === 'fight_not_found' || c === 'session_not_found' || c === 'relationship_full' ||
+      c === 'relationship_ended' || c === 'relationship_not_found' || c === 'invalid_token' ||
+      c === 'unauthorized' || c === 'session_not_active'
     );
   }
 
@@ -276,6 +292,8 @@
                 var errCode = e.code || 'http_' + res.status;
                 // The schema caps a side at MAX_SIDE, so an over-long one is a plain 422.
                 if (res.status === 422 && /\/side$/.test(path)) errCode = 'side_too_long';
+                // A schema 422 on answers (too long, wrong shape) reads as "that answer didn't go through".
+                if (errCode === 'validation_error' && /\/answers$/.test(path)) errCode = 'invalid_answer';
                 throw new ApiFailure(res.status, errCode, retry, e.request_id);
               });
           },
@@ -284,7 +302,7 @@
     }
 
     function fail(err) {
-      if (err && (err.code === 'invite_used' || err.code === 'invite_claimed')) writeToken(null);
+      if (err && (err.code === 'invite_used' || err.code === 'invite_claimed' || err.code === 'guest_claimed')) writeToken(null);
       if (err && err.code === 'guest_dropped') return gone();
       set({ screen: 'error', error: err, busy: false, notice: null });
     }

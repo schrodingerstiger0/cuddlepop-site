@@ -1,7 +1,7 @@
 /*
  * Cuddle Pop analytics hook.
  * track(eventName, props) forwards to whichever providers are configured below,
- * and does nothing (loads no third-party script) while both IDs are empty.
+ * and does nothing (loads no third-party script) while both IDs are empty or off cuddlepop.com.
  * Debug logging: add ?debug=1 to the URL, or run localStorage.cp_debug = '1'.
  */
 (function () {
@@ -12,6 +12,15 @@
   // or before any EU/UK campaign.
   var GA_MEASUREMENT_ID = 'G-YBZTCEFL4W';
   var META_PIXEL_ID = '';
+
+  // Only the live site reports: localhost, LAN, previews and test runs load nothing and send nothing
+  // (track() still logs with ?debug=1 there).
+  var host = '';
+  try { host = window.location.hostname; } catch (e) { /* no location */ }
+  if (host !== 'cuddlepop.com' && host !== 'www.cuddlepop.com') {
+    GA_MEASUREMENT_ID = '';
+    META_PIXEL_ID = '';
+  }
 
   var debug = false;
   try {
