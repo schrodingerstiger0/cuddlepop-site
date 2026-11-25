@@ -204,6 +204,7 @@ body {
 }
 .link:hover { text-decoration: underline; }
 .link.danger { color: var(--ember); }
+.link[disabled] { opacity: 0.55; cursor: default; text-decoration: none; }
 
 textarea {
   width: 100%;

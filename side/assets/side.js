@@ -22,6 +22,8 @@
     "And you can delete the whole thing, any time. I'll drop it like it never happened.",
   ];
   var HALF_HEARD = 'Oliver has only heard one side of this.';
+  // Shown while the yes is in flight: the consent call drafts the summary, which takes seconds.
+  var READING = 'One sec. Oliver is reading both sides.';
   var MAX_SIDE = 4000; // fights.sides.SIDE_MAX on the server
   // Screens that offer the app and show the claim code (installBlock): the guest gets the code
   // there to prove the side is theirs. "Not yet" is not one: it pitches nothing (docs/18 §3 step 4).
@@ -207,6 +209,7 @@
       gameIntroSeen: false,
       confirmDelete: false,
       busy: false,
+      pending: null, // 'consent' while the yes is in flight (the slow call); the page shows READING
       notice: null, // inline {title, body}
       error: null, // full-screen ApiFailure
       claimCode: null, // from POST /guest/claim-code, minted once per visit
@@ -477,15 +480,21 @@
       });
     }
 
+    // The server drafts the summary inside this call, so it can take several seconds: the page
+    // holds both buttons and shows READING until it answers.
     function consent() {
-      if (!s.fight) return Promise.resolve();
-      set({ busy: true, notice: null });
+      if (!s.fight || s.busy) return Promise.resolve();
+      set({ busy: true, pending: 'consent', notice: null });
       return api('POST', '/guest/fights/' + s.fight.id + '/consent', { share: true }, true).then(
         function (fight) {
           if (fight) s.fight = fight;
+          s.pending = null;
           set({ busy: false, screen: 'done', confirmDelete: false });
         },
-        trouble
+        function (err) {
+          s.pending = null;
+          trouble(err);
+        }
       );
     }
 
@@ -601,6 +610,7 @@
     PROMISES_INTRO: PROMISES_INTRO,
     PROMISES: PROMISES,
     HALF_HEARD: HALF_HEARD,
+    READING: READING,
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = exported;
   if (typeof document === 'undefined') return;
@@ -736,6 +746,12 @@
     return el('div.notice', { role: 'status' }, el('strong', { text: st.notice.title }), ' ', st.notice.body);
   }
 
+  // The yes is in flight (side.READING): a status line so the tap never looks dead.
+  function reading(st) {
+    if (st.pending !== 'consent') return null;
+    return el('p.small.reading', { role: 'status', 'data-testid': 'reading', text: READING });
+  }
+
   function promisesCard(st) {
     return el('div.card.butter',
       el('p.promise-intro', { text: st.promisesIntro }),
@@ -777,7 +793,7 @@
 
   function deleteBlock(st) {
     if (!st.confirmDelete) {
-      return el('button.link.danger', { type: 'button', text: 'Delete the whole thing', on: { click: app.askDelete } });
+      return el('button.link.danger', { type: 'button', text: 'Delete the whole thing', disabled: st.busy, on: { click: app.askDelete } });
     }
     return el('div.card.peach', { role: 'group', 'aria-label': 'Confirm delete' },
       el('p.promise-intro', { text: 'Delete it for both of you?' }),
@@ -876,11 +892,12 @@
         el('h1.title', { text: 'Share this with Oliver so both sides get heard?' }),
         el('p.lede', { text: 'Until you say yes it stays sealed. Oliver hasn’t read it, and ' + (st.name ? st.name + ' only sees' : 'they only see') + ' that you wrote something, never the words.' }),
         notice(st),
+        reading(st),
         el('div.btns.row',
           el('button.btn.primary', { type: 'button', text: 'Yes', disabled: st.busy, on: { click: app.consent } }),
           el('button.btn', { type: 'button', text: 'Not yet', disabled: st.busy, on: { click: app.notYet } })
         ),
-        el('button.link', { type: 'button', text: 'Change what I wrote', on: { click: app.editAgain } }),
+        el('button.link', { type: 'button', text: 'Change what I wrote', disabled: st.busy, on: { click: app.editAgain } }),
         deleteBlock(st),
       ];
     },
@@ -896,9 +913,10 @@
         el('h1.title', { text: 'No rush.' }),
         el('p.lede', { text: 'Your side stays sealed and Oliver won’t read it. Open this link again on this phone whenever you’re ready.' + until }),
         notice(st),
+        reading(st),
         el('div.btns',
           el('button.btn.primary', { type: 'button', text: 'Share it now', disabled: st.busy, on: { click: app.consent } }),
-          el('button.btn', { type: 'button', text: 'Change what I wrote', on: { click: app.editAgain } })
+          el('button.btn', { type: 'button', text: 'Change what I wrote', disabled: st.busy, on: { click: app.editAgain } })
         ),
         deleteBlock(st),
       ];
