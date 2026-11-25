@@ -679,6 +679,8 @@
   var appEl = doc.getElementById('app');
   var openBtn = doc.getElementById('open-app');
   var lastScreen = null;
+  var lastKey = null;
+  var sectionEl = null;
   var appState = { known: false, tried: false, missing: false };
 
   function rememberApp() {
@@ -1050,8 +1052,19 @@
     sideView = null;
     var make = screens[st.screen] || screens.loading;
     var kids = make(st);
-    var section = el('section.screen', null, kids);
-    appEl.replaceChildren ? appEl.replaceChildren(section) : (appEl.textContent = '', appEl.appendChild(section));
+    // A new view (screen, or the next game question) gets a new section, which fades in. A rebuild
+    // of the same view (busy flags, the claim code arriving on done) swaps the section's contents
+    // and keeps the section, so the fade plays once and is never cut short or replayed.
+    var key = st.screen + (st.screen === 'game' ? ':' + st.qIndex : '');
+    if (key === lastKey && sectionEl) {
+      kids = kids.filter(Boolean);
+      if (sectionEl.replaceChildren) sectionEl.replaceChildren.apply(sectionEl, kids);
+      else { sectionEl.textContent = ''; kids.forEach(function (k) { sectionEl.appendChild(k); }); }
+    } else {
+      sectionEl = el('section.screen', null, kids);
+      appEl.replaceChildren ? appEl.replaceChildren(sectionEl) : (appEl.textContent = '', appEl.appendChild(sectionEl));
+    }
+    lastKey = key;
     if (st.screen !== 'side') textarea = null;
     if (lastScreen !== st.screen) {
       lastScreen = st.screen;
