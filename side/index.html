@@ -14,12 +14,14 @@
 <!-- Store listings: fill in when they exist; the buttons stay hidden while empty. -->
 <meta name="app-store-ios" content="">
 <meta name="app-store-android" content="">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https:; frame-src cuddlepop:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.cuddlepop.com; frame-src cuddlepop:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/side/assets/side.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<!-- Fonts never block the first paint: side.js turns this preload into a stylesheet (the CSP allows no inline onload). -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap"></noscript>
 <!-- Absolute paths: the same file is served at /side/{code}, /join/{code} (Pages 404.html) and by the API. -->
 <link rel="stylesheet" href="/side/assets/side.css">
 </head>

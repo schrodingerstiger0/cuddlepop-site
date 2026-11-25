@@ -608,6 +608,38 @@
   // ======================= browser layer =======================
 
   var doc = document;
+
+  // Google Fonts arrive as <link rel="preload" as="style"> so they never block the first paint;
+  // the CSP (script-src 'self') rules out the usual inline onload swap, so it happens here, once
+  // the preload has finished (swapping earlier makes Safari fetch the stylesheet a second time).
+  if (doc.querySelectorAll) {
+    var preloads = doc.querySelectorAll('link[rel="preload"][as="style"]');
+    for (var pi = 0; pi < preloads.length; pi++) (function (link) {
+      function swap() { link.rel = 'stylesheet'; }
+      var perf = window.performance;
+      if (perf && perf.getEntriesByName && perf.getEntriesByName(link.href).length) swap();
+      else { link.addEventListener('load', swap); link.addEventListener('error', swap); }
+    })(preloads[pi]);
+  }
+
+  // A meta CSP can't set frame-ancestors and Pages sends no headers, so refuse to run inside a
+  // frame (clickjacking): show one line and a link that opens this same page top-level.
+  var framed = false;
+  try { framed = !!window.top && !!window.self && window.top !== window.self; } catch (e) { framed = true; }
+  if (framed) {
+    var away = doc.createElement('a');
+    away.href = location.href;
+    away.target = '_top';
+    away.rel = 'noopener';
+    away.textContent = 'Open it on its own';
+    var line = doc.createElement('p');
+    line.textContent = 'This page only opens in its own tab. ';
+    line.appendChild(away);
+    if (doc.body.replaceChildren) doc.body.replaceChildren(line);
+    else { doc.body.textContent = ''; doc.body.appendChild(line); }
+    return;
+  }
+
   function meta(name) {
     var m = doc.querySelector('meta[name="' + name + '"]');
     return m ? m.getAttribute('content') || '' : '';
