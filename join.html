@@ -25,25 +25,44 @@
 <!-- /join/{code} is the universal link in every invite. It opens the web page first, on every
      device (docs/18 §3): this file only forwards to /side/{code}, the guest page with Cuddle Pop's
      promises. On GitHub Pages 404.html is a copy of this file, so /join/{code} and /side/{code}
-     forward to /side/?code={code}. No auto-redirect into the app. -->
+     forward to /side/?code={code}. No auto-redirect into the app.
+     Every other missing URL on Pages (a typo, /pricing, /foo) also gets this file, so only invite
+     paths forward; anything else shows a one-line "page not found" (no API call, no redirect).
+     Check without a browser: node apps/web/tools/join-check.js -->
 <script>
 (function () {
   // /join/CODE and /side/CODE both land here on GitHub Pages (404.html has no rewrites):
   // the app's share text links to /side/CODE, so that path must forward with its code too.
-  var m = location.pathname.match(/\/(?:join|side)\/([A-Za-z0-9]{4,12})\/?$/) ||
+  var p = location.pathname;
+  var m = p.match(/^\/(?:join|side)\/([A-Za-z0-9]{4,12})\/?$/) ||
           location.search.match(/[?&]code=([A-Za-z0-9]{4,12})(?:&|$)/);
   // Forward to the query form: Pages serves /side/ (index.html) with a 200, and the guest page
   // reads ?code=. Forwarding to /side/CODE would land on this 404 page again, forever.
-  location.replace(m ? '/side/?code=' + m[1].toUpperCase() : '/side/');
+  if (m) { location.replace('/side/?code=' + m[1].toUpperCase()); return; }
+  // An invite path with no usable code (/join, /join/, /side/bad!) still goes to the guest page,
+  // which explains that the link is missing its code.
+  if (/^\/(?:join|side)(?:\.html)?(?:\/|$)/.test(p)) { location.replace('/side/'); return; }
+  // Anything else is a plain 404 (a typo, /pricing, /privacy): show "page not found" instead.
+  document.documentElement.setAttribute('data-notfound', '');
+  document.title = 'Page not found · Cuddle Pop';
 })();
 </script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/side/assets/side.css">
+<style>
+  [data-notfound] .invite { display: none; }
+  html:not([data-notfound]) .notfound { display: none; }
+  .notfound a { color: var(--iris); font-weight: 700; text-underline-offset: 3px; }
+</style>
 </head>
 <body>
 <header class="top"><a class="wordmark" href="/">Cuddle Pop</a></header>
 <main class="wrap">
-  <section class="screen">
+  <section class="screen notfound">
+    <h1 class="title">page not found</h1>
+    <p class="lede">go <a href="/">home</a> or try <a href="/adhd/">ADHD Mode</a>.</p>
+  </section>
+  <section class="screen invite">
     <p class="eyebrow">One sec</p>
     <h1 class="title">Taking you to Cuddle Pop…</h1>
     <noscript>

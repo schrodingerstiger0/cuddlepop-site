@@ -5,4 +5,9 @@
     <lastmod>2026-11-15</lastmod>
   </url>
   <url><loc>https://cuddlepop.com/adhd/</loc></url>
+  <!-- DRAFT legal pages, not live: uncomment once the founder approves them and their
+       noindex meta is removed.
+  <url><loc>https://cuddlepop.com/privacy/</loc></url>
+  <url><loc>https://cuddlepop.com/terms/</loc></url>
+  -->
 </urlset>
